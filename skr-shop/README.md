@@ -1,4 +1,4 @@
-# strshop
+# skr-shop
 
 ## Project setup
 ```
