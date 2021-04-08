@@ -1,6 +1,7 @@
 <template>
    <div>
       <p>主页</p>
+      <span>test</span>
    </div>
 </template>
 
