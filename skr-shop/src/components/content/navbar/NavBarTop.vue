@@ -10,7 +10,7 @@
         <span>加入</span>
       </div>
       <div class="icon">
-        <a-icon type="user" />
+        <a-icon type="select" />
         <span>登录</span>
       </div>
       <div class="icon">
