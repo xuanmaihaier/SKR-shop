@@ -98,9 +98,6 @@ export default {
       } else if (e.target.id == "password") {
         e.target.placeholder = "请输入您的密码";
       }
-    },
-    toHome(){
-      this.$router.push('/home')
     }
   },
 };
