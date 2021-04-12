@@ -6,6 +6,7 @@
         v-for="(item, index) in 4"
         @click="liclick(index)"
         :class="{ active: page == index }"
+        :key="index"
       >
         item
       </li>

@@ -83,7 +83,7 @@ export default {
 <style lang="less" scoped>
 /deep/ .ant-affix {
   width: 100% !important;
-  min-width: 1000px;
+  min-width: 1240px;
 }
 .bottom {
   width: 100%;
