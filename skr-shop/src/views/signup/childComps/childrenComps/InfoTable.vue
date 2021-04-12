@@ -229,6 +229,7 @@ export default {
       font-family: "yg750";
       font-size: 14px;
       cursor: pointer;
+      outline: none;
       &:last-child {
         color: #fff;
         background-color: #000;

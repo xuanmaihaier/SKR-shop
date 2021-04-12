@@ -6,7 +6,7 @@
           <span>还不是SKR-SHOP成员？</span><br />
           <span>如果您注册成为会员，您将获得10％的折扣券。</span>
         </p>
-        <button>注册</button>
+        <button @click="signupVip">注册</button>
       </li>
       <li>
         <p><span>需要非会员订单/交货查询吗？</span><br /></p>
@@ -17,7 +17,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    signupVip(){
+      this.$router.replace('/signup')
+    }
+  },
+};
 </script>
 
 <style lang="less" scoped>
