@@ -181,7 +181,7 @@ export default {
                 display: block;
                 width: 100%;
 				overflow: hidden;
-				white-space: nowrap;/* 设置文本是否换行. */
+				white-space: nowrap;/* 设置文本是否换行.. */
 				text-overflow: ellipsis;/* 超出文本出现省略号代替 */
                 }
                 }
