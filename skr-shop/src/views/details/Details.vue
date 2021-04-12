@@ -39,9 +39,9 @@
             <div ref="mask" v-show="topShow" class="top" :style="topStyle"></div>
             <!-- 最顶层覆盖了整个原图空间的透明层罩 -->
             <div class="maskTop"
-            @mouseenter="isEnterHandler(true)"
-            @mousemove="moveHandler"
-            @mouseout="isEnterHandler(false)"></div>
+              @mouseenter="isEnterHandler(true)"
+              @mousemove="moveHandler"
+              @mouseout="isEnterHandler(false)"></div>
           </div>
           <!-- 显示放大效果的外元素 -->
           <div v-show="rShow" class="right">
@@ -65,7 +65,7 @@
       <div class="good_right">
         <div class="top">
           <h3>ULLALA PAJAMAS</h3>
-          <span>￥ +∞</span>
+          <span style="">￥ +∞</span>
           <span></span>
         </div>
         <div class="middel">
@@ -166,7 +166,6 @@ import Detail from "./childComps/Detail/Detail";
           this.mackWidth = parseFloat(finalStyle.width)
           this.mackHeight = parseFloat(finalStyle.height)
         }
-        
         this.topShow = isEnter
         this.rShow = isEnter
       },
@@ -181,7 +180,6 @@ import Detail from "./childComps/Detail/Detail";
         if(topX>this.imgWidthLeft-halfMackWidth) topX = this.imgWidthLeft-halfMackWidth
         if(topY>this.imgWidthLeft-halfMackHeight) topY = this.imgWidthLeft-halfMackHeight
         // 通过 transform 进行移动控制
-        // console.log(this.imgWidth);
         this.topStyle.transform = `translate(${topX}px,${topY}px)`
         this.r_img.transform = `translate(-${this.imgWidthRight*((topX-35)/this.imgWidthLeft)}px,-${this.imgWidthRight*(topY/this.imgWidthLeft)}px)`
       },
@@ -246,7 +244,6 @@ import Detail from "./childComps/Detail/Detail";
             line-height 45px
             text-indent 20px
             margin-right 20px
-
       .down
         display flex 
         justify-content space-between
