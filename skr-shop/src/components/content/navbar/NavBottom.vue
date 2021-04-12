@@ -66,6 +66,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+/deep/ .ant-affix{
+  width: 100% !important;
+  min-width: 1000px;
+}
 .bottom {
   width: 100%;
   height: 65px;
