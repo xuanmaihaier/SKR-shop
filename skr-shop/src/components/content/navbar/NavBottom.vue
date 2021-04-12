@@ -1,10 +1,9 @@
 <template>
-  <a-affix :offset-top="top">
+  <a-affix :style="{ position: (isChage==true?'absolute':'static'), top: 0, left: 0}" @change="affixChange">
+    <!--  -->
     <div class="bottom">
-     
       <!-- 二级目录 -->
       <div class="conent">
-       
         <ul class="left">
           <li
             v-for="(item, index) in navLeft"
@@ -25,7 +24,6 @@
             {{ item }}
           </li>
         </ul>
-       
       </div>
       <!-- Nav 显示隐藏的list表 -->
       <nav-eng v-show="$store.state.isShow" :navIndex="navIndex"></nav-eng>
@@ -40,12 +38,14 @@ export default {
   components: { NavEng },
   data() {
     return {
-      top:0,
+      top: 0,
       navLeft: ["新的", "女装", "男装", "生活", "美丽", "销售", "设计师"],
       navRight: ["独家的", "WDNA", "事件", "最好的"],
       navIndex: 0,
+      isChage:false
     };
   },
+
   methods: {
     //移入
     engraft(index) {
@@ -61,11 +61,19 @@ export default {
     handleClick() {
       console.log(123);
     },
+    affixChange(){
+      this.isChage=!this.isChage
+    }
   },
 };
 </script>
 
 <style lang="less" scoped>
+/deep/ .ant-affix {
+  width: 100% !important;
+  min-width: 1000px;
+ 
+}
 .bottom {
   width: 100%;
   height: 65px;
