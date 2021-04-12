@@ -15,11 +15,10 @@
           </a-card-meta>
         </a-card>
       </swiper-slide>
-      
     </swiper>
     <div class="swiper-button-prev" slot="button-prev"></div>
-      　　
-      <div class="swiper-button-next" slot="button-next"></div>
+    　　
+    <div class="swiper-button-next" slot="button-next"></div>
   </div>
 </template>
 
@@ -83,6 +82,7 @@ img {
 .swiper-button-prev,
 .swiper-button-next {
   --swiper-theme-color: #ccc; /* 设置Swiper风格 */
+  z-index: 1;
 }
 .AnCard {
   width: 100%;

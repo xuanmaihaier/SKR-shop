@@ -80,5 +80,6 @@ img {
 .swiper-button-prev,
 .swiper-button-next {
   --swiper-theme-color: #ccc; /* 设置Swiper风格 */
+  z-index: 1;
 }
 </style>

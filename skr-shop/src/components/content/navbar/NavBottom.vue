@@ -1,8 +1,10 @@
 <template>
   <a-affix :offset-top="top">
     <div class="bottom">
+     
       <!-- 二级目录 -->
       <div class="conent">
+       
         <ul class="left">
           <li
             v-for="(item, index) in navLeft"
@@ -23,6 +25,7 @@
             {{ item }}
           </li>
         </ul>
+       
       </div>
       <!-- Nav 显示隐藏的list表 -->
       <nav-eng v-show="$store.state.isShow" :navIndex="navIndex"></nav-eng>
@@ -69,6 +72,8 @@ export default {
   line-height: 65px;
   background-color: #0b0b0d;
   color: white;
+  overflow: hidden;
+  z-index: 55;
   .conent {
     width: 55%;
     height: 100%;

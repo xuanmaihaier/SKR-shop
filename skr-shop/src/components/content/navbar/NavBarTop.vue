@@ -1,7 +1,10 @@
 <template>
   <div class="nav">
-    <div>
+    <div class="navs">
       <img src="../../../assets/images/log.png" alt="" />
+      <a-affix :offset-top="top">
+        <img src="../../../assets/images/log1.png" alt="" class="affixImg" />
+      </a-affix>
     </div>
     <nav-search></nav-search>
     <div class="icons">
@@ -15,7 +18,7 @@
       </div>
       <div class="icon">
         <a-icon type="shopping-cart" />
-        <span>加入</span>
+        <span>0</span>
       </div>
     </div>
   </div>
@@ -26,6 +29,11 @@ import NavSearch from "./NavSearch.vue";
 
 export default {
   components: { NavSearch },
+  data() {
+    return {
+      top:0
+    }
+  },
 };
 </script>
 
@@ -35,9 +43,18 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 0 5% 0 2%;
+  overflow: hidden;
+  .navs {
+    div{
+       /deep/ .ant-affix {
+      z-index: 999;
+    }
+    }
+  }
   > div {
     line-height: 65px;
   }
+
   .icons {
     width: 15%;
     display: flex;
@@ -45,14 +62,23 @@ export default {
 }
 .icon {
   margin: 0 10px;
-    display: flex;
-    justify-content: center;
-    i{
-        font-size: 20px;
-      transform: translate(20px,10px);
-    }
-    span{
-        transform: translate(0px,12px);
-    }
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  i {
+    font-size: 20px;
+    transform: translate(20px, 10px);
+  }
+  span {
+    text-align: center;
+    display: block;
+    width: 32px;
+    transform: translate(-5px, 12px);
+  }
+}
+
+.affixImg {
+  position: relative;
+ height: 60px;
 }
 </style>
