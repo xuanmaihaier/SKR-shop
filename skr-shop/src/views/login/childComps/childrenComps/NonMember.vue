@@ -20,7 +20,7 @@
 export default {
   methods: {
     signupVip(){
-      this.$router.replace('/signup')
+      this.$router.push('/signup')
     }
   },
 };

@@ -37,10 +37,10 @@ export default {
   },
   methods: {
     goSignup(){
-      this.$router.replace('/signup')
+      this.$router.push('/signup')
     },
     goLogin(){
-      this.$router.replace('/login')
+      this.$router.push('/login')
     },
 
     handleClick(){
