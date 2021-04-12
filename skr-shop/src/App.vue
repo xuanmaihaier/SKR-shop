@@ -17,4 +17,7 @@ export default {
 </script>
 <style>                                                                          
 @import url("./assets/css/params.less");
+#app{
+  height: 2000px;
+}
 </style>
