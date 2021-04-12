@@ -20,6 +20,7 @@ const routes = [
   },
   {
     path:'/details',
+    name:'Details',
     component:()=>import("views/details/Details")
   }
 ]
