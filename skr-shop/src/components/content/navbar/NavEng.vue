@@ -145,7 +145,7 @@ export default {
   width: 100%;
   height: 350px;
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.9);
   .conent {
     width: 70%;
     height: 100%;

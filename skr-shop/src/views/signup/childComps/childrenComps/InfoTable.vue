@@ -116,7 +116,7 @@ export default {
           key,
           duration: 2,
         });
-        this.$router.push("/login");
+        this.$router.push('/login')
       }, 1000);
     },
   },
