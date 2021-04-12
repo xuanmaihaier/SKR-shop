@@ -21,7 +21,7 @@
         </span>
       </div>
       <div class="btnGroup">
-        <button class="loginBtn">登录</button>
+        <button class="loginBtn" @click="toHome">登录</button>
         <ul class="link">
           <li>
             <a href="javascript:;">找回用户名</a>
@@ -48,6 +48,9 @@ export default {
     showImg() {
       this.imgShow = !this.imgShow
     },
+    toHome(){
+      this.$router.replace('/home')
+    }
   },
 };
 </script>
@@ -94,6 +97,7 @@ export default {
         background-color: #000;
         border-color: #000;
         color: #fff;
+        outline: none;
         cursor: pointer;
       }
       .link {

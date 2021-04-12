@@ -3,12 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import 'normalize.css/normalize.css'
-import { Button } from 'ant-design-vue'
-import { Message } from 'ant-design-vue'
-
-Vue.component(Button.name, Button)
-Vue.prototype.$message = Message
 Vue.config.productionTip = false
+// antd
+import './plugins/antd/index.js'
+// swiper
+import './plugins/swiper/index'
 
 new Vue({
   router,

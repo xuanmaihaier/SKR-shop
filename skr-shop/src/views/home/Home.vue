@@ -1,46 +1,69 @@
 <template>
-   <div>
-      <p>主页</p>
-      <span>test</span>
-      <router-link to="/login">login</router-link>
-      <router-link to="/signup">signup</router-link>
-   </div>
+  <div>
+    <!-- 头部轮播退 -->
+    <SwiperHreader />
+    <Title><p>STYLE STORY</p></Title>
+    <AnCard />
+    <StickyBanner />
+    <Title><p>WHAT'S NEW</p></Title>
+    <SwiperList />
+    <Title><p>MAKE IT YOURS</p></Title>
+    <SwiperCarousel />
+    <Title><p>EXCLUSIVE +</p></Title>
+    <!-- 带有颜色渐变的轮播 -->
+    <SwiperColor />
+    <List />
+    <Title><p>BEAUTY PICK +</p></Title>
+    <SwiperAndList />
+    <SwiperHreader class="margin" />
+    <TypeList />
+    <TypeList />
+    <TypeList />
+    <TypeList />
+    <Title><p>DESIGNERS</p></Title>
+    <SwiperTab />
+    <Title><p>WDNA STYLE</p></Title>
+    <ShopListTab />
+    <FooterNav/>
+  </div>
 </template>
 
 <script>
+import Title from "components/common/title/Title";
+import SwiperHreader from "./childComps/SwiperHreader";
+import AnCard from "./childComps/AnCard";
+import StickyBanner from "./childComps/StickyBanner";
+import SwiperList from "./childComps/SwiperList";
+import SwiperCarousel from "./childComps/SwiperCarousel";
+import SwiperColor from "./childComps/SwiperColor";
+import List from "./childComps/List";
+import SwiperAndList from "./childComps/SwiperAndList";
+import TypeList from "./childComps/TypeList";
+import SwiperTab from "./childComps/SwiperTab";
+import ShopListTab from "./childComps/ShopListTab"
+import FooterNav from "./childComps/FooterNav"
 export default {
-  name:"Home",
-}
+  name: "Home",
+  components: {
+    SwiperHreader,
+    Title,
+    AnCard,
+    StickyBanner,
+    SwiperList,
+    SwiperCarousel,
+    SwiperColor,
+    List,
+    SwiperAndList,
+    TypeList,
+    SwiperTab,
+    ShopListTab,
+    FooterNav
+  },
+};
 </script>
 
 <style lang="less" scoped>
-// @xxx: ~'(min-width:2px)';
-// .both{
-//   font-size: 2rem;
-// }
-// p{
-//   color:@color-tint;
-//   .both();
-//   &:hover{
-//     color: #123;
-//   }
-//   &::before{
-//     position: absolute;
-//     // content: '';
-//     top: 0;
-//     left: 0;  
-//     width: 100px;
-//     height: 100px;
-//     background-color: chocolate;
-//   }
-//   @media screen and (max-width:300px){
-//     color: #adff2f;
-//   }
-//   @media screen and (max-width:500px ) and (min-width:300px){
-//     color: #8a2be2;
-//   }
-// }
-// span{
-//   font-size: 10px + @font-size; 
-// }
+.margin {
+  margin-top: 20px;
+}
 </style>

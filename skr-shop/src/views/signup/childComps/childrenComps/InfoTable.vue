@@ -113,6 +113,7 @@ export default {
           key,
           duration: 1,
         });
+        this.$router.replace('/login')
       }, 1000);
     },
   },
