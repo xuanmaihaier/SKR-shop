@@ -2,14 +2,34 @@
   <div class="loginWrap">
     <form action="" @submit.prevent="">
       <div class="inpGroup">
-        <member-input :id="'user'" :placeholder="'请输入您的用户名'" :type="'text'">用户名</member-input>
-        <member-input :id="'password'" :placeholder="'请输入您的密码'" :type="'password'" :class="'mt20'">密码</member-input>
+        <p>
+          <label for="user">用户名</label>
+          <input
+            id="user"
+            type="text"
+            placeholder="请输入您的用户名"
+            @focus="showText"
+            @blur="hideText"
+            v-model="userName"
+          />
+        </p>
+        <p class="mt20">
+          <label for="password">密码</label>
+          <input
+            id="password"
+            type="password"
+            placeholder="请输入您的密码"
+            @focus="showText"
+            @blur="hideText"
+            v-model.trim="userPassWord"
+          />
+        </p>
         <span class="inputBtn" @click="showImg">
           <img
             src="@/assets/img/login/forget.png"
             alt=""
             width="32px"
-            v-show="imgShow"
+            v-show.trim="imgShow"
           />
           <img
             src="@/assets/img/login/rember.png"
@@ -19,6 +39,10 @@
           />
           <label for="">记住账号</label>
         </span>
+        <div class="warning">
+          <span v-show="nameShow">用户名不能为空</span>
+          <span v-show="passWordShow">密码不能为空</span>
+        </div>
       </div>
       <div class="btnGroup">
         <button class="loginBtn" @click="toHome">登录</button>
@@ -36,20 +60,44 @@
 </template>
 
 <script>
-import MemberInput from '../../../../components/content/login-register/MemberInput.vue';
 export default {
-  components: { MemberInput },
   data() {
     return {
-      imgShow:true,
+      imgShow: true,
+      userName: "",
+      userPassWord: "",
+      nameShow: false,
+      passWordShow: false,
     };
   },
   methods: {
     showImg() {
-      this.imgShow = !this.imgShow
+      this.imgShow = !this.imgShow;
     },
-    toHome(){
-      this.$router.push('/home')
+    toHome() {
+      if (this.userName == "") {
+        this.nameShow = true;
+        return;
+      } else if (this.userPassWord == "") {
+        this.passWordShow = true;
+        return;
+      }
+      this.$router.push("/home");
+    },
+    showText(e) {
+      if (e.target.id == "user") {
+        this.nameShow = false;
+      } else if (e.target.id == "password") {
+        this.passWordShow = false;
+      }
+      e.target.placeholder = "";
+    },
+    hideText(e) {
+      if (e.target.id == "user") {
+        e.target.placeholder = "请输入您的用户名";
+      } else if (e.target.id == "password") {
+        e.target.placeholder = "请输入您的密码";
+      }
     }
   },
 };
@@ -69,6 +117,35 @@ export default {
     .inpGroup {
       width: 525px;
       padding-bottom: 30px;
+      p {
+        height: 40px;
+        label {
+          display: inline-block;
+          width: 105px;
+          height: 100%;
+          line-height: 40px;
+          color: #333;
+        }
+        input {
+          width: 420px;
+          height: 40px;
+          line-height: 38px;
+          padding-left: 20px;
+          background-color: #f2f2f2;
+          border: 1px solid #f2f2f2;
+          font-size: 14px;
+          font-family: "ProximaNova-Regular", "yg740";
+          outline: none;
+          &:focus {
+            background-color: #fff;
+            border: 1px solid #000;
+          }
+        }
+      }
+      .mt20 {
+        margin-top: 20px;
+        height: 50px;
+      }
       span.inputBtn {
         position: relative;
         display: inline-block;
@@ -85,6 +162,13 @@ export default {
           font-family: "ProximaNova-Regular", "yg740";
           line-height: 35px;
           padding-left: 42px;
+        }
+      }
+      .warning {
+        padding-left: 105px;
+        height: 20px;
+        span {
+          color: #ff4141;
         }
       }
     }

@@ -84,9 +84,12 @@ export default {
   },
   methods: {
     showText(e) {
+      if (e.target.type == "text") {
+        this.userNameShow = false;
+      } else if (e.target.type == "password") {
+        this.pasWordShow = false;
+      }
       e.target.placeholder = "";
-      this.userNameShow = false;
-      this.pasWordShow = false;
     },
     hideText(e) {
       if (e.target.type == "text") {
@@ -109,9 +112,9 @@ export default {
       this.$message.loading({ content: "Loading...", key });
       setTimeout(() => {
         this.$message.success({
-          content: "注册完成!即将跳转至登录页面",
+          content: "注册完成!跳转至登录页面",
           key,
-          duration: 1,
+          duration: 2,
         });
         this.$router.push('/login')
       }, 1000);
