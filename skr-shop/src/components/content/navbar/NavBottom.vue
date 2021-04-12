@@ -1,5 +1,6 @@
 <template>
   <div class="bottom">
+    <!-- 二级目录 -->
     <div class="conent">
       <ul class="left">
         <li v-for="(item, index) in navLeft" :key="index" @mouseover="engraft(index)" @mouseout="exgraft">{{ item }}</li>
@@ -9,31 +10,33 @@
         <li v-for="(item, index) in navRight" :key="index" @click="handleClick">{{ item }}</li>
       </ul>
     </div>
-    <div class="eng" ref="eng">
-
-    </div>
+   <!-- Nav 显示隐藏的list表 -->
+    <nav-eng v-show="$store.state.isShow" :navIndex="navIndex"></nav-eng >
   </div>
 </template>
 
 <script>
+import NavEng from './NavEng'
 export default {
   name: "NavBottom",
+  components:{NavEng},
   data() {
     return {
       navLeft: ["新的", "女装", "男装", "生活", "美丽", "销售", "设计师"],
       navRight: ["独家的", "WDNA", "事件", "最好的"],
+      navIndex :0
     };
   },
   methods: {
       //移入
       engraft(index){
-          console.log(index);
-          this.$refs.eng.style.display = 'block'
-        //   this.$refs.eng.style.color = '#04bd9e'
+          this.navIndex = index;
+          // console.log(this.navIndex,'----');
+         this.$store.commit('changeShow',true)
       },
     //移出
     exgraft(){
-         this.$refs.eng.style.display = 'none'
+        this.$store.commit('changeShow',false)
     },
     //点击事件
     handleClick(){
@@ -72,12 +75,7 @@ export default {
         cursor: pointer;
     }
   }
-  .eng{
-      width: 100%;
-      height: 350px;
-      background-color: antiquewhite;
-      display: none;
-  }
+ 
  
 }
 </style>
