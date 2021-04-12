@@ -20,3 +20,22 @@
 // })
 
 // export default instance
+import axios from 'axios'
+const instance = axios.create({
+  baseURL:process.env.VUE_APP_BASE_URL,
+  timeout:5000
+})
+
+instance.interceptors.request.use(config =>{
+  config.headers.Authorization = window.sessionStorage.getItem('token')
+  return config
+},error=>{
+  console.log(error);
+  return Promise.reject(error)
+})
+
+instance.interceptors.response.use(response=>{
+  return response
+})
+
+export default instance

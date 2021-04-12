@@ -74,7 +74,7 @@ export default {
   width: 100%;
   height: 65px;
   line-height: 65px;
-  background-color: #0b0b0d;
+  background-color: #000000;
   color: white;
   overflow: hidden;
   z-index: 55;

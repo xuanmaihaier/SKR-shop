@@ -1,6 +1,7 @@
 <template>
   <div class="nav">
-    <div class="navs">
+    <div class="navs" @click="handleClick">
+
       <img src="../../../assets/images/log.png" alt="" />
       <a-affix :offset-top="top">
         <img src="../../../assets/images/log1.png" alt="" class="affixImg" />
@@ -10,11 +11,11 @@
     <div class="icons">
       <div class="icon">
         <a-icon type="user" />
-        <span>加入</span>
+        <span @click="goSignup">加入</span>
       </div>
       <div class="icon">
         <a-icon type="select" />
-        <span>登录</span>
+        <span @click="goLogin">登录</span>
       </div>
       <div class="icon">
         <a-icon type="shopping-cart" />
@@ -34,6 +35,18 @@ export default {
       top:0
     }
   },
+  methods: {
+    goSignup(){
+      this.$router.replace('/signup')
+    },
+    goLogin(){
+      this.$router.replace('/login')
+    },
+
+    handleClick(){
+      this.$router.push('/home')
+    }
+  },
 };
 </script>
 
@@ -45,6 +58,7 @@ export default {
   padding: 0 5% 0 2%;
   overflow: hidden;
   .navs {
+    cursor: pointer;
     div{
        /deep/ .ant-affix {
       z-index: 999;
