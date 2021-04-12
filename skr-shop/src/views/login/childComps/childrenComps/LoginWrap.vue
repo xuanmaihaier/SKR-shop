@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import MemberInput from '../../../../components/content/MemberInput.vue';
+import MemberInput from '../../../../components/content/login-register/MemberInput.vue';
 export default {
   components: { MemberInput },
   data() {

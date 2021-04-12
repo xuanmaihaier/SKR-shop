@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import TitleWarp from '../../components/content/TitleWarp.vue';
+import TitleWarp from '@/components/content/login-register/TitleWarp.vue';
 import JoinMember from './childComps/JoinMember.vue';
 export default {
   components: { TitleWarp, JoinMember },
