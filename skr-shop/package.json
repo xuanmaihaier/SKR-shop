@@ -10,7 +10,9 @@
   "dependencies": {
     "ant-design-vue": "^1.7.4",
     "axios": "^0.21.1",
+    "antd": "^4.15.0",
     "core-js": "^3.6.5",
+    "customize-cra": "^1.0.0",
     "normalize.css": "^8.0.1",
     "swiper": "^5.4.5",
     "vue": "^2.6.11",
