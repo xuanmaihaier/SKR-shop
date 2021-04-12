@@ -13,7 +13,7 @@ module.exports = {
     resolve: {
       alias: {
         '@': resolve("src"),
-        "componets": resolve("src/components"),
+        "components": resolve("src/components"),
         "views": resolve("src/views"),
         "store": resolve("src/store"),
         "assets": resolve("src/assets"),
