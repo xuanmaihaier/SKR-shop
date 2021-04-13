@@ -9,8 +9,9 @@
   },
   "dependencies": {
     "ant-design-vue": "^1.7.4",
-    "axios": "^0.21.1",
     "antd": "^4.15.0",
+    "axios": "^0.21.1",
+    "chokidar": "^3.5.1",
     "core-js": "^3.6.5",
     "customize-cra": "^1.0.0",
     "normalize.css": "^8.0.1",

@@ -6,6 +6,7 @@
         v-for="(item, index) in 4"
         @click="liclick(index)"
         :class="{ active: page == index }"
+        :key="index"
       >
         item
       </li>
@@ -36,6 +37,8 @@ export default {
         centeredSlides: true, // 设定为true时，active slide会居中，而不是默认状态下的居左。
         spaceBetween: 10, // 在slide之间设置距离（单位px）。
         loopAdditionaSlider: 0, // loop模式下会在slides前后复制若干个slide,，前后复制的个数不会大于原总个数。
+          observer: true, //修改swiper自己或子元素时，自动初始化swiper
+        observeParents: true, //修改swiper的父元素时，自动初始化swiper
         on: {
           slideChange: (e) => {
             let swiper = this.$refs.mySwiper.$swiper;

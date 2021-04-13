@@ -19,10 +19,23 @@ const routes = [
     component:()=>import("views/home/Home.vue")
   },
   {
+
     path:'/details',
     name:'Details',
     component:()=>import("views/details/Details")
-  }
+  },
+  {
+
+    path:'/login',
+    name:'Login',
+    component:()=>import("views/login/Login.vue")
+  },
+  {
+    path:'/signup',
+    name:'Signup',
+    component:()=>import("views/signup/Signup.vue")
+  },
+
 ]
 
 const router = new VueRouter({
