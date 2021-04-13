@@ -28,6 +28,11 @@ const routes = [
     name:'Signup',
     component:()=>import("views/signup/Signup.vue")
   },
+  {
+    path:'/exclusive',
+    name:'Exclusive',
+    component:()=>import("views/exclusive/Exclusive.vue")
+  }
 ]
 
 const router = new VueRouter({
