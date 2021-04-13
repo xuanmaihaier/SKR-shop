@@ -19,6 +19,8 @@ export default {
 <style lang="less" scoped>
 .signup {
   width: 100%;
-  height: calc(101vh - 130px);
+  height: 100%;
+  margin-bottom: 40px;
+  // height: calc(101vh - 130px);
 }
 </style>

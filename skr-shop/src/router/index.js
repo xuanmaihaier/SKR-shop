@@ -28,6 +28,17 @@ const routes = [
     name:'Signup',
     component:()=>import("views/signup/Signup.vue")
   },
+  {
+    // 一级分类界面
+    path:'/primary/:id',
+    name:'Primary',
+    component:()=>import("views/primary/Primary.vue")
+  },
+  {
+    path:'/mypage',
+    name:'MyPage',
+    component:()=>import("views/mypage/MyPage.vue")
+  }
 ]
 
 

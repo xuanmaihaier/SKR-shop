@@ -62,8 +62,6 @@ export default {
       flag: true, //节流阀
     };
   },
-
-  created() {},
   methods: {
     isClose(val) {
       // 侧边栏右上角按钮的点击事件
@@ -162,6 +160,7 @@ export default {
         this.isShowDown = true;
       }
     }.bind(this);
+    
   },
 };
 </script>

@@ -1,17 +1,18 @@
 import Vue from "vue"
 // 按需引入
-import { Button,Radio,Message} from 'ant-design-vue';
-import {Input,Icon,Tabs,Affix,Card,Row,Col} from "ant-design-vue"
+
+import {
+    Button, Radio, Message, Input, Icon, Tabs, Affix, Card,Row,Col,List,Select,Pagination
+} from "ant-design-vue"
 Vue.prototype.$message = Message
 // use使用
-Vue.use(Button)
-Vue.use(Input)
-Vue.use(Radio)
-Vue.use(Icon)
-Vue.use(Tabs)
-Vue.use(Affix)
-Vue.use(Card)
-Vue.use(Row)
-Vue.use(Col)
+const vueUse = {
+    Button, Radio, Input, Icon, Tabs, Affix, Card,Row,Col,List,Select,Pagination
+}
+Object.keys(vueUse).forEach(item => {
+    Vue.use(vueUse[item])
+})
+Vue.prototype.$message = Message
+
 
 

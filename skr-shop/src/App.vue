@@ -1,21 +1,23 @@
 <template>
   <div id="app">
-    <NavBar />
-    <router-view />
-    <!-- <footerNav /> -->
+    <NavBar/>
+    <router-view/>
+    <FooterNav/>
+    <Adside/>
   </div>
 </template>
 <script>
-import NavBar from "@/components/content/navbar/NavBar.vue";
-// import footerNav from "./components/common/common/adside/Adside";
+import NavBar from 'components/content/navbar/NavBar.vue'
+import FooterNav from "components/common/footer/FooterNav"
+import Adside from "components/common/adside/Adside";
 export default {
-  name: "App",
-  components: {
+  name:'App',
+  components:{
     NavBar,
-    // footerNav,
-  },
-};
-NavBar;
+    FooterNav,
+    Adside,
+  }
+}
 </script>
 <style>
 @import url("./assets/css/params.less");
