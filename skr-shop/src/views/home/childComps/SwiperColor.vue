@@ -64,12 +64,14 @@ export default {
 .swiper-container .swiper-wrapper .swiper-slide img {
   width: 100%;
   transform: scale(1);
+  transition: transform 0.5s;
   border-radius: 5px;
   cursor: pointer;
 }
 .swiper-container .swiper-wrapper .swiper-slide-prev,
 .swiper-container .swiper-wrapper .swiper-slide-next {
   transform: scale(0.9) !important;
+  transition: transform 0.5s;
   opacity: 0.5;
 }
 .swiper-container .swiper-wrapper .swiper-slide-prev img,
