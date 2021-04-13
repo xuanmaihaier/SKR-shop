@@ -17,6 +17,7 @@
             :key="index"
             @mouseover="engraft(index)"
             @mouseout="exgraft"
+             @click="handleClicka(item)"
           >
             {{ item }}
           </li>
@@ -64,6 +65,10 @@ export default {
     exgraft() {
       this.$store.commit("changeShow", false);
     },
+    // 前几个的点击 by stride
+    handleClicka(item){
+      this.$router.push(item)
+    },
     //点击事件
     handleClick() {
       console.log(123);
@@ -83,7 +88,7 @@ export default {
 <style lang="less" scoped>
 /deep/ .ant-affix {
   width: 100% !important;
-  min-width: 1000px;
+  min-width: 1240px;
 }
 .bottom {
   width: 100%;
