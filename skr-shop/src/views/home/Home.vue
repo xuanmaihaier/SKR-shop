@@ -24,7 +24,9 @@
     <SwiperTab />
     <Title><p>WDNA STYLE</p></Title>
     <ShopListTab />
-    <FooterNav/>
+    <FooterNav />
+    <adside />
+    <footerNav/>
   </div>
 </template>
 
@@ -40,8 +42,11 @@ import List from "./childComps/List";
 import SwiperAndList from "./childComps/SwiperAndList";
 import TypeList from "./childComps/TypeList";
 import SwiperTab from "./childComps/SwiperTab";
-import ShopListTab from "./childComps/ShopListTab"
-import FooterNav from "./childComps/FooterNav"
+import ShopListTab from "./childComps/ShopListTab";
+import FooterNav from "./childComps/FooterNav";
+import adside from "components/common/common/adside/Adside";
+import footerNav from "../../components/common/common/footer/FooterNav"
+
 export default {
   name: "Home",
   components: {
@@ -57,7 +62,9 @@ export default {
     TypeList,
     SwiperTab,
     ShopListTab,
-    FooterNav
+    FooterNav,
+    adside,
+    footerNav,
   },
 };
 </script>

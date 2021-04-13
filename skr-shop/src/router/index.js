@@ -16,7 +16,17 @@ const routes = [
   {
     path:'/home',
     name:'Home',
-    component:()=>import("views/home/Home.vue")
+    component:()=>import("views/home/Home.vue"),
+    children: [
+      {
+        path: '/service',
+        component: () => import("components/common/common/adside/Service")
+      },
+      {
+        path: '/history',
+        component: () => import("components/common/common/adside/ShoppingHistory")
+      },
+    ]
   },
   {
     path:'/login',
@@ -29,6 +39,8 @@ const routes = [
     component:()=>import("views/signup/Signup.vue")
   },
 ]
+
+
 
 const router = new VueRouter({
   mode: 'history',

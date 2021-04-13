@@ -1,0 +1,204 @@
+<template>
+  <div>
+    <div class="side_menu" ref="sidemenu">
+      <div class="side_M" ref="side_M">
+        <!-- 客服窗口 -->
+        <div class="side_bar">
+          <a-icon
+            type="unordered-list"
+            :style="{ color: '#fff' }"
+            @click="showService(1)"
+          />
+          <span class="number">0</span>
+        </div>
+        <!-- 购物历史 -->
+        <div class="quick_history">
+          <a-icon type="history" :rotate="180" @click="showHistory(2)" />
+          <span class="number">8</span>
+        </div>
+      </div>
+      <div class="arrow_bar">
+        <!-- 返回顶部 -->
+        <a-icon
+          type="arrow-up"
+          class="icon_btn"
+          @click="returnTop"
+          v-if="isShowUp"
+        />
+        <!-- 返回底部 -->
+        <a-icon
+          type="arrow-down"
+          class="icon_btn"
+          @click="returnBottom"
+          v-if="isShowDown"
+        />
+      </div>
+    </div>
+    <!-- 拓展页面 -->
+    <div class="expand" ref="expand">
+      <router-view />
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      isShowUp: false,
+      isShowDown: true,
+      //右侧页面的显示隐藏
+      last:'',
+    };
+  },
+  created() {},
+  methods: {
+    returnTop() {
+      let top = document.documentElement.scrollTop || document.body.scrollTop;
+      // 实现滚动效果
+      const timeTop = setInterval(() => {
+        document.body.scrollTop = document.documentElement.scrollTop = top -= 80;
+        if (top <= 90) {
+          // 到达顶部停止动画
+          clearInterval(timeTop);
+        }
+      }, 10);
+    },
+    returnBottom() {
+      let top = document.documentElement.scrollTop || document.body.scrollTop;
+      // 实现动画效果
+      const timeButtom = setInterval(() => {
+        document.body.scrollTop = document.documentElement.scrollTop = top += 80;
+        if (top + document.body.clientHeight >= document.body.scrollHeight) {
+          // 到达底部停止动画
+          clearInterval(timeButtom);
+        }
+      }, 10);
+    },
+    showExpanBar(value) {
+      // this.num = "";
+      // 右侧页面的显示隐藏
+      // 点击显示右侧的页面，再次点击隐藏
+      if (value) {
+        this.$refs.expand.style.right = 0 + "px";
+        this.$refs.sidemenu.style.right = 300 + "px";
+      } else {
+        this.$refs.expand.style.right = -300 + "px";
+        this.$refs.sidemenu.style.right = 0 + "px";
+        console.log(11112312312312);
+        this.last = ' '
+        console.log(this.last);
+      }
+    },
+    showService(a) {
+      if(a === this.last){
+        this.showExpanBar(false)
+        this.last = ''
+      }else{
+        this.showExpanBar(true)
+        this.$router.push("/service");
+        this.last = a
+      }
+    },
+    showHistory(a) {
+      if(a === this.last){
+        this.showExpanBar(false)
+        this.last = ''
+      }else{
+        this.showExpanBar(true)
+        this.$router.push("/history");
+        this.last = a
+      }
+
+    },
+  },
+
+  mounted() {
+    // 返回顶部、返回底部按钮的显示隐藏
+    // console.log(this.$refs.side_M.offsetTop);
+    window.onscroll = function () {
+      //  滚动条的高度
+      let scrollBar = document.documentElement.scrollTop;
+      // 页面高度
+      let bodyHeight = document.body.scrollHeight;
+      // 可视区高度
+      let clientH = document.body.clientHeight;
+      // console.log(scrollBar, bodyHeight, clientH);
+      if (scrollBar <= 100) {
+        this.isShowUp = false;
+      } else {
+        this.isShowUp = true;
+      }
+      if (clientH + scrollBar >= bodyHeight - 100) {
+        this.isShowDown = false;
+      } else {
+        this.isShowDown = true;
+      }
+    }.bind(this);
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.side_menu {
+  position: fixed;
+  right: 0;
+  bottom: 30px;
+  width: 55px;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  padding: 10px 0;
+  background-color: #0d0d0d;
+  transition: all 0.7s;
+  z-index: 999;
+}
+.side_M {
+  width: 55px;
+  background-color: #0d0d0d;
+  transition: all 0.5s;
+}
+.side_bar {
+  width: 100%;
+  padding: 11px 0;
+}
+.quick_history {
+  padding: 11px 0;
+}
+.number {
+  display: block;
+  margin: 3px 0;
+  color: red;
+}
+.arrow_bar {
+  background-color: #0d0d0d;
+  margin: 5px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.icon_btn {
+  display: block;
+  width: 55px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+}
+
+.anticon {
+  cursor: pointer;
+}
+// 隐藏页面
+.expand {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 300px;
+  height: 100vh;
+  transition: all 0.7s;
+  border: 1px solid red;
+  z-index: 999;
+}
+</style>
