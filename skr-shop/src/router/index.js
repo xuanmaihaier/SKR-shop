@@ -35,9 +35,6 @@ const routes = [
     name:'Signup',
     component:()=>import("views/signup/Signup.vue")
   },
-<<<<<<< HEAD
-
-=======
   {
     // 一级分类界面
     path:'/primary/:id',
@@ -49,7 +46,6 @@ const routes = [
     name:'MyPage',
     component:()=>import("views/mypage/MyPage.vue")
   }
->>>>>>> 8c7d91ed4d1dd2b3fba2369aadb5501c9e2d3b71
 ]
 
 
