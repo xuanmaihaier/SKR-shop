@@ -1,25 +1,26 @@
 <template>
   <div class="footer">
+    <!-- 底部 -->
     <div class="footerNav">
       <!-- 底部导航栏 -->
       <a-row type="flex" justify="space-around" align="middle">
-        <a-col ></a-col>
         <a-col :span="2.4" v-for="(item, index) in footer_list" :key="index">
           <p
-            class="height-100"
+            class="height-100 footer_bar"
             type="flex"
             justify="space-around"
             align="middle"
+            @click="footerNavList(index)"
           >
+            <!-- 底部列表 -->
             <a href="javascript:;">{{ item }}</a>
           </p>
         </a-col>
-        <a-col ></a-col>
       </a-row>
     </div>
     <!-- 底部信息 -->
     <div class="footerMsg">
-      <a-row >
+      <a-row>
         <!-- 底部左侧 -->
         <a-col :span="12" class="footMsg_left">
           <p>商店名称</p>
@@ -39,11 +40,12 @@
         <a-col :span="12" class="footMsg_right">
           <p>消费者损害赔偿保险</p>
           <p>
-                    客户在以现金支付安全交易时可以使用Wconcept订阅的<span>
-                    消费者损害赔偿保险服务。
-                </span></p>
-                <p>赔偿对象：不送/退货，拒绝退款/商场破产</p>
-                <a href="javascript:;"><span>检查服务订阅事实</span></a>
+            客户在以现金支付安全交易时可以使用Wconcept订阅的<span>
+              消费者损害赔偿保险服务。
+            </span>
+          </p>
+          <p>赔偿对象：不送/退货，拒绝退款/商场破产</p>
+          <a href="javascript:;"><span>检查服务订阅事实</span></a>
         </a-col>
       </a-row>
     </div>
@@ -64,7 +66,22 @@ export default {
         "招聘信息",
         "全球的",
       ],
+      followRoutes: [
+        "/about",
+        "/advisory",
+        "/partner",
+        "/privacy",
+        "/serviceCenter",
+        "/terms",
+        "/offers",
+        "/global",
+      ],
     };
+  },
+  methods: {
+    footerNavList(val) {
+      this.$router.push(this.followRoutes[val]);
+    },
   },
 };
 </script>
@@ -80,6 +97,23 @@ export default {
   width: 100%;
   height: 60px;
   background-color: #848484;
+}
+/deep/ [data-v-17729fb8] .ant-row-flex-middle {
+  width: 80%;
+  margin: 0 auto;
+}
+.footer_bar {
+  min-width: 110px;
+  height: 60px;
+  line-height: 60px;
+  display: inline-block;
+}
+.footer_bar:hover {
+  background-color: #636262;
+  cursor: pointer;
+}
+.footer_bar:hover.footer_bar > a {
+  color: rgb(209, 209, 202);
 }
 // 底部导航栏
 /deep/[data-v-4d19bb52] .ant-row-flex-middle {
@@ -108,23 +142,22 @@ export default {
   margin: 0 auto;
 }
 
-.footMsg_left{
-    position: relative;
-    padding: 0 30px;
-    // border: 1px solid red;
+.footMsg_left {
+  position: relative;
+  padding: 0 30px;
+  // border: 1px solid red;
 }
-.footMsg_right{
-    padding-left: 30px;
+.footMsg_right {
+  padding-left: 30px;
 }
-.footMsg_left::after{
-    position: absolute;
-    top: 0;
-    right: 10px;
-    content: "";
-    display: inline-block;
-    width: 1px ;
-    height: 87px;
-    background-color: #e5e5e5;
-
+.footMsg_left::after {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 87px;
+  background-color: #e5e5e5;
 }
 </style>
