@@ -38,6 +38,11 @@ const routes = [
     name:'Signup',
     component:()=>import("views/signup/Signup.vue")
   },
+  {
+    path:'/:item',
+    name:"Event",
+    component:()=>import('views/typeOneEvent/Event.vue')
+  }
 ]
 
 
