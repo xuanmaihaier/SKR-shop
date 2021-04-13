@@ -1,5 +1,6 @@
 <template>
   <div class="service">
+    <!-- 侧边栏购物车 -->
     <header>
       <h3>购物车</h3>
       <fork @click.native="handle()"></fork>
