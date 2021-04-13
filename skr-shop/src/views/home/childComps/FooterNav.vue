@@ -4,9 +4,6 @@
     <div class="container footer">
       <!-- 底部图片 -->
       <div class="inner">
-        <!-- <a href="" v-for="(item, index) in img" :key="index">
-          <img :src="item.img" alt="" srcset="" />
-        </a> -->
       </div>
       <!-- 底部信息 -->
       <div class="footer_content">
@@ -70,40 +67,6 @@
         </div>
       </div>
     </div>
-    <div class="footer_list">
-      <ul class="footer_u">
-        <li
-          v-for="(item, index) in footer_list"
-          :key="index"
-          class="footer_item"
-        >
-          <a href="javascript:;">{{ item }}</a>
-        </li>
-      </ul>
-     
-    </div>
-
-    <section class="footer_last">
-      <div class="last_left">
-        <p>商品名称</p>
-        <p>
-          Concept Korea
-          Co.，Ltd.ㅣ代表：李恩哲ㅣ地址：首尔特别市江南区德黑兰路14街5楼16号（灵山洞线大楼）
-        </p>
-        <button>确认业务信息</button>
-        <p>│个人信息保护官：许善熙│托管服务：W Concept Korea Co.，Ltd.</p>
-        <p>
-          版权ⓒ2020 <span>Double U Concept Korea </span>Co.，Ltd.保留所有权利
-        </p>
-      </div>
-      <div class="last_right">
-        <h3>消费者损害赔偿保险</h3>
-        <p>客户在以现金支付安全交易时可以使用Wconcept订阅的</p>
-        <p>消费者损害赔偿保险服务。</p>
-        <span>赔偿对象：不送/退货，拒绝退款/商场破产</span>
-        <button>检查服务订阅事实</button>
-      </div>
-    </section>
   </div>
 </template>
 
@@ -112,27 +75,6 @@ export default {
   name:"FooterNav",
   data() {
     return {
-      // img: [
-      //   { img: require("assets/img/footer_img_1.png") },
-      //   { img: require("assets/img/footer_img_1.png") },
-      //   { img: require("assets/img/footer_img_1.png") },
-      // ],
-      notice_one: [
-        [
-          "· [指南](3/5罢工)",
-          "· [指南] 3月1日",
-          "· [信息] 客服",
-          "· [concept] ",
-          "· [concept]",
-        ],
-        [
-          "· [指南](3/5罢工)",
-          "· [指南] 3月1日",
-          "· [信息] 客服",
-          "· [concept] ",
-          "· [concept]",
-        ],
-      ],
       notice_one: [
         "· [指南](3/5罢工)",
         "· [指南] 3月1日",
