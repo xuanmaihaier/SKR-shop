@@ -48,74 +48,65 @@ export default {
       isShowUp: false,
       isShowDown: true,
       //右侧页面的显示隐藏
-      last:'',
+      last: "",
     };
   },
   created() {},
   methods: {
     returnTop() {
-      let top = document.documentElement.scrollTop || document.body.scrollTop;
-      // 实现滚动效果
-      const timeTop = setInterval(() => {
-        document.body.scrollTop = document.documentElement.scrollTop = top -= 80;
-        if (top <= 90) {
-          // 到达顶部停止动画
-          clearInterval(timeTop);
-        }
-      }, 10);
+      let tance = window.pageYOffset;
+      this.animate(0,tance)
     },
     returnBottom() {
-      let top = document.documentElement.scrollTop || document.body.scrollTop;
-      // 实现动画效果
-      const timeButtom = setInterval(() => {
-        document.body.scrollTop = document.documentElement.scrollTop = top += 80;
-        if (top + document.body.clientHeight >= document.body.scrollHeight) {
-          // 到达底部停止动画
-          clearInterval(timeButtom);
-        }
-      }, 10);
+      let tance = window.pageYOffset;
+      let bodyHeight = document.body.scrollHeight;
+      this.animate(bodyHeight,tance)
     },
     showExpanBar(value) {
-      // this.num = "";
-      // 右侧页面的显示隐藏
-      // 点击显示右侧的页面，再次点击隐藏
       if (value) {
         this.$refs.expand.style.right = 0 + "px";
         this.$refs.sidemenu.style.right = 300 + "px";
       } else {
         this.$refs.expand.style.right = -300 + "px";
         this.$refs.sidemenu.style.right = 0 + "px";
-        console.log(11112312312312);
-        this.last = ' '
-        console.log(this.last);
+        this.last = " ";
       }
     },
     showService(a) {
-      if(a === this.last){
-        this.showExpanBar(false)
-        this.last = ''
-      }else{
-        this.showExpanBar(true)
+      if (a === this.last) {
+        this.showExpanBar(false);
+        this.last = "";
+      } else {
+        this.showExpanBar(true);
         this.$router.push("/service");
-        this.last = a
+        this.last = a;
       }
     },
     showHistory(a) {
-      if(a === this.last){
-        this.showExpanBar(false)
-        this.last = ''
-      }else{
-        this.showExpanBar(true)
+      if (a === this.last) {
+        this.showExpanBar(false);
+        this.last = "";
+      } else {
+        this.showExpanBar(true);
         this.$router.push("/history");
-        this.last = a
+        this.last = a;
       }
-
+    },
+    animate(tan, now) {
+      var timer;
+      timer = setInterval(function () {
+        now = now - (now - tan) / 25;
+        now = now - tan < 0 ? Math.ceil(now) : Math.floor(now);
+        if (now == tan) {
+          clearInterval(timer);
+        }
+        document.documentElement.scrollTop = now;
+      }, 16.7);
     },
   },
 
   mounted() {
     // 返回顶部、返回底部按钮的显示隐藏
-    // console.log(this.$refs.side_M.offsetTop);
     window.onscroll = function () {
       //  滚动条的高度
       let scrollBar = document.documentElement.scrollTop;
