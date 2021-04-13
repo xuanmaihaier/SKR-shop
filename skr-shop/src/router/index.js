@@ -20,11 +20,11 @@ const routes = [
     children: [
       {
         path: '/service',
-        component: () => import("components/common/common/adside/Service")
+        component: () => import("components/common/adside/Service")
       },
       {
         path: '/history',
-        component: () => import("components/common/common/adside/ShoppingHistory")
+        component: () => import("components/common/adside/ShoppingHistory")
       },
     ]
   },
@@ -39,10 +39,16 @@ const routes = [
     component:()=>import("views/signup/Signup.vue")
   },
   {
+    // 一级分类界面
+    path:'/:id',
+    name:'Primary',
+    component:()=>import("views/primary/Primary.vue")
+  },
+  {
     path:'/mypage',
     name:'MyPage',
     component:()=>import("views/mypage/MyPage.vue")
-  },
+  }
 ]
 
 
