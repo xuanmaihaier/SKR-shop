@@ -14,19 +14,9 @@ const routes = [
     redirect: "home"
   },
   {
-    path: '/home',
-    name: 'Home',
-    component: () => import("views/home/Home.vue"),
-    children: [
-      {
-        path: '/service',
-        component: () => import("components/common/adside/Service")
-      },
-      {
-        path: '/history',
-        component: () => import("components/common/adside/ShoppingHistory")
-      },
-    ]
+    path:'/home',
+    name:'Home',
+    component:()=>import("views/home/Home.vue"),
   },
   {
     path: '/login',

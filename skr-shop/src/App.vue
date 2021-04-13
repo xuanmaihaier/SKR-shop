@@ -18,8 +18,7 @@ export default {
     Adside,
   }
 }
-    NavBar
 </script>
-<style>                                                                          
+<style>
 @import url("./assets/css/params.less");
 </style>
