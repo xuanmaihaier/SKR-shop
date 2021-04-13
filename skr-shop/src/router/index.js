@@ -40,7 +40,7 @@ const routes = [
   },
   {
     // 一级分类界面
-    path:'/:id',
+    path:'/primary/:id',
     name:'Primary',
     component:()=>import("views/primary/Primary.vue")
   },

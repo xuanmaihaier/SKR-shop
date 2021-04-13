@@ -67,7 +67,7 @@ export default {
     },
     // 前几个的点击 by stride
     handleClicka(item){
-      this.$router.push(item)
+      this.$router.push(`/primary/${item}`)
     },
     //点击事件
     handleClick() {
