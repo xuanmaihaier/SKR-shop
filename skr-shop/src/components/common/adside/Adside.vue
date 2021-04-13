@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 侧边栏 -->
     <div class="side_menu" ref="sidemenu">
       <div class="side_M" ref="side_M">
         <!-- 客服窗口 -->
@@ -73,7 +74,6 @@ export default {
         this.flag = false;
         let tance = window.pageYOffset;
         this.animate(0, tance);
-
         setTimeout(() => {
           this.flag = true;
         }, 1500);
