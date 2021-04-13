@@ -51,7 +51,9 @@ export default {
       last: "",
     };
   },
-  created() {},
+  created() {
+   
+  },
   methods: {
     returnTop() {
       let tance = window.pageYOffset;
@@ -126,6 +128,7 @@ export default {
         this.isShowDown = true;
       }
     }.bind(this);
+    
   },
 };
 </script>
