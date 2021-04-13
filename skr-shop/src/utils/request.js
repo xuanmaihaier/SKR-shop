@@ -35,7 +35,7 @@ instance.interceptors.request.use(config =>{
 })
 
 instance.interceptors.response.use(response=>{
-  return response
+  return response.data
 })
 
 export default instance

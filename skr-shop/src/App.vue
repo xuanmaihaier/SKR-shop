@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <NavBar/>
+    <!-- 都有的的侧边栏 -->
     <router-view/>
   </div>
 </template>
