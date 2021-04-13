@@ -1,5 +1,6 @@
 import Vue from "vue"
 // 按需引入
+
 import {
     Button, Radio, Message, Input, Icon, Tabs, Affix, Card
 } from "ant-design-vue"
@@ -11,4 +12,7 @@ const vueUse = {
 Object.keys(vueUse).forEach(item => {
     Vue.use(vueUse[item])
 })
+Vue.prototype.$message = Message
+
+
 

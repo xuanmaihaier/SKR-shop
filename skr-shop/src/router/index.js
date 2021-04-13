@@ -16,7 +16,17 @@ const routes = [
   {
     path:'/home',
     name:'Home',
-    component:()=>import("views/home/Home.vue")
+    component:()=>import("views/home/Home.vue"),
+    children: [
+      {
+        path: '/service',
+        component: () => import("components/common/common/adside/Service")
+      },
+      {
+        path: '/history',
+        component: () => import("components/common/common/adside/ShoppingHistory")
+      },
+    ]
   },
   {
     path:'/login',
@@ -28,7 +38,19 @@ const routes = [
     name:'Signup',
     component:()=>import("views/signup/Signup.vue")
   },
+  {
+    // 一级分类界面
+    path:'/:id',
+    name:'Primary',
+    component:()=>import("views/primary/Primary.vue")
+  },{
+    path:'/mypage',
+    name:'MyPage',
+    component:()=>import("views/mypage/MyPage.vue")
+  }
 ]
+
+
 
 const router = new VueRouter({
   mode: 'history',

@@ -17,6 +17,7 @@
             :key="index"
             @mouseover="engraft(index)"
             @mouseout="exgraft"
+             @click="handleClicka(item)"
           >
             {{ item }}
           </li>
@@ -63,6 +64,10 @@ export default {
     //移出
     exgraft() {
       this.$store.commit("changeShow", false);
+    },
+    // 前几个的点击 by stride
+    handleClicka(item){
+      this.$router.push(item)
     },
     //点击事件
     handleClick() {
