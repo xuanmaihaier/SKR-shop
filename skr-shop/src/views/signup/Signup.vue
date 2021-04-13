@@ -1,17 +1,19 @@
 <template>
-  <div class="signup">
+  <div class="signup">  
     <!-- 注册大标题 -->
     <title-warp>注册</title-warp>
     <!-- 注册主体内容 -->
     <JoinMember/>
+    <FooterNav/>
   </div>
 </template>
 
 <script>
 import TitleWarp from '@/components/content/login-register/TitleWarp.vue';
 import JoinMember from './childComps/JoinMember.vue';
+import FooterNav from '../../components/common/common/footer/FooterNav.vue';
 export default {
-  components: { TitleWarp, JoinMember },
+  components: { TitleWarp, JoinMember, FooterNav },
   name: "Signup",
 };
 </script>

@@ -4,14 +4,16 @@
     <title-warp>登录</title-warp>
     <!-- 登录主体内容 -->
     <Member-join/>
+    <FooterNav/>
   </div>
 </template>
 
 <script>
 import TitleWarp from "@/components/content/login-register/TitleWarp";
 import MemberJoin from './childComps/MemberJoin.vue';
+import FooterNav from '../../components/common/common/footer/FooterNav.vue';
 export default {
-  components: { TitleWarp,MemberJoin },
+  components: { TitleWarp,MemberJoin, FooterNav },
   name: "Login",
 };
 </script>
