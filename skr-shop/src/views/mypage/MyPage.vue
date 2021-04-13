@@ -6,18 +6,15 @@
     <MyPageSnb />
     <!-- 订单部分 -->
     <MyPageMain />
-    <!-- 底部 -->
-    <FooterNav/>
   </div>
 </template>
 
 <script>
-import FooterNav from '../../components/common/common/footer/FooterNav.vue';
 import MyPageMain from "./childComps/MyPageMain.vue";
 import MyPageSnb from "./childComps/MyPageSnb.vue";
 import SubTitleWrap from "./childComps/SubTitleWrap.vue";
 export default {
-  components: { SubTitleWrap, MyPageSnb, MyPageMain, FooterNav },
+  components: { SubTitleWrap, MyPageSnb, MyPageMain },
   name: "MyPage",
 };
 </script>

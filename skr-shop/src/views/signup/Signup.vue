@@ -4,16 +4,14 @@
     <title-warp>注册</title-warp>
     <!-- 注册主体内容 -->
     <JoinMember/>
-    <FooterNav/>
   </div>
 </template>
 
 <script>
 import TitleWarp from '@/components/content/login-register/TitleWarp.vue';
 import JoinMember from './childComps/JoinMember.vue';
-import FooterNav from '../../components/common/common/footer/FooterNav.vue';
 export default {
-  components: { TitleWarp, JoinMember, FooterNav },
+  components: { TitleWarp, JoinMember },
   name: "Signup",
 };
 </script>
