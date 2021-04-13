@@ -28,6 +28,12 @@ const routes = [
     name:'Signup',
     component:()=>import("views/signup/Signup.vue")
   },
+  {
+    // 一级分类界面
+    path:'/:id',
+    name:'Primary',
+    component:()=>import("views/primary/Primary.vue")
+  },
 ]
 
 const router = new VueRouter({
