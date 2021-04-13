@@ -17,16 +17,6 @@ const routes = [
     path:'/home',
     name:'Home',
     component:()=>import("views/home/Home.vue"),
-    children: [
-      {
-        path: '/service',
-        component: () => import("components/common/common/adside/Service")
-      },
-      {
-        path: '/history',
-        component: () => import("components/common/common/adside/ShoppingHistory")
-      },
-    ]
   },
   {
 
@@ -45,7 +35,21 @@ const routes = [
     name:'Signup',
     component:()=>import("views/signup/Signup.vue")
   },
+<<<<<<< HEAD
 
+=======
+  {
+    // 一级分类界面
+    path:'/primary/:id',
+    name:'Primary',
+    component:()=>import("views/primary/Primary.vue")
+  },
+  {
+    path:'/mypage',
+    name:'MyPage',
+    component:()=>import("views/mypage/MyPage.vue")
+  }
+>>>>>>> 8c7d91ed4d1dd2b3fba2369aadb5501c9e2d3b71
 ]
 
 

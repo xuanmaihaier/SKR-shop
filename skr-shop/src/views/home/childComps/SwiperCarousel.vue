@@ -72,6 +72,7 @@ export default {
 }
 img {
   transform: scale(0.6);
+  
 }
 .swiper-button-prev {
   left: -8%;

@@ -36,86 +36,111 @@
     </div>
     <!-- 拓展页面 -->
     <div class="expand" ref="expand">
-      <router-view />
+      <!-- <router-view /> -->
+      <shopCar v-if="isShowService" @isCloseBar="isClose"></shopCar>
+      <service v-if="isShowHistory" @isCloseBar="isClose"></service>
     </div>
   </div>
 </template>
 
 <script>
+import shopCar from "./ShopCar";
+import service from "./Service";
 export default {
+  components: {
+    shopCar,
+    service,
+  },
   data() {
     return {
       isShowUp: false,
       isShowDown: true,
       //右侧页面的显示隐藏
-      last:'',
+      last: "",
+      isShowService: true,
+      isShowHistory: false,
+      flag: true, //节流阀
     };
   },
-  created() {},
   methods: {
+    isClose(val) {
+      // 侧边栏右上角按钮的点击事件
+      this.showExpanBar(val);
+    },
     returnTop() {
-      let top = document.documentElement.scrollTop || document.body.scrollTop;
-      // 实现滚动效果
-      const timeTop = setInterval(() => {
-        document.body.scrollTop = document.documentElement.scrollTop = top -= 80;
-        if (top <= 90) {
-          // 到达顶部停止动画
-          clearInterval(timeTop);
-        }
-      }, 10);
+      // 返回顶部
+      if (this.flag) {
+        this.flag = false;
+        let tance = window.pageYOffset;
+        this.animate(0, tance);
+
+        setTimeout(() => {
+          this.flag = true;
+        }, 1500);
+      }
     },
     returnBottom() {
-      let top = document.documentElement.scrollTop || document.body.scrollTop;
-      // 实现动画效果
-      const timeButtom = setInterval(() => {
-        document.body.scrollTop = document.documentElement.scrollTop = top += 80;
-        if (top + document.body.clientHeight >= document.body.scrollHeight) {
-          // 到达底部停止动画
-          clearInterval(timeButtom);
-        }
-      }, 10);
+      // 返回底部
+      if (this.flag) {
+        this.flag = false;
+        let tance = window.pageYOffset;
+        let bodyHeight = document.body.scrollHeight;
+        this.animate(bodyHeight, tance);
+        setTimeout(() => {
+          this.flag = true;
+        }, 1500);
+      }
     },
     showExpanBar(value) {
-      // this.num = "";
-      // 右侧页面的显示隐藏
-      // 点击显示右侧的页面，再次点击隐藏
+      // value 为true，则显示侧边栏
       if (value) {
         this.$refs.expand.style.right = 0 + "px";
         this.$refs.sidemenu.style.right = 300 + "px";
       } else {
         this.$refs.expand.style.right = -300 + "px";
         this.$refs.sidemenu.style.right = 0 + "px";
-        console.log(11112312312312);
-        this.last = ' '
-        console.log(this.last);
+        this.last = " ";
       }
     },
     showService(a) {
-      if(a === this.last){
-        this.showExpanBar(false)
-        this.last = ''
-      }else{
-        this.showExpanBar(true)
-        this.$router.push("/service");
-        this.last = a
+      if (a === this.last) {
+        this.showExpanBar(false);
+        this.last = "";
+      } else {
+        this.showExpanBar(true);
+        // this.$router.push("/service");
+        this.isShowService = true;
+        this.isShowHistory = false;
+        this.last = a;
       }
     },
     showHistory(a) {
-      if(a === this.last){
-        this.showExpanBar(false)
-        this.last = ''
-      }else{
-        this.showExpanBar(true)
-        this.$router.push("/history");
-        this.last = a
+      if (a === this.last) {
+        this.showExpanBar(false);
+        this.last = "";
+      } else {
+        this.showExpanBar(true);
+        // this.$router.push("/history");
+        this.isShowHistory = true;
+        this.isShowService = false;
+        this.last = a;
       }
-
+    },
+    animate(tan, now) {
+      // 动画函数
+      var timer;
+      timer = setInterval(function () {
+        now = now - (now - tan) / 20;
+        now = now - tan < 0 ? Math.ceil(now) : Math.floor(now);
+        if (now == tan) {
+          clearInterval(timer);
+        }
+        document.documentElement.scrollTop = now;
+      }, 16.7);
     },
   },
-
   mounted() {
     // 返回顶部、返回底部按钮的显示隐藏
-    // console.log(this.$refs.side_M.offsetTop);
     window.onscroll = function () {
       //  滚动条的高度
       let scrollBar = document.documentElement.scrollTop;
@@ -124,17 +149,18 @@ export default {
       // 可视区高度
       let clientH = document.body.clientHeight;
       // console.log(scrollBar, bodyHeight, clientH);
-      if (scrollBar <= 100) {
+      if (scrollBar <= 19) {
         this.isShowUp = false;
       } else {
         this.isShowUp = true;
       }
-      if (clientH + scrollBar >= bodyHeight - 100) {
+      if (clientH + scrollBar >= bodyHeight - 19) {
         this.isShowDown = false;
       } else {
         this.isShowDown = true;
       }
     }.bind(this);
+    
   },
 };
 </script>
@@ -198,7 +224,6 @@ export default {
   width: 300px;
   height: 100vh;
   transition: all 0.7s;
-  border: 1px solid red;
   z-index: 999;
 }
 </style>
