@@ -28,13 +28,13 @@
     </nav>
 
 
-    <div class="good">
-      <div class="good_left">
-        <div class="wrap">
+    <div class="good" >
+      <div class="good_left" >
+        <div class="wrap" v-if="shopById.length">
           <!-- 左边显示正常图片的外元素 -->
           <div class="left"> 
             <!-- 图片 -->
-            <img class="leftImg" ref="bigImgLeft" src="https://img.fishfay.com/shopgoods/4/162128505/zt-162128505/967a12b8a092e029b88ed179778e8058.jpg?x-image-process=image/resize,w_800,h_800">
+            <img class="leftImg" ref="bigImgLeft" :src="JSON.parse(shopById[0].imgs)[0].small">
             <!-- 鼠标层罩 -->
             <div ref="mask" v-show="topShow" class="top" :style="topStyle"></div>
             <!-- 最顶层覆盖了整个原图空间的透明层罩 -->
@@ -46,13 +46,17 @@
           <!-- 显示放大效果的外元素 -->
           <div v-show="rShow" class="right">
             <!-- 放大图片 -->
-            <img :style="r_img" ref="bigImgRight" class="rightImg" src="https://img.fishfay.com/shopgoods/4/162128505/zt-162128505/967a12b8a092e029b88ed179778e8058.jpg?x-image-process=image/resize,w_800,h_800">
+            <img :style="r_img" ref="bigImgRight" class="rightImg" :src="JSON.parse(shopById[0].imgs)[0].normal">
           </div>
         </div>
-        <div class="imgList">
+        <div class="imgList" v-if="shopById.length">
           <ul>
-            <li><img @click="changeImg($event)" src="//image.wconcept.co.kr/productimg/image/img0/09/301186009_GG33291.jpg"></li>
-            <li><img @click="changeImg($event)" src="//image.wconcept.co.kr/productimg/image/img9/09/301186009_add1_GL13282.jpg"></li>
+            <li 
+              v-for="(img,index) in JSON.parse(shopById[0].imgs)"
+              :key="index"
+            >
+              <img @click="changeImg($event)" :src="img.small">
+            </li>
           </ul>
           <div>
             <a-icon type="share-alt" class="c" />
@@ -62,13 +66,30 @@
           </div>
         </div>
       </div>
-      <div class="good_right">
+      <div class="good_right" v-if="shopById.length">
         <div class="top">
-          <h3>ULLALA PAJAMAS</h3>
-          <span style="">￥ +∞</span>
+          <span>梭织短裤</span>
+          <h3> {{shopById[0].title}} </h3>
+          <span class="price">￥{{shopById[0].price}} </span>
+          <span class="price underline">￥ {{shopById[0].price}} </span>
+          <div class="promotion">
+            <span class="title">促销</span>
+            <span class="con">官方商城全场包邮</span>
+          </div>
           <span></span>
         </div>
         <div class="middel">
+            <ul>
+              <li 
+                v-for="(img,index) in JSON.parse(shopById[0].imgs)"
+                :key="index"
+              >
+                <img @click="changeImg($event)" :src="img.small">
+              </li>
+            </ul>
+            <div class="sort">
+              <span v-for="item in JSON.parse(shopById[0].param)"> {{item}} </span>
+            </div>
             <div class="choose">
               <label for="size">尺码</label>
               <select name="size" id="size">
@@ -117,6 +138,9 @@
 
 <script type="text/ecmascript-6">
 
+import { getShopById } from "@/network/getShopById.js";
+
+
 import Vue from 'vue'
 import { Button, Pagination, Rate, Breadcrumb, Dropdown, Menu, Icon } from 'ant-design-vue';
 Vue.use(Button);
@@ -128,7 +152,6 @@ Vue.use(Menu);
 Vue.use(Icon);
 
 
-// import Detail from "./components/Details/Detail/Detail";
 import DetailSortNav from "./childComps/DetailSortNav/DetailSortNav";
 import QA from "./childComps/QA/QA";
 import ReturnDelivery from "./childComps/ReturnDelivery/ReturnDelivery";
@@ -143,6 +166,9 @@ import Detail from "./childComps/Detail/Detail";
       Review,
       Detail
     },
+    props: {
+      id: Number
+    },
     data() {
       return {
         topStyle:{transform:''},
@@ -153,24 +179,28 @@ import Detail from "./childComps/Detail/Detail";
         imgWidthRight: '',
         mackWidth: '',
         mackHeight: '',
-        options:[{value:1,label:1},{value:2,label:2},{value:3,label:3},{value:4,label:4},{value:5,label:5},{value:6,label:6},{value:7,label:7},{value:8,label:8},{value:9,label:9},{value:10,label:10},],
+        shopById: []
       }
     },
     methods : {
       whichOne(ref){
         this.$refs[ref].$el.scrollIntoView(true)
       },
+      // 判断鼠标是否移入
       isEnterHandler(isEnter) {
+        this.topShow = isEnter
+        this.rShow = isEnter
+        console.log(this.$refs.bigImgRight.offsetWidth);
+        this.imgWidthLeft = this.$refs.bigImgLeft.offsetWidth
         if (isEnter) {
           var finalStyle = this.$refs.mask.currentStyle ? this.$refs.mask.currentStyle : document.defaultView.getComputedStyle(this.$refs.mask, null)
           this.mackWidth = parseFloat(finalStyle.width)
           this.mackHeight = parseFloat(finalStyle.height)
         }
-        this.topShow = isEnter
-        this.rShow = isEnter
       },
       // 鼠标移动函数
       moveHandler(event) {
+        this.imgWidthRight = this.$refs.bigImgRight.offsetWidth
         let x = event.offsetX
         let y = event.offsetY
         let halfMackWidth = this.mackWidth
@@ -181,20 +211,24 @@ import Detail from "./childComps/Detail/Detail";
         if(topY>this.imgWidthLeft-halfMackHeight) topY = this.imgWidthLeft-halfMackHeight
         // 通过 transform 进行移动控制
         this.topStyle.transform = `translate(${topX}px,${topY}px)`
-        this.r_img.transform = `translate(-${this.imgWidthRight*((topX-35)/this.imgWidthLeft)}px,-${this.imgWidthRight*(topY/this.imgWidthLeft)}px)`
+        this.r_img.transform = `translate(-${this.imgWidthRight*((topX)/this.imgWidthLeft)}px,-${this.imgWidthRight*((topY)/this.imgWidthLeft)}px)`
       },
+      // 点击小图切换大图
       changeImg(event){
         this.$refs.bigImgLeft.src = event.target.src
         this.$refs.bigImgRight.src = event.target.src
       }
     },
-    mounted(){
-      var finalStyle1 = this.$refs.bigImgRight.currentStyle ? this.$refs.bigImgRight.currentStyle : document.defaultView.getComputedStyle(this.$refs.bigImgRight, null)
-      var finalStyle2 = this.$refs.bigImgLeft.currentStyle ? this.$refs.bigImgLeft.currentStyle : document.defaultView.getComputedStyle(this.$refs.bigImgLeft, null)
-      this.imgWidthRight = parseFloat(finalStyle1.width)
-      this.imgWidthLeft = parseFloat(finalStyle2.width)
-    }
-    
+    async created(){
+      // 当动态路由传参的时候使用以下2行代码
+      // const {id} = this
+      // const result = await getShopById({id})
+      // 测试使用
+      const result = await getShopById({id:56})
+      this.shopById = result.data
+      console.log(result.data);
+       
+    },
   }
 </script>
 
@@ -219,10 +253,58 @@ import Detail from "./childComps/Detail/Detail";
       margin-left 30px
       height 625px
       .top 
-        height 200px
+        height 250px
         // border-bottom 2px solid #000
+        h3
+          font-size 30px
+        span
+          color #b0b0b0
+        .price
+          font-size 26px
+          font-weight 500
+          color #000
+        .underline
+          color #b0b0b0
+          margin-left 5px
+          font-size 16px
+          text-decoration-line line-through
+        .promotion
+          font-size 14px
+          width 495px
+          height 65px
+          margin-top 25px
+          background-color #F7F7F7
+          display flex 
+          align-items center
+          h
+          .title
+            display inline-block
+            width 44px
+            height 22px
+            margin 0 10px 0
+            background-color #000
+            color #fff
+            text-align center
+          .on 
+            color #000
       .middel
-        height 330px
+        height 280px
+        ul 
+          display flex 
+          // margin-bottom 10px
+          img 
+            cursor pointer
+            width 60px
+            height 60px
+            margin 0px 10px 10px 0
+        .sort
+          margin-bottom 20px
+          span 
+            display inline-block
+            width 60px
+            text-align center
+            margin-right 10px
+            cursor pointer
         .choose
           width 100%
           height 50px
@@ -271,7 +353,7 @@ import Detail from "./childComps/Detail/Detail";
         .left
           width: 625px
           height 625px
-          border: 1px solid teal
+          // border: 1px solid teal
           float: left
           position: relative
           cursor pointer
@@ -295,9 +377,9 @@ import Detail from "./childComps/Detail/Detail";
             height 625px
             display: inline-block
         .right
-          right -645px
-          width: 625px
-          height: 625px
+          left 645px
+          width: 516px
+          height: 516px
           border: 1px solid #efefef
           position: absolute
           overflow: hidden
@@ -317,12 +399,12 @@ import Detail from "./childComps/Detail/Detail";
         left -70px
         height 100%
         ul 
-          flex 1
           img 
+            cursor pointer
             width 60px
             height 60px
             margin 0px 10px 10px 0
-        div
+          flex 1
           display flex 
           flex-direction column
           align-items center
@@ -337,4 +419,3 @@ import Detail from "./childComps/Detail/Detail";
             margin 10px
         
 </style>
-
