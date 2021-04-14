@@ -7,14 +7,22 @@ export default new Vuex.Store({
   state: {
     // NavBarTop 的显示隐藏
     NavbarShow:true,
-    isShow:false,
+    isShow: false,
+    loadingStatus: false //loading全局开关
+
   },
   mutations: {
-    changeShow(state,value){
-        state.isShow= value
+    changeShow(state, value) {
+      state.isShow = value
+    },
+    changeLoading(state, val) {
+      state.loadingStatus = val
     }
   },
   actions: {
+    commitLoading({commit},val){
+      commit('changeLoading',val)
+    }
   },
   modules: {
   }

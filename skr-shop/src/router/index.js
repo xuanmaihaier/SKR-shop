@@ -42,12 +42,6 @@ const routes = [
     name: 'Signup',
     component: () => import("views/signup/Signup.vue")
   },
-  // 个人中心
-  {
-    path: '/mypage',
-    name: 'MyPage',
-    component: () => import("views/mypage/MyPage.vue")
-  },
   // 独家的
   {
     path: '/exclusive',
