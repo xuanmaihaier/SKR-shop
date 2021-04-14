@@ -110,16 +110,21 @@ const router = new VueRouter({
 })
 
 //挂载路由导航守卫
-router.beforeEach((to,from,next)=>{
-  if(to.path=='/login')return next()
-  //获取token
+router.beforeEach((to, from, next) => {
+  // ...
+  const auth = ['/shopcar', '/mypage']
   const tokenStr=window.sessionStorage.getItem('token')
-  if(!tokenStr) {
-    router.app.$store.state.NavbarShow = true
-    return next('/login')
+  if (auth.includes(to.fullPath)) {
+    // console.log('验证token')
+    if (!tokenStr) {
+      router.app.$store.state.NavbarShow = true
+      return next('/login')
+    } else {
+      router.app.$store.state.NavbarShow = false
+      next()
+    }
+  } else {
+    next()
   }
-  router.app.$store.state.NavbarShow = false
-  next()
-
 })
 export default router
