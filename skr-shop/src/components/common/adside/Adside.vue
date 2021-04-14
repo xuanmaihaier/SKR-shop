@@ -130,13 +130,13 @@ export default {
       // 动画函数
       var timer;
       timer = setInterval(function () {
-        now = now - (now - tan) / 20;
+        now = now - (now - tan) / 10;
         now = now - tan < 0 ? Math.ceil(now) : Math.floor(now);
         if (now == tan) {
           clearInterval(timer);
         }
         document.documentElement.scrollTop = now;
-      }, 16.7);
+      }, 0);
     },
   },
   mounted() {
