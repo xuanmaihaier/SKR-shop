@@ -42,17 +42,23 @@ const routes = [
     name: 'Signup',
     component: () => import("views/signup/Signup.vue")
   },
-  // 个人中心
-  {
-    path: '/mypage',
-    name: 'MyPage',
-    component: () => import("views/mypage/MyPage.vue")
-  },
   // 独家的
   {
     path: '/exclusive',
     name: 'Exclusive',
     component: () => import("views/exclusive/Exclusive.vue")
+
+
+  },
+  {
+    path: '/wdna',
+    name: 'Wdna',
+    component: () => import("views/wdna/Wdna.vue")
+  },
+{
+    path:'/mypage',
+    name:'MyPage',
+    component:()=>import("views/mypage/MyPage.vue")
   },
   {
     // 一级分类界面

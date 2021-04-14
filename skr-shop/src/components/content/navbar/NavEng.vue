@@ -4,7 +4,7 @@
       <div class="left">
         <ul v-for="(item, index) in listOne" :key="index">
           <li>
-            <h2>{{ item.titleOne + navIndex }}</h2>
+            <h2>{{ item[navIndex] }}</h2>
           </li>
           <li v-for="(data, indexs) in item.listTwo" :key="indexs">
             <span>{{ data.title }}</span>
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import bus from "utils/bus"
 export default {
   name: "NavEng",
   props: {
@@ -41,55 +42,7 @@ export default {
   },
   data() {
     return {
-      listOne: [
-        {
-          titleOne: "刚抵达",
-          listTwo: [
-            {
-              title: "女性",
-              heat: 5614,
-            },
-            {
-              title: "男性",
-              heat: 7814,
-            },
-            {
-              title: "生活",
-              heat: 888,
-            },
-            {
-              title: "美丽",
-              heat: 122,
-            },
-          ],
-        },
-        {
-          titleOne: "新品牌",
-          listTwo: [
-            {
-              title: "标榜",
-            },
-            {
-              title: "银河集团",
-            },
-            {
-              title: "简单的",
-            },
-            {
-              title: "贝尔",
-            },
-            {
-              title: "贝尔",
-            },
-            {
-              title: "贝尔",
-            },
-            {
-              title: "贝尔",
-            },
-          ],
-        },
-      ],
+      listOne: [],
       rightList: [
         {
           url:
@@ -138,6 +91,12 @@ export default {
       this.$store.commit("changeShow", false);
       
     }
+  },
+  mounted() {
+    bus.$on('typeTwo',res=>{
+      console.log(res);
+      this.listOne = res
+    })
   },
 };
 </script>

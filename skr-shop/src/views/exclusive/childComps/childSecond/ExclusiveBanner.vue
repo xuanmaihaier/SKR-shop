@@ -68,6 +68,7 @@ export default {
   position: relative;
   overflow: hidden;
   width: 100%;
+
   .thumbnail {
     float: right;
     width: 33.5%;
