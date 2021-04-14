@@ -64,10 +64,7 @@ export default {
   position: relative;
   cursor: pointer;
   height: 100%;
- img{
-   width: 100%;
-   height: 100%;
- }
+ 
 }
 .swiper-container {
   width: 100%;

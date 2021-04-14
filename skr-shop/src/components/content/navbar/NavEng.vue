@@ -124,15 +124,19 @@ export default {
           price: "148,000",
         },
       ],
+      
     };
   },
   methods: {
+    //移入
     engraft(){
       this.$store.commit("changeShow", true);
+      
     },
       //移出
     exgraft() {
       this.$store.commit("changeShow", false);
+      
     }
   },
 };
@@ -143,9 +147,11 @@ export default {
   position: relative;
   z-index: 10;
   width: 100%;
-  height: 350px;
+  height: 300px;
+  animation: eng_ 1s;
   position: absolute;
   background-color: rgba(255, 255, 255, 0.9);
+ 
   .conent {
     width: 70%;
     height: 100%;
@@ -214,6 +220,15 @@ export default {
         }
       }
     }
+  }
+}
+
+@keyframes eng_ {
+  0%{
+    opacity: 0;
+  }
+  100%{
+   opacity: 1;
   }
 }
 </style>

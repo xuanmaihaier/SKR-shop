@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div class="exclusice">
       <Title><p> EXCLUSIVE </p></Title>
 
       <ExclusiveConent/>
       <ExclusiveConenta/>
       <ExclusiveConentb/>
       <ExclusiveConentc/>
+    
   </div>
 </template>
 
@@ -16,6 +17,7 @@ import ExclusiveConenta from './childComps/ExclusiveConenta.vue'
 import ExclusiveConentb from './childComps/ExclusiveConentb.vue'
 import ExclusiveConentc from './childComps/ExclusiveConentc.vue'
 
+
 export default {
     name:'Exclusive',
     components:{
@@ -23,12 +25,15 @@ export default {
         ExclusiveConent,
         ExclusiveConenta,
         ExclusiveConentb,
-        ExclusiveConentc
+        ExclusiveConentc,
+      
 
     }
 }
 </script>
 
-<style>
-
+<style lang="less" scoped>
+.exclusice{
+    margin-bottom: 40px;
+}
 </style>
