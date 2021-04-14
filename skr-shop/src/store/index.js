@@ -5,14 +5,21 @@ Vue.use(Vuex)
 // 请按照规范 使用action触发mutations
 export default new Vuex.Store({
   state: {
-    isShow:false,
+    isShow: false,
+    loadingStatus: false //loading全局开关
   },
   mutations: {
-    changeShow(state,value){
-        state.isShow= value
+    changeShow(state, value) {
+      state.isShow = value
+    },
+    changeLoading(state, val) {
+      state.loadingStatus = val
     }
   },
   actions: {
+    commitLoading({commit},val){
+      commit('changeLoading',val)
+    }
   },
   modules: {
   }
