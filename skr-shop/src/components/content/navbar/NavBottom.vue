@@ -36,7 +36,7 @@
     </div>
     <!-- 右侧icon图标 -->
     <div class="utility" v-if="isChage">
-      <div class="icon">
+      <div class="icon" @click="clickSearch">
        <a-icon type="search" />
         <p >SEARCH</p>
       </div>
@@ -50,14 +50,19 @@
       </div>
       
     </div>
+    <!-- 搜索 -->
+    <div class="nav_search" v-if="isChage" v-show="Search_Show">
+      <NavSearch></NavSearch>
+    </div>
   </a-affix>
 </template>
 
 <script>
-import NavEng from "./NavEng";
+import NavEng from "./NavEng.vue";
+import NavSearch from './NavSearch.vue';
 export default {
   name: "NavBottom",
-  components: { NavEng },
+  components: { NavEng,NavSearch },
   data() {
     return {
       top: 0,
@@ -65,6 +70,7 @@ export default {
       navRightPath: ["/exclusive", "/wdna"],
       navIndex: 0,
       isChage: false,
+      Search_Show:false
     };
   },
   props: {
@@ -78,11 +84,11 @@ export default {
     engraft(index) {
       this.navIndex = index;
       // console.log(this.navIndex,'----');
-      this.$store.commit("changeShow", true);
+      this.$store.dispatch("commitShow", true);
     },
     //移出
     exgraft() {
-      this.$store.commit("changeShow", false);
+      this.$store.dispatch("commitShow", false);
     },
     // 前几个的点击 by stride
     handleClicka(item) {
@@ -92,9 +98,16 @@ export default {
     handleClickb(index) {
       this.$router.push(this.navRightPath[index]);
     },
+    // icon的显示隐藏
     affixChange() {
       this.isChage = !this.isChage;
+      this.Search_Show = false
     },
+    // 搜索点击
+    clickSearch(){
+      this.Search_Show = !this.Search_Show
+      console.log(123);
+    }
   },
   mounted() {
     setTimeout(() => {
@@ -149,7 +162,9 @@ export default {
   top: 0;
   right: 5%;
   display: flex;
+  padding-top: 3px;
   .icon{
+    cursor: pointer;
     padding-top: 10px;
     text-align: center;
     flex: 1;
@@ -158,6 +173,32 @@ export default {
      
       font-size: 20px;
     }
+  }
+}
+
+.nav_search{
+  position: absolute;
+  top: 0;
+  right: 5%;
+  height: 65px;
+  // width: 15%;
+  padding-top: 12px;
+  animation: navs_search 1s linear;
+  animation-fill-mode: forwards;
+  .ipt{
+    width: 100%;
+  }
+  /deep/.ant-input{
+    width: 100%;
+    height: 40px;
+  }
+}
+@keyframes navs_search {
+  0%{
+    width: 0;
+  }
+  100%{
+    width: 15%;
   }
 }
 </style>

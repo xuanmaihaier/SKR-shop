@@ -87,7 +87,6 @@ export default {
   },
   mounted() {
     bus.$on("typeTwo", (res) => {
-      console.log(res);
       this.listOne = res;
       // console.log(this.listOne);
     });
@@ -103,7 +102,7 @@ export default {
   height: 300px;
   animation: eng_ 1s;
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 1);
 
   .conent {
     width: 70%;
@@ -115,17 +114,18 @@ export default {
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
-      padding-top: 25px;
+      padding: 25px 0;
         li{
-         color: #333;
+         color: #999;
          height: 30px;
          line-height: 30px;
-         text-align: center;
          width: 30%;
          cursor: pointer;
+         
         }
         li:hover{
           color:#04bd9e ;
+          text-decoration: underline;
         }
      
     }

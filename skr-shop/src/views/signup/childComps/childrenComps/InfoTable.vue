@@ -18,7 +18,7 @@
             </th>
             <td>
               <p>
-                <input type="text" placeholder="请输入用户名" @focus="showText" @blur="hideText" v-model.trim="userName">
+                <input type="text" placeholder="请输入您的用户名" @focus="showText" @blur="hideText" v-model.trim="userName" id="userName">
               </p>
               <p v-show="userNameShow" >
                 <small>用户名不能为空</small>
@@ -32,7 +32,7 @@
             </th>
             <td>
               <p>
-                <input type="password" placeholder="请输入密码" @focus="showText" @blur="hideText" v-model.trim="passWord">
+                <input type="password" placeholder="请输入您的密码" @focus="showText" @blur="hideText" v-model.trim="passWord" id="passWord">
               </p>
               <p v-show="pasWordShow">
                 <small>密码不能为空</small>
@@ -40,21 +40,17 @@
             </td>
           </td>
         </tr>
-         <tr>
+        <tr>
             <th>
-              性别<span>*</span>
+              邮箱<span>*</span>
             </th>
-            <td class="sex">
-              <label for="male" id="male" @click="maleShow=true;femaleShow=true" >
-                <img src="../../../../assets/img/signup/radio.png" alt="" v-show="!maleShow">  
-                <img src="../../../../assets/img/signup/radioActive.png" alt="" v-show="maleShow">  
-                <span>男</span>
-              </label>
-              <label for="femal" id="female" @click="maleShow=false;femaleShow=false">
-                <img src="../../../../assets/img/signup/radio.png" alt="" v-show="femaleShow">   
-                <img src="../../../../assets/img/signup/radioActive.png" alt="" v-show="!femaleShow">  
-                <span>女</span>
-              </label>
+            <td>
+              <p>
+                <input type="text" placeholder="请输入您的邮箱" @focus="showText" @blur="hideText" v-model.trim="email" id="email">
+              </p>
+              <p v-show="emailShow">
+                <small>请填写正确的邮箱格式</small>
+              </p>
             </td>
           </td>
         </tr>
@@ -68,56 +64,81 @@
 </template>
 
 <script>
+import { userSignUp } from "@/network/userJoin";
 const key = "updatable";
+// 邮箱验证
+const regular = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 export default {
   name: "InfoTable",
   data() {
     return {
-      maleShow: true,
-      femaleShow: true,
       disabled: false,
       userName: "",
       passWord: "",
+      email: "",
       userNameShow: false,
       pasWordShow: false,
+      emailShow: false,
+      regular,
     };
   },
   methods: {
     showText(e) {
-      if (e.target.type == "text") {
+      if (e.target.id == "userName") {
         this.userNameShow = false;
-      } else if (e.target.type == "password") {
+      } else if (e.target.id == "passWord") {
         this.pasWordShow = false;
+      } else if (e.target.id == "email") {
+        this.emailShow = false;
       }
       e.target.placeholder = "";
     },
     hideText(e) {
-      if (e.target.type == "text") {
+      if (e.target.id == "userName") {
         e.target.placeholder = "请输入您的用户名";
-      } else if (e.target.type == "password") {
+      } else if (e.target.id == "passWord") {
         e.target.placeholder = "请输入您的密码";
+      } else if (e.target.id == "email") {
+        e.target.placeholder = "请输入您的邮箱";
       }
     },
     successedBtn() {
+      // 信息验证
       if (this.userName == "") {
         this.userNameShow = true;
         return;
-      }
-      if (this.passWord == "") {
+      } else if (this.passWord == "") {
         this.pasWordShow = true;
         return;
+      } else if (regular.test(this.email) == false) {
+        this.emailShow = true;
+        return;
       }
-      this.$emit("successedBtn", true);
-      this.disabled = true;
-      this.$message.loading({ content: "Loading...", key });
-      setTimeout(() => {
-        this.$message.success({
-          content: "注册完成!跳转至登录页面",
-          key,
-          duration: 2,
-        });
-        this.$router.push('/login')
-      }, 1000);
+      userSignUp({
+        username: this.userName,
+        password: this.passWord,
+        email: this.email,
+      }).then((res) => {
+        console.log(res);
+        if(res.code == 501){
+          this.$message.error({
+            content:'用户名已被注册，请重新输入！',
+            duration:.5
+          });
+          return
+        }
+        this.$emit("successedBtn", true);
+        this.disabled = true;
+        this.$message.loading({ content: "Loading...", key });
+        setTimeout(() => {
+          this.$message.success({
+            content: "注册完成!跳转至登录页面",
+            key,
+            duration: 2,
+          });
+          this.$router.push("/login");
+        }, 1000);
+      });
     },
   },
 };
