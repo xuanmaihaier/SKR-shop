@@ -1,17 +1,12 @@
 <template>
   <div class="eng" @mouseover="engraft" @mouseout="exgraft">
     <div class="conent">
-      <div class="left">
-        <ul v-for="(item, index) in listOne" :key="index">
-          <li>
-            <h2>{{ item[navIndex] }}</h2>
-          </li>
-          <li v-for="(data, indexs) in item.listTwo" :key="indexs">
-            <span>{{ data.title }}</span>
-            <span>{{ data.heat }}</span>
-          </li>
-        </ul>
-      </div>
+      <ul class="left">
+        <li v-for="(item, index) in listOne[navIndex]" :key="index">
+          {{item}}
+        </li>
+      </ul>
+
       <div class="right">
         <ul>
           <li v-for="(ListItem, index) in rightList" :key="index">
@@ -27,11 +22,12 @@
         </ul>
       </div>
     </div>
+    
   </div>
 </template>
 
 <script>
-import bus from "utils/bus"
+import bus from "utils/bus";
 export default {
   name: "NavEng",
   props: {
@@ -77,26 +73,24 @@ export default {
           price: "148,000",
         },
       ],
-      
     };
   },
   methods: {
     //移入
-    engraft(){
+    engraft() {
       this.$store.commit("changeShow", true);
-      
     },
-      //移出
+    //移出
     exgraft() {
       this.$store.commit("changeShow", false);
-      
-    }
+    },
   },
   mounted() {
-    bus.$on('typeTwo',res=>{
+    bus.$on("typeTwo", (res) => {
       console.log(res);
-      this.listOne = res
-    })
+      this.listOne = res;
+      // console.log(this.listOne);
+    });
   },
 };
 </script>
@@ -104,50 +98,44 @@ export default {
 <style lang="less" scoped>
 .eng {
   position: relative;
-  z-index: 10;
+  z-index: 20;
   width: 100%;
   height: 300px;
   animation: eng_ 1s;
   position: absolute;
   background-color: rgba(255, 255, 255, 0.9);
- 
+
   .conent {
     width: 70%;
     height: 100%;
     margin: 0 auto;
-    .left,
+    .left {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      padding-top: 25px;
+        li{
+         color: #333;
+         height: 30px;
+         line-height: 30px;
+         text-align: center;
+         width: 30%;
+         cursor: pointer;
+        }
+        li:hover{
+          color:#04bd9e ;
+        }
+     
+    }
+
     .right {
       width: 50%;
       height: 100%;
-      //   background-color: red;
       display: flex;
       ul {
         flex: 1;
-        li {
-          height: 35px;
-          display: flex;
-          justify-content: space-evenly;
-          cursor: pointer;
-          //    padding: 0 30px 0 15px;
-          h2 {
-            text-align: center;
-            font-weight: 700;
-            font-size: 12px;
-          }
-          span {
-            font-size: 12px;
-            color: #333;
-          }
-          span:hover{
-            text-decoration: underline;
-          }
-        }
-      }
-    }
-   
-    .right {
-      width: 50%;
-      ul {
         padding: 25px 0;
         display: flex;
         overflow: hidden;
@@ -164,16 +152,24 @@ export default {
           }
           h2 {
             line-height: 30px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 12px;
           }
           p {
             line-height: 30px;
 
             span {
+              font-size: 12px;
+              color: #333;
               display: block;
               width: 100%;
               overflow: hidden;
               white-space: nowrap; /* 设置文本是否换行.. */
               text-overflow: ellipsis; /* 超出文本出现省略号代替 */
+            }
+            span:hover {
+              text-decoration: underline;
             }
           }
         }
@@ -183,11 +179,11 @@ export default {
 }
 
 @keyframes eng_ {
-  0%{
+  0% {
     opacity: 0;
   }
-  100%{
-   opacity: 1;
+  100% {
+    opacity: 1;
   }
 }
 </style>

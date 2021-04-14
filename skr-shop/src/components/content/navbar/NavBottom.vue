@@ -7,7 +7,6 @@
     }"
     @change="affixChange"
   >
-    <!--  -->
     <div class="bottom">
       <!-- 二级目录 -->
       <div class="conent">
@@ -17,7 +16,7 @@
             :key="index"
             @mouseover="engraft(index)"
             @mouseout="exgraft"
-             @click="handleClicka(item)"
+            @click="handleClicka(item)"
           >
             {{ item }}
           </li>
@@ -35,6 +34,22 @@
       <!-- Nav 显示隐藏的list表 -->
       <nav-eng v-show="$store.state.isShow" :navIndex="navIndex"></nav-eng>
     </div>
+    <!-- 右侧icon图标 -->
+    <div class="utility" v-if="isChage">
+      <div class="icon">
+       <a-icon type="search" />
+        <p >SEARCH</p>
+      </div>
+       <div class="icon">
+         <a-icon type="user" />
+        <p >MY</p>
+      </div>
+      <div class="icon">
+        <a-icon type="shopping-cart" />
+        <p>0</p>
+      </div>
+      
+    </div>
   </a-affix>
 </template>
 
@@ -47,16 +62,16 @@ export default {
     return {
       top: 0,
       navRight: ["独家的", "WDNA", "事件", "最好的"],
-      navRightPath:['/exclusive','wdna'],
+      navRightPath: ["/exclusive", "/wdna"],
       navIndex: 0,
       isChage: false,
     };
   },
-  props:{
-    typeOne:{
-      type:Array,
-      default:()=>[]
-    }
+  props: {
+    typeOne: {
+      type: Array,
+      default: () => [],
+    },
   },
   methods: {
     //移入
@@ -70,12 +85,12 @@ export default {
       this.$store.commit("changeShow", false);
     },
     // 前几个的点击 by stride
-    handleClicka(item){
-      this.$router.push(`/primary/${item}`)
+    handleClicka(item) {
+      this.$router.push(`/primary/${item}`);
     },
     //Right的点击事件
     handleClickb(index) {
-      this.$router.push(this.navRightPath[index])
+      this.$router.push(this.navRightPath[index]);
     },
     affixChange() {
       this.isChage = !this.isChage;
@@ -123,6 +138,25 @@ export default {
     li:hover {
       color: #04bd9e;
       cursor: pointer;
+    }
+  }
+}
+.utility {
+  height: 65px;
+  width: 10%;
+  min-width: 150px;
+  position: absolute;
+  top: 0;
+  right: 5%;
+  display: flex;
+  .icon{
+    padding-top: 10px;
+    text-align: center;
+    flex: 1;
+     color: #fff;
+    i{
+     
+      font-size: 20px;
     }
   }
 }

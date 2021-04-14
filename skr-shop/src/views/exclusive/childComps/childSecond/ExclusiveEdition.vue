@@ -43,11 +43,11 @@ export default {
       //鼠标移入
       engraft(index){
             this.index_page = index
-       
+   
       },
     //鼠标移出
     exgraft(){
-      this.index_page = ''
+      this.index_page = null
     }
   },
 };

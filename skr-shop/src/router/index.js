@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
+import '../store/index'
 Vue.use(VueRouter)
 // 导航冗余报错解决
 const originalPush = VueRouter.prototype.push
@@ -50,15 +50,16 @@ const routes = [
 
 
   },
+  //WDNA
   {
     path: '/wdna',
     name: 'Wdna',
     component: () => import("views/wdna/Wdna.vue")
   },
-{
-    path:'/mypage',
-    name:'MyPage',
-    component:()=>import("views/mypage/MyPage.vue")
+  {
+    path: '/mypage',
+    name: 'MyPage',
+    component: () => import("views/mypage/MyPage.vue")
   },
   {
     // 一级分类界面
@@ -108,4 +109,20 @@ const router = new VueRouter({
   routes
 })
 
+//挂载路由导航守卫
+router.beforeEach((to, from, next) => {
+  // ...
+  const auth = ['/shopcar', '/mypage']
+  const tokenStr = window.sessionStorage.getItem('token')
+  if (!tokenStr) {
+    router.app.$store.state.NavbarShow = true
+    if (auth.includes(to.fullPath)) {
+      return next('/login')
+    }
+    return next()
+  } else {
+    router.app.$store.state.NavbarShow = false
+    next()
+  }
+})
 export default router

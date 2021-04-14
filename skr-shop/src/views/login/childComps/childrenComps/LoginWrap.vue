@@ -65,7 +65,7 @@ export default {
   data() {
     return {
       imgShow: true,
-      userName: localStorage.getItem('remberName'),
+      userName: sessionStorage.getItem('remberName'),
       userPassWord: "",
       nameShow: false,
       passWordShow: false,
@@ -90,11 +90,11 @@ export default {
         console.log(res);
         if (res.code == 200) {
           if(this.imgShow){
-            localStorage.removeItem('remberName')
+            sessionStorage.removeItem('remberName')
           }else{
-            localStorage.setItem('remberName',this.userName)
+            sessionStorage.setItem('remberName',this.userName)
           }
-          localStorage.setItem("token", res.data.token);
+          sessionStorage.setItem("token", res.data.token);
           this.$message.success("登录成功！祝您购物愉快😀");
           this.$router.push("/home");
         } else {
