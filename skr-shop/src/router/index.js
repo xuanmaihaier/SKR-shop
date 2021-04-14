@@ -61,6 +61,11 @@ const routes = [
     component: () => import("views/exclusive/Exclusive.vue")
 
   },
+  {
+    path: '/wdna',
+    name: 'Wdna',
+    component: () => import("views/wdna/Wdna.vue")
+  },
 {
     path:'/mypage',
     name:'MyPage',
