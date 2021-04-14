@@ -13,7 +13,7 @@
         <p @click="goSignup">加入</p>
       </div>
       <div class="icon">
-        <a-icon type="login" />
+         <a-icon type="login" />
         <p @click="goLogin">登录</p>
       </div>
       <div class="icon">
@@ -21,7 +21,7 @@
         <p>0</p>
       </div>
     </div>
-    <div class="icons" v-else>
+      <div class="icons" v-else>
       <div class="icon">
         <a-icon type="logout" />
         <p @click="outLogin">LOGOUT</p>
@@ -45,10 +45,9 @@ export default {
   components: { NavSearch },
   data() {
     return {
-      top: 0,
-      NavbarShow: false,
-      sessionStorage: sessionStorage.getItem("token"),
-    };
+      top:0,
+      NavbarShow:false
+    }
   },
   methods: {
     goSignup() {
@@ -102,29 +101,34 @@ export default {
     width: 15%;
     display: flex;
     position: relative;
-    .icon {
-      width: calc(100% / 3 - 15px);
+    cursor: pointer;
+    .icon{
+      width: calc(100%/3 - 15px);
       position: relative;
-      .anticon {
+      .anticon{
         font-size: 18px;
         font-weight: 700;
         position: absolute;
         top: 10%;
         left: 50%;
-        transform: translate(-50%, 0);
+        transform: translate(-50%,0);
+        padding-top: 5px;
       }
-      p {
+      p{
         position: absolute;
-        top: 15%;
-        left: 50%;
-        transform: translate(-50%, 0);
+        top: 20%;
+         left: 50%;
+        transform: translate(-50%,0);
       }
     }
+
   }
 }
+
 
 .affixImg {
   position: relative;
   height: 60px;
 }
+
 </style>

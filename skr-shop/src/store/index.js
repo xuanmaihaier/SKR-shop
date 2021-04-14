@@ -3,11 +3,13 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 // 请按照规范 使用action触发mutations
-export default new Vuex.Store({
+let store= new Vuex.Store({
   state: {
-    NavbarShow:true,// NavBarTop 的显示隐藏
+    // NavBarTop 的显示隐藏
+    NavbarShow:true,
     isShow: false,
-    loadingStatus: false, //loading全局开关
+    loadingStatus: false //loading全局开关
+
   },
   mutations: {
     changeShow(state, value) {
@@ -16,15 +18,25 @@ export default new Vuex.Store({
     changeLoading(state, val) {
       state.loadingStatus = val
     },
+    changeNavbarShow(state, val){
+      state.NavbarShow = val
+    }
   },
   actions: {
+    //更改Loadingde 
     commitLoading({commit},val){
       commit('changeLoading',val)
     },
-    commitNavbarShow({commit},val){
-      commit('changeNavbarShow',val)
+    // 更改Nav-eng的显示隐藏
+    commitShow(store,val){
+      store.commit('changeShow',val)
     },
+    //更改NavbarShow
+    commitNavbarShow(store,val){
+      store.commit('changeNavbarShow',val)
+    }
   },
   modules: {
   }
 })
+export default store
