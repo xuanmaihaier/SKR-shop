@@ -24,6 +24,11 @@ const routes = [
     component:()=>import("views/details/Details")
   },
   {
+    path:'/shopcart',
+    name:'ShopCart',
+    component:()=>import("views/shopcart/ShopCart")
+  },
+  {
 
     path:'/login',
     name:'Login',

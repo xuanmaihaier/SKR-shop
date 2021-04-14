@@ -58,12 +58,6 @@
               <img @click="changeImg($event)" :src="img.small">
             </li>
           </ul>
-          <div>
-            <a-icon type="share-alt" class="c" />
-            <span>分享</span>
-            <a-icon type="heart" class="d" />
-            <span>收藏</span>
-          </div>
         </div>
       </div>
       <div class="good_right" v-if="shopById.length">
@@ -190,7 +184,6 @@ import Detail from "./childComps/Detail/Detail";
       isEnterHandler(isEnter) {
         this.topShow = isEnter
         this.rShow = isEnter
-        console.log(this.$refs.bigImgRight.offsetWidth);
         this.imgWidthLeft = this.$refs.bigImgLeft.offsetWidth
         if (isEnter) {
           var finalStyle = this.$refs.mask.currentStyle ? this.$refs.mask.currentStyle : document.defaultView.getComputedStyle(this.$refs.mask, null)
