@@ -2,31 +2,10 @@
   <div id="shop_detail">
     <nav class="nav">
       <a-breadcrumb>
-        <a-breadcrumb-item>Home</a-breadcrumb-item>
-        <a-breadcrumb-item>
-          <a-dropdown :trigger="['click']">
-            <a class="ant-dropdown-link" @click="e => e.preventDefault()">Click me <a-icon type="down"/></a>
-            <a-menu slot="overlay">
-              <a-menu-item key="0">
-                <a href="">1st menu item</a>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
-        </a-breadcrumb-item>
-        <a-breadcrumb-item>
-          <a-dropdown :trigger="['click']">
-            <a class="ant-dropdown-link" @click="e => e.preventDefault()">Application List <a-icon type="down"/></a>
-            <a-menu slot="overlay">
-              <a-menu-item key="0">
-                <a href="">1st menu item</a>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
-        </a-breadcrumb-item>
-        <a-breadcrumb-item>An Application</a-breadcrumb-item>
+        <a-breadcrumb-item style="cursor: pointer"><a href="/home">Home</a></a-breadcrumb-item>
+        <a-breadcrumb-item>Details</a-breadcrumb-item>
       </a-breadcrumb>
     </nav>
-
 
     <div class="good" >
       <div class="good_left" >
@@ -65,9 +44,9 @@
           <span>梭织短裤</span>
           <h3> {{shopById[0].title}} </h3>
           <span class="price">￥{{shopById[0].price}} </span>
-          <span class="price underline">￥ {{shopById[0].price}} </span>
+          <span class="price underline">￥ {{shopById2[0].special_price}} </span>
           <div class="promotion">
-            <span class="title">促销</span>
+            <span class="title" v-if="shopById2[0].is_special"> {{ shopById2[0].is_special == 1 ? '促销' : '抢购' }} </span>
             <span class="con">官方商城全场包邮</span>
           </div>
           <span></span>
@@ -87,15 +66,7 @@
             <div class="choose">
               <label for="size">尺码</label>
               <select name="size" id="size">
-                <option value="XS">XS</option>
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-                <option value="XL">XL</option>
-                <option value="2XL">2XL</option>
-                <option value="3XL">3XL</option>
-                <option value="4XL">4XL</option>
-                <option value="5XL">5XL</option>
+                <option :value="item" v-for="(item,index) in size"> {{item}} </option>
               </select>
               <label for="count">数量: </label>
               <input id="count" type="number" value="1" max="10" min="1">
@@ -112,7 +83,7 @@
 
     <div class="detail">
       <DetailSortNav @jumptoWhich="whichOne" ref="DETAIL" :currentIndexIsOn="0" />
-      <Detail/>
+      <Detail :imgs="shopById.length>0 ?  JSON.parse(shopById[0].imgs) : []" />
     </div>
     <div class="review">
       <DetailSortNav @jumptoWhich="whichOne"  ref="REVIEW" :currentIndexIsOn="1" />
@@ -132,18 +103,12 @@
 
 <script type="text/ecmascript-6">
 
-import { getShopById } from "@/network/getShopById.js";
-
+import { getShopById, getShopById2 } from "@/network/getShopById.js";
+import axios from "axios";
 
 import Vue from 'vue'
 import { Button, Pagination, Rate, Breadcrumb, Dropdown, Menu, Icon } from 'ant-design-vue';
-Vue.use(Button);
-Vue.use(Pagination);
-Vue.use(Rate);
-Vue.use(Breadcrumb);
-Vue.use(Dropdown);
-Vue.use(Menu);
-Vue.use(Icon);
+Vue.use(Button);Vue.use(Pagination);Vue.use(Rate);Vue.use(Breadcrumb);Vue.use(Dropdown);Vue.use(Menu);Vue.use(Icon);
 
 
 import DetailSortNav from "./childComps/DetailSortNav/DetailSortNav";
@@ -151,6 +116,7 @@ import QA from "./childComps/QA/QA";
 import ReturnDelivery from "./childComps/ReturnDelivery/ReturnDelivery";
 import Review from "./childComps/Review/Review";
 import Detail from "./childComps/Detail/Detail";
+
   export default {
     name: 'Details',
     components:{
@@ -160,9 +126,7 @@ import Detail from "./childComps/Detail/Detail";
       Review,
       Detail
     },
-    props: {
-      id: Number
-    },
+    props: ['id'],
     data() {
       return {
         topStyle:{transform:''},
@@ -173,7 +137,9 @@ import Detail from "./childComps/Detail/Detail";
         imgWidthRight: '',
         mackWidth: '',
         mackHeight: '',
-        shopById: []
+        shopById: [],
+        shopById2: [],
+        size: ['XS','S','M','L','XL','2XL','3XL','4XL','5XL']
       }
     },
     methods : {
@@ -213,14 +179,12 @@ import Detail from "./childComps/Detail/Detail";
       }
     },
     async created(){
-      // 当动态路由传参的时候使用以下2行代码
-      // const {id} = this
-      // const result = await getShopById({id})
-      // 测试使用
-      const result = await getShopById({id:56})
-      this.shopById = result.data
-      console.log(result.data);
-       
+      const {id} = this
+      // 同时发送两个请求
+      const result = await axios.all([getShopById({id}),getShopById2({id})])
+      this.shopById = result[0].data
+      this.shopById2 = result[1].data
+      console.log(this.shopById2);
     },
   }
 </script>
@@ -278,6 +242,8 @@ import Detail from "./childComps/Detail/Detail";
             background-color #000
             color #fff
             text-align center
+          .con
+            margin-left 10px
           .on 
             color #000
       .middel

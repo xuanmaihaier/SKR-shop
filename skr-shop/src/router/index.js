@@ -19,8 +19,9 @@ const routes = [
     component: () => import("views/home/Home.vue"),
   },
   {
-    path:'/details',
+    path:'/details/:id',
     name:'Details',
+    props: true,
     component:()=>import("views/details/Details")
   },
   {
@@ -29,7 +30,6 @@ const routes = [
     component:()=>import("views/shopcart/ShopCart")
   },
   {
-
     path:'/login',
     name:'Login',
     component:()=>import("views/login/Login.vue")

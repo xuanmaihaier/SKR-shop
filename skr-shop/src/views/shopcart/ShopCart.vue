@@ -125,9 +125,6 @@
       -moz-transform: rotate(-45deg);
       -ms-transform: rotate(-45deg);
       transform: rotate(-45deg);
-
-
-
 .fixed-width
   max-width 1200px
   margin 30px auto 
