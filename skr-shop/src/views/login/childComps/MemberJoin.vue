@@ -27,6 +27,7 @@ export default {
   width: 1240px;
   .joinCont {
     padding-top: 60px;
+    margin-bottom: 180px;
     border-top: 2px solid #171717;
   }
 }

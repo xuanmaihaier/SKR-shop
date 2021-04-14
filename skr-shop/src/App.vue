@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <NavBar/>
+    <!-- 都有的的侧边栏 -->
     <router-view/>
     <FooterNav/>
     <Adside/>
@@ -18,8 +19,7 @@ export default {
     Adside,
   }
 }
-    NavBar
 </script>
-<style>                                                                          
+<style>
 @import url("./assets/css/params.less");
 </style>

@@ -27,7 +27,7 @@
           <li
             v-for="(item, index) in navRight"
             :key="index"
-            @click="handleClick"
+            @click="handleClickb(index)"
           >
             {{ item }}
           </li>
@@ -49,6 +49,7 @@ export default {
       top: 0,
       navLeft: ["新的", "女装", "男装", "生活", "美丽", "销售", "设计师"],
       navRight: ["独家的", "WDNA", "事件", "最好的"],
+      navRightPath:['/exclusive'],
       navIndex: 0,
       isChage: false,
     };
@@ -67,11 +68,11 @@ export default {
     },
     // 前几个的点击 by stride
     handleClicka(item){
-      this.$router.push(item)
+      this.$router.push(`/primary/${item}`)
     },
-    //点击事件
-    handleClick() {
-      console.log(123);
+    //Right的点击事件
+    handleClickb(index) {
+      this.$router.push(this.navRightPath[index])
     },
     affixChange() {
       this.isChage = !this.isChage;

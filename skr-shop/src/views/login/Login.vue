@@ -19,6 +19,6 @@ export default {
 <style lang="less" scoped>
 .login{
   width: 100%;
-  height: calc(101vh - 130px);
+   margin-bottom: 40px;
 }
 </style>

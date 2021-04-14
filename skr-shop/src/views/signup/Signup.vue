@@ -1,5 +1,5 @@
 <template>
-  <div class="signup">
+  <div class="signup">  
     <!-- 注册大标题 -->
     <title-warp>注册</title-warp>
     <!-- 注册主体内容 -->
@@ -19,6 +19,8 @@ export default {
 <style lang="less" scoped>
 .signup {
   width: 100%;
-  height: calc(101vh - 130px);
+  height: 100%;
+  margin-bottom: 40px;
+  // height: calc(101vh - 130px);
 }
 </style>
