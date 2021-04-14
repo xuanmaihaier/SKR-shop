@@ -8,7 +8,7 @@
             @mouseout="exgraft" :bordered="false">
              
        <div :style="{width:`100%`,position:'relative'}">
-           <div :class="{mask:index==index_page}" :style="{backgroundColor:mask_background[index]}"></div>
+           <div :class="{mask:index==index_page}"  :style="{backgroundColor:mask_background[index]}"></div>
             <img
         style="width:100%"
           slot="cover"
@@ -46,7 +46,9 @@ export default {
        
       },
     //鼠标移出
-    exgraft(){}
+    exgraft(){
+      this.index_page = ''
+    }
   },
 };
 </script>
@@ -97,7 +99,11 @@ export default {
             width: 100%;
             height: 100%;
             z-index: 1;
-            
+            animation: mask_ 1s;
+        }
+        @keyframes mask_ {
+          0%{opacity: 0;}
+          100%{opacity: 1;}
         }
     }
 }

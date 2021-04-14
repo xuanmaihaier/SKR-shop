@@ -1,16 +1,23 @@
 <template>
   <div class="conenta">
-      444
+      <InnerLeft/>
+      <InnerRight/>
   </div>
 </template>
 
 <script>
+import InnerLeft from './childSecond/InnerLeft.vue'
+import InnerRight from './childSecond/InnerRight.vue'
 export default {
+  components: { InnerLeft, InnerRight },
 
 }
 </script>
 <style lang="less" scoped>
 .conenta{
-    padding-top: 5%;
+    min-width: 1240px;
+    margin-top: 5%;
+    position: relative;
+    display: flex;
 }
 </style>
