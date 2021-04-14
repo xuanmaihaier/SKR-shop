@@ -17,13 +17,11 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: () => import("views/home/Home.vue"),
-
     children: [
       {
         path: '/service',
         component: () => import("components/common/adside/Service")
       },
-
     ]
   },
   // 登录
