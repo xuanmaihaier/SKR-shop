@@ -87,7 +87,6 @@ export default {
   },
   mounted() {
     bus.$on("typeTwo", (res) => {
-      console.log(res);
       this.listOne = res;
       // console.log(this.listOne);
     });
@@ -103,7 +102,7 @@ export default {
   height: 300px;
   animation: eng_ 1s;
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 1);
 
   .conent {
     width: 70%;

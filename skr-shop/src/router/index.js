@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import '../store/index'
+import store from '../store/index.js'
 Vue.use(VueRouter)
 // 导航冗余报错解决
 const originalPush = VueRouter.prototype.push
@@ -114,16 +114,18 @@ router.beforeEach((to, from, next) => {
   // ...
   const auth = ['/shopcar', '/mypage']
   const tokenStr=window.sessionStorage.getItem('token')
-  if (auth.includes(to.fullPath)) {
-    // console.log('验证token')
-    if (!tokenStr) {
-      router.app.$store.state.NavbarShow = true
+  // console.log(tokenStr);
+  if (!tokenStr) {
+    console.log(123);
+    store.dispatch('commitNavbarShow',true)
+    if(auth.includes(to.fullPath)){
       return next('/login')
-    } else {
-      router.app.$store.state.NavbarShow = false
-      next()
     }
+    return next()
   } else {
+   
+    store.dispatch('commitNavbarShow',false)
+    console.log(store);
     next()
   }
 })
