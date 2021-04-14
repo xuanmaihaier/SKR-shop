@@ -4,7 +4,6 @@ import Vue from "vue"
 import {
     Button, Radio, Message, Input, Icon, Tabs, Affix, Card,Row,Col,List,Select,Pagination
 } from "ant-design-vue"
-Vue.prototype.$message = Message
 // use使用
 const vueUse = {
     Button, Radio, Input, Icon, Tabs, Affix, Card,Row,Col,List,Select,Pagination

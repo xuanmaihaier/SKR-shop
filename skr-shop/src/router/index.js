@@ -38,21 +38,9 @@ const routes = [
     component:()=>import("views/details/Details")
   },
   {
-
-    path:'/login',
-    name:'Login',
-    component:()=>import("views/login/Login.vue")
-  },
-  {
     path: '/signup',
     name: 'Signup',
     component: () => import("views/signup/Signup.vue")
-  },
-
-  {
-    path: '/mypage',
-    name: 'MyPage',
-    component: () => import("views/mypage/MyPage.vue")
   },
   // 独家的
   {
@@ -71,11 +59,6 @@ const routes = [
     path: '/primary/:id',
     name: 'Primary',
     component: () => import("views/primary/Primary.vue")
-  },
-  {
-    path: '/mypage',
-    name: 'MyPage',
-    component: () => import("views/mypage/MyPage.vue")
   },
   // 底部路由跳转 
   {

@@ -13,7 +13,7 @@
       <div class="conent">
         <ul class="left">
           <li
-            v-for="(item, index) in navLeft"
+            v-for="(item, index) in typeOne"
             :key="index"
             @mouseover="engraft(index)"
             @mouseout="exgraft"
@@ -21,7 +21,6 @@
           >
             {{ item }}
           </li>
-          <span>|</span>
         </ul>
         <ul class="right">
           <li
@@ -47,14 +46,18 @@ export default {
   data() {
     return {
       top: 0,
-      navLeft: ["新的", "女装", "男装", "生活", "美丽", "销售", "设计师"],
       navRight: ["独家的", "WDNA", "事件", "最好的"],
       navRightPath:['/exclusive'],
       navIndex: 0,
       isChage: false,
     };
   },
-
+  props:{
+    typeOne:{
+      type:Array,
+      default:()=>[]
+    }
+  },
   methods: {
     //移入
     engraft(index) {
@@ -112,6 +115,7 @@ export default {
     li {
       flex: 1;
       text-align: center;
+      letter-spacing: 2px;
     }
     span {
       transform: translateX(10px);
