@@ -17,38 +17,32 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: () => import("views/home/Home.vue"),
-
     children: [
       {
         path: '/service',
         component: () => import("components/common/adside/Service")
       },
-     
     ]
   },
+  // 登录
   {
     path: '/login',
     name: 'Login',
     component: () => import("views/login/Login.vue")
-
   },
+  // 详情
   {
-    path:'/details',
-    name:'Details',
-    component:()=>import("views/details/Details")
+    path: '/details',
+    name: 'Details',
+    component: () => import("views/details/Details")
   },
-  {
-
-    path:'/login',
-    name:'Login',
-    component:()=>import("views/login/Login.vue")
-  },
+  // 注册
   {
     path: '/signup',
     name: 'Signup',
     component: () => import("views/signup/Signup.vue")
   },
-
+  // 个人中心
   {
     path: '/mypage',
     name: 'MyPage',
@@ -59,6 +53,7 @@ const routes = [
     path: '/exclusive',
     name: 'Exclusive',
     component: () => import("views/exclusive/Exclusive.vue")
+
 
   },
   {
@@ -76,11 +71,6 @@ const routes = [
     path: '/primary/:id',
     name: 'Primary',
     component: () => import("views/primary/Primary.vue")
-  },
-  {
-    path: '/mypage',
-    name: 'MyPage',
-    component: () => import("views/mypage/MyPage.vue")
   },
   // 底部路由跳转 
   {

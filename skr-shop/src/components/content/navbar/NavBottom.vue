@@ -49,7 +49,7 @@ export default {
       top: 0,
       navLeft: ["新的", "女装", "男装", "生活", "美丽", "销售", "设计师"],
       navRight: ["独家的", "WDNA", "事件", "最好的"],
-      navRightPath:['/exclusive'],
+      navRightPath:['/exclusive','wdna'],
       navIndex: 0,
       isChage: false,
     };
