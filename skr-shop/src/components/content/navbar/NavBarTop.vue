@@ -88,6 +88,7 @@ export default {
     width: 15%;
     display: flex;
     position: relative;
+    cursor: pointer;
     .icon{
       width: calc(100%/3 - 15px);
       position: relative;
@@ -98,10 +99,11 @@ export default {
         top: 10%;
         left: 50%;
         transform: translate(-50%,0);
+        padding-top: 5px;
       }
       p{
         position: absolute;
-        top: 15%;
+        top: 20%;
          left: 50%;
         transform: translate(-50%,0);
       }
