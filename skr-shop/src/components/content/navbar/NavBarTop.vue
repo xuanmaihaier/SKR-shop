@@ -8,18 +8,32 @@
       </a-affix>
     </div>
     <nav-search></nav-search>
-    <div class="icons">
+    <div class="icons" v-if="$store.state.NavbarShow">
       <div class="icon">
-        <a-icon type="user" />
-        <span @click="goSignup">加入</span>
+        <a-icon type="user-add" />
+        <p @click="goSignup">加入</p>
       </div>
       <div class="icon">
-        <a-icon type="select" />
-        <span @click="goLogin">登录</span>
+         <a-icon type="login" />
+        <p @click="goLogin">登录</p>
       </div>
       <div class="icon">
         <a-icon type="shopping-cart" />
-        <span>0</span>
+        <p>0</p>
+      </div>
+    </div>
+      <div class="icons" v-else>
+      <div class="icon">
+        <a-icon type="logout" />
+        <p @click="goSignup">LOGOUT</p>
+      </div>
+      <div class="icon">
+        <a-icon type="user" />
+        <p @click="goLogin">MY</p>
+      </div>
+      <div class="icon">
+        <a-icon type="shopping-cart" />
+        <p>0</p>
       </div>
     </div>
   </div>
@@ -32,7 +46,8 @@ export default {
   components: { NavSearch },
   data() {
     return {
-      top:0
+      top:0,
+      NavbarShow:false
     }
   },
   methods: {
@@ -72,27 +87,33 @@ export default {
   .icons {
     width: 15%;
     display: flex;
+    position: relative;
+    .icon{
+      width: calc(100%/3 - 15px);
+      position: relative;
+      .anticon{
+        font-size: 18px;
+        font-weight: 700;
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%,0);
+      }
+      p{
+        position: absolute;
+        top: 15%;
+         left: 50%;
+        transform: translate(-50%,0);
+      }
+    }
+
   }
 }
-.icon {
-  margin: 0 10px;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-  i {
-    font-size: 20px;
-    transform: translate(20px, 10px);
-  }
-  span {
-    text-align: center;
-    display: block;
-    width: 32px;
-    transform: translate(-5px, 12px);
-  }
-}
+
 
 .affixImg {
   position: relative;
  height: 60px;
 }
+
 </style>
