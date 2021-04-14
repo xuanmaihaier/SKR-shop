@@ -56,10 +56,10 @@ const routes = [
     name: 'Wdna',
     component: () => import("views/wdna/Wdna.vue")
   },
-{
-    path:'/mypage',
-    name:'MyPage',
-    component:()=>import("views/mypage/MyPage.vue")
+  {
+    path: '/mypage',
+    name: 'MyPage',
+    component: () => import("views/mypage/MyPage.vue")
   },
   {
     // 一级分类界面
@@ -116,7 +116,6 @@ router.beforeEach((to, from, next) => {
   const tokenStr=window.sessionStorage.getItem('token')
   // console.log(tokenStr);
   if (!tokenStr) {
-    console.log(123);
     store.dispatch('commitNavbarShow',true)
     if(auth.includes(to.fullPath)){
       return next('/login')

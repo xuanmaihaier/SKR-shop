@@ -154,7 +154,6 @@ export default {
     }
   }
 }
-
 .utility {
   height: 65px;
   width: 10%;
