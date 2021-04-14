@@ -66,13 +66,13 @@ export default {
         "招聘信息",
         "全球的",
       ],
-      followRoutes: [
+      followRoutes: [ // 改动 正确的
         "/about",
         "/advisory",
         "/partner",
+        "/terms",
         "/privacy",
         "/serviceCenter",
-        "/terms",
         "/offers",
         "/global",
       ],
@@ -91,6 +91,7 @@ export default {
   display: block;
   width: 100%;
   box-sizing: border-box;
+  padding-top: 90px;
   padding-bottom: 20px;
 }
 .footerNav {
