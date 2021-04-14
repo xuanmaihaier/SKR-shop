@@ -115,17 +115,18 @@ export default {
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
-      padding-top: 25px;
+      padding: 25px 0;
         li{
-         color: #333;
+         color: #999;
          height: 30px;
          line-height: 30px;
-         text-align: center;
          width: 30%;
          cursor: pointer;
+         
         }
         li:hover{
           color:#04bd9e ;
+          text-decoration: underline;
         }
      
     }
