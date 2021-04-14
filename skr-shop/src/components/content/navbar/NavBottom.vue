@@ -47,7 +47,7 @@ export default {
     return {
       top: 0,
       navRight: ["独家的", "WDNA", "事件", "最好的"],
-      navRightPath:['/exclusive'],
+      navRightPath:['/exclusive','wdna'],
       navIndex: 0,
       isChage: false,
     };

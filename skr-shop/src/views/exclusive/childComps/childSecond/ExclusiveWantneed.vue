@@ -45,6 +45,7 @@ export default {
 
 <style lang="less" scoped>
 .exclusive_wantneed {
+  margin-top: 7%;
   .tit_wantneed{
     transform: translateY(-100%);
   }

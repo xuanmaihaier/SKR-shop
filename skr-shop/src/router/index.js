@@ -17,26 +17,26 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: () => import("views/home/Home.vue"),
-
     children: [
       {
         path: '/service',
         component: () => import("components/common/adside/Service")
       },
-     
     ]
   },
+  // 登录
   {
     path: '/login',
     name: 'Login',
     component: () => import("views/login/Login.vue")
-
   },
+  // 详情
   {
-    path:'/details',
-    name:'Details',
-    component:()=>import("views/details/Details")
+    path: '/details',
+    name: 'Details',
+    component: () => import("views/details/Details")
   },
+  // 注册
   {
     path: '/signup',
     name: 'Signup',
@@ -48,6 +48,12 @@ const routes = [
     name: 'Exclusive',
     component: () => import("views/exclusive/Exclusive.vue")
 
+
+  },
+  {
+    path: '/wdna',
+    name: 'Wdna',
+    component: () => import("views/wdna/Wdna.vue")
   },
 {
     path:'/mypage',
