@@ -27,7 +27,7 @@
           <li
             v-for="(item, index) in navRight"
             :key="index"
-            @click="handleClick"
+            @click="handleClick(item)"
           >
             {{ item }}
           </li>
@@ -70,8 +70,9 @@ export default {
       this.$router.push(`/primary/${item}`)
     },
     //点击事件
-    handleClick() {
-      console.log(123);
+    handleClick(item) {
+      // console.log(123);
+   
     },
     affixChange() {
       this.isChage = !this.isChage;
