@@ -1,6 +1,6 @@
 <template>
   <div class="ipt">
-       <a-input-search placeholder="input search text" :style="inputStyle"  />
+       <a-input-search placeholder="input search text" :style="inputStyle"  @search="onSearch"/>
   </div>
 </template>
 
@@ -15,6 +15,11 @@ export default {
             }
         }
     },
+    methods: {
+        onSearch(val){
+            this.$router.push(`/search/${val}`)
+        }
+    }
 }
 </script>
 

@@ -56,16 +56,21 @@ const routes = [
     name: 'Wdna',
     component: () => import("views/wdna/Wdna.vue")
   },
-{
-    path:'/mypage',
-    name:'MyPage',
-    component:()=>import("views/mypage/MyPage.vue")
+  {
+    path: '/mypage',
+    name: 'MyPage',
+    component: () => import("views/mypage/MyPage.vue")
   },
   {
     // 一级分类界面
     path: '/primary/:id',
     name: 'Primary',
     component: () => import("views/primary/Primary.vue")
+  },
+  // 搜索
+  {
+    path: '/search/:word',
+    component: () => import("views/search/Search.vue")
   },
   // 底部路由跳转 
   {
@@ -113,7 +118,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   // ...
   const auth = ['/shopcar', '/mypage']
-  const tokenStr=window.sessionStorage.getItem('token')
+  const tokenStr = window.sessionStorage.getItem('token')
   if (auth.includes(to.fullPath)) {
     // console.log('验证token')
     if (!tokenStr) {
