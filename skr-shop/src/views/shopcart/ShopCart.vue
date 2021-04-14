@@ -111,7 +111,7 @@
     cursor pointer
     &:after
       opacity 1
-      content: '';   
+      content: ''   
       position: absolute;
       width: 9px;    
       height: 5px;
@@ -120,10 +120,7 @@
       left: 2px;
       border: 2px solid #000;
       border-top: none;
-      border-right: none;    
-      -webkit-transform: rotate(-45deg);
-      -moz-transform: rotate(-45deg);
-      -ms-transform: rotate(-45deg);
+      border-right: none;
       transform: rotate(-45deg);
 .fixed-width
   max-width 1200px
@@ -189,7 +186,7 @@
       height 140px
       border-bottom 1px solid #C3C3C3
       display flex 
-      justify-content start
+      justify-content flex-start
       align-items center
       padding 20px 0
       .checkbox-item
@@ -231,7 +228,7 @@
             color #000
           .fl
             display flex 
-            justify-content start
+            justify-content flex-start
             span 
               margin-right 20px
             .num
