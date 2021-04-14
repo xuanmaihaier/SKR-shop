@@ -1,9 +1,12 @@
 <template>
   <!-- 首页底部 -->
   <div class="footer_bar">
-    <div class="container footer">
+    <div class=" footer">
       <!-- 底部图片 -->
       <div class="inner">
+        <a href="javascript:;" v-for="(i,j) in img" :key="j">
+          <img :src="i.imgUrl" alt="" />
+        </a>
       </div>
       <!-- 底部信息 -->
       <div class="footer_content">
@@ -72,7 +75,7 @@
 
 <script>
 export default {
-  name:"FooterNav",
+  name: "FooterNav",
   data() {
     return {
       notice_one: [
@@ -92,6 +95,11 @@ export default {
         "招聘信息",
         "全球的",
       ],
+      img:[
+        { imgUrl: require("assets/img/following/pc_benefit_main.png")},
+        { imgUrl: require("assets/img/following/pc_benefit_main.png")},
+        { imgUrl: require("assets/img/following/pc_benefit_main.png")}
+      ]
     };
   },
 };
@@ -103,7 +111,7 @@ export default {
 .footer_bar {
   width: 100%;
   padding-top: 90px;
-  padding-bottom: 36px;
+  // padding-bottom: 36px;
 }
 #center() {
   .center {
@@ -120,9 +128,13 @@ export default {
   height: 130px;
   margin-bottom: 80px;
 }
+.inner img{
+  width: 33%;
+}
 .footer {
-  height: 500px; //===========
-  // background-color: skyblue;
+  width: 80%;
+  height: 500px; 
+  margin: 0 auto;
 }
 // 左侧
 .footer_content {
@@ -237,12 +249,12 @@ button {
   height: 87px;
   background-color: #e5e5e5;
 }
-@media screen and(max-width: 1400px){
-  .last_right{
+@media screen and(max-width: 1400px) {
+  .last_right {
     display: none;
   }
-  .footer_btn{
-    transform: scale(.8);
+  .footer_btn {
+    transform: scale(0.8);
   }
 }
 </style>

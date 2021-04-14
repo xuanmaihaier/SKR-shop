@@ -53,16 +53,16 @@ const routes = [
     component: () => import("components/common/Following/Partner.vue")
   },
   {
+    path: '/terms', // 服务条款
+    component: () => import("components/common/Following/Terms.vue")
+  },
+  {
     path: '/privacy', // 隐私政策
     component: () => import("components/common/Following/Privacy.vue")
   },
   {
     path: '/serviceCenter', // 服务中心
     component: () => import("components/common/Following/ServiceCenter.vue")
-  },
-  {
-    path: '/terms', // 服务条款
-    component: () => import("components/common/Following/Terms.vue")
   },
   {
     path: '/offers', // 招聘信息

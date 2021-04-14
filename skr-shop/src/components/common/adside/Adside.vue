@@ -136,7 +136,7 @@ export default {
           clearInterval(timer);
         }
         document.documentElement.scrollTop = now;
-      }, 16.7);
+      }, 10);
     },
   },
   mounted() {
