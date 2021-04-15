@@ -60,11 +60,12 @@
 </template>
 
 <script>
+import { userLogin } from "@/network/userJoin.js";
 export default {
   data() {
     return {
       imgShow: true,
-      userName: "",
+      userName: sessionStorage.getItem("remberName"),
       userPassWord: "",
       nameShow: false,
       passWordShow: false,
@@ -82,7 +83,32 @@ export default {
         this.passWordShow = true;
         return;
       }
-      this.$router.push("/home");
+      userLogin({
+        username: this.userName,
+        password: this.userPassWord,
+      }).then((res) => {
+        console.log(res);
+        if (res.code == 200) {
+          if (this.imgShow) {
+            sessionStorage.removeItem("remberName");
+          } else {
+            sessionStorage.setItem("remberName", this.userName);
+          }
+          sessionStorage.setItem("token", res.data.token);
+          this.$message.success("登录成功！祝您购物愉快😀");
+          if (sessionStorage.getItem("fristLogin")) { //判断是否由注册页跳转过来
+            sessionStorage.removeItem("fristLogin");
+            this.$router.push("/home");
+          } else {
+            this.$router.go(-1);
+          }
+        } else {
+          this.$message.error({
+            content: "用户名或密码错误，请重新输入！",
+            duration: 0.8,
+          });
+        }
+      });
     },
     showText(e) {
       if (e.target.id == "user") {
@@ -98,7 +124,7 @@ export default {
       } else if (e.target.id == "password") {
         e.target.placeholder = "请输入您的密码";
       }
-    }
+    },
   },
 };
 </script>

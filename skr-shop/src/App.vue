@@ -2,19 +2,26 @@
   <div id="app">
     <NavBar/>
     <router-view/>
+    <FooterNav/>
+    <Adside/>
+    <Loading/>
   </div>
 </template>
 <script>
-import NavBar from '@/components/content/navbar/NavBar.vue'
+import NavBar from 'components/content/navbar/NavBar.vue'
+import FooterNav from "components/common/footer/FooterNav"
+import Adside from "components/common/adside/Adside";
+import Loading from './components/common/loading/Loading.vue';
 export default {
   name:'App',
   components:{
-    NavBar
-
+    NavBar,
+    FooterNav,
+    Adside,
+    Loading,
   }
 }
-    NavBar
 </script>
-<style>                                                                          
+<style>
 @import url("./assets/css/params.less");
 </style>
