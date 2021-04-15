@@ -1,5 +1,6 @@
 <template>
   <div class="historyPage">
+    <!-- 侧边栏客服 -->
     <div class="his_head">
       <h2>客服小气</h2>
       <fork @click.native="handle()"></fork>

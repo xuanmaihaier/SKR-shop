@@ -4,7 +4,8 @@
     <carousel />
     <cet-nav />
     <hot-key-word />
-    <tab-btn />
+    <tab-btn @listTma='getChild' />
+    <thumnail :msg="msg" />
   </div>
 </template>
 
@@ -14,6 +15,7 @@ import Carousel from "./childComps/Carousel.vue";
 import CetNav from './childComps/CetNav.vue';
 import HotKeyWord from './childComps/HotKeyWord'
 import TabBtn from './childComps/TabBtn'
+import Thumnail from './childComps/Thumnail'
 export default {
   components: {
     // TopTitle,
@@ -22,9 +24,21 @@ export default {
     CetNav,
     HotKeyWord,
     TabBtn,
+    Thumnail
   },
+  data(){
+    return{
+      msg:"" // 接收Tab子组件的值 按钮的值
+    }
+  },
+  methods:{
+    getChild(val){
+      this.msg = val
+    }
+  }
 };
 </script>
 
 <style lang='less' scoped>
+
 </style>

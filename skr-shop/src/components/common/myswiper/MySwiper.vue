@@ -29,6 +29,7 @@ export default {
     swiperShow:{
       type:Boolean,
       default: true,
+
     }
   },
   data() {

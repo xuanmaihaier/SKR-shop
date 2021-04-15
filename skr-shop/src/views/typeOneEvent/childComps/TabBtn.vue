@@ -17,23 +17,22 @@
         </li>
       </ul>
       <p class="dropdown">
-        <a-dropdown :trigger="['click']">
+        <a-dropdown :trigger="['click']" class="dropdown_cet">
           <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
             진행중 이벤트 <a-icon type="down" />
           </a>
           <a-menu slot="overlay">
             <a-menu-item key="0">
-              <a href="">1st menu item</a>
+              <a href="">진행중 이벤트</a>
             </a-menu-item>
             <a-menu-item key="1">
-              <a href="http://www.taobao.com/">2nd menu item</a>
+              <a href="">진행중 이벤트</a>
             </a-menu-item>
-            <a-menu-divider />
-            <a-menu-item key="3"> 3rd menu item </a-menu-item>
           </a-menu>
         </a-dropdown>
       </p>
     </div>
+
   </div>
 </template>
 
@@ -49,6 +48,7 @@ export default {
   methods: {
     onbtn(index) {
       this.avtiveIndex = index;
+      this.$emit('listTma',this.btn[index])
     },
   },
 };
@@ -108,10 +108,18 @@ export default {
         border: none;
       }
     }
-    .dropdown{
-        width: 150px;
-        margin-right: 20px;
+    .dropdown {
+      width: 150px;
+      margin-right: 20px;
+      .dropdown_cet {
+        width: 100%;
+        // margin-left: 15px;
+        margin: auto;
+        line-height: 32px;
+        border: 1px solid #ccc;
+      }
     }
   }
 }
+
 </style>

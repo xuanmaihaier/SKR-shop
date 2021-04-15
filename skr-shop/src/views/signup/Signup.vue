@@ -1,5 +1,5 @@
 <template>
-  <div class="signup">
+  <div class="signup">  
     <!-- 注册大标题 -->
     <title-warp>注册</title-warp>
     <!-- 注册主体内容 -->

@@ -31,14 +31,14 @@ export default {
         "W컨셉에서만 만나볼 수 있는 #봄기운을 담은 백",
         "4월, 새롭게 주목할 #주얼리 브랜드 ",
       ],
-      txt:'',
+      txt: "",
     };
   },
-  methods:{
-      onipt(){
-          console.log(this.txt);
-      }
-  }
+  methods: {
+    onipt() {
+      console.log(this.txt);
+    },
+  },
 };
 </script>
 
@@ -123,6 +123,17 @@ export default {
         height: auto;
         font-size: 25px;
         line-height: 40px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 1600px) {
+  .hotkeyword {
+    height: 255px;
+    .hotkeyword-cont {
+      h3 {
+        width: 295px;
+        height: 100%;
       }
     }
   }

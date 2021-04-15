@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 侧边栏 -->
     <div class="side_menu" ref="sidemenu">
       <div class="side_M" ref="side_M">
         <!-- 客服窗口 -->
@@ -73,7 +74,6 @@ export default {
         this.flag = false;
         let tance = window.pageYOffset;
         this.animate(0, tance);
-
         setTimeout(() => {
           this.flag = true;
         }, 1500);
@@ -130,13 +130,13 @@ export default {
       // 动画函数
       var timer;
       timer = setInterval(function () {
-        now = now - (now - tan) / 20;
+        now = now - (now - tan) / 10;
         now = now - tan < 0 ? Math.ceil(now) : Math.floor(now);
         if (now == tan) {
           clearInterval(timer);
         }
         document.documentElement.scrollTop = now;
-      }, 16.7);
+      }, 10);
     },
   },
   mounted() {

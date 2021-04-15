@@ -1,17 +1,12 @@
 <template>
   <div class="eng" @mouseover="engraft" @mouseout="exgraft">
     <div class="conent">
-      <div class="left">
-        <ul v-for="(item, index) in listOne" :key="index">
-          <li>
-            <h2>{{ item.titleOne + navIndex }}</h2>
-          </li>
-          <li v-for="(data, indexs) in item.listTwo" :key="indexs">
-            <span>{{ data.title }}</span>
-            <span>{{ data.heat }}</span>
-          </li>
-        </ul>
-      </div>
+      <ul class="left">
+        <li v-for="(item, index) in listOne[navIndex]" :key="index">
+          {{item}}
+        </li>
+      </ul>
+
       <div class="right">
         <ul>
           <li v-for="(ListItem, index) in rightList" :key="index">
@@ -27,10 +22,12 @@
         </ul>
       </div>
     </div>
+    
   </div>
 </template>
 
 <script>
+import bus from "utils/bus";
 export default {
   name: "NavEng",
   props: {
@@ -41,55 +38,7 @@ export default {
   },
   data() {
     return {
-      listOne: [
-        {
-          titleOne: "刚抵达",
-          listTwo: [
-            {
-              title: "女性",
-              heat: 5614,
-            },
-            {
-              title: "男性",
-              heat: 7814,
-            },
-            {
-              title: "生活",
-              heat: 888,
-            },
-            {
-              title: "美丽",
-              heat: 122,
-            },
-          ],
-        },
-        {
-          titleOne: "新品牌",
-          listTwo: [
-            {
-              title: "标榜",
-            },
-            {
-              title: "银河集团",
-            },
-            {
-              title: "简单的",
-            },
-            {
-              title: "贝尔",
-            },
-            {
-              title: "贝尔",
-            },
-            {
-              title: "贝尔",
-            },
-            {
-              title: "贝尔",
-            },
-          ],
-        },
-      ],
+      listOne: [],
       rightList: [
         {
           url:
@@ -127,13 +76,20 @@ export default {
     };
   },
   methods: {
-    engraft(){
+    //移入
+    engraft() {
       this.$store.commit("changeShow", true);
     },
-      //移出
+    //移出
     exgraft() {
       this.$store.commit("changeShow", false);
-    }
+    },
+  },
+  mounted() {
+    bus.$on("typeTwo", (res) => {
+      this.listOne = res;
+      // console.log(this.listOne);
+    });
   },
 };
 </script>
@@ -141,48 +97,45 @@ export default {
 <style lang="less" scoped>
 .eng {
   position: relative;
-  z-index: 10;
+  z-index: 20;
   width: 100%;
-  height: 350px;
+  height: 300px;
+  animation: eng_ 1s;
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 1);
+
   .conent {
     width: 70%;
     height: 100%;
     margin: 0 auto;
-    .left,
+    .left {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      padding: 25px 0;
+        li{
+         color: #999;
+         height: 30px;
+         line-height: 30px;
+         width: 30%;
+         cursor: pointer;
+         
+        }
+        li:hover{
+          color:#04bd9e ;
+          text-decoration: underline;
+        }
+     
+    }
+
     .right {
       width: 50%;
       height: 100%;
-      //   background-color: red;
       display: flex;
       ul {
         flex: 1;
-        li {
-          height: 35px;
-          display: flex;
-          justify-content: space-evenly;
-          cursor: pointer;
-          //    padding: 0 30px 0 15px;
-          h2 {
-            text-align: center;
-            font-weight: 700;
-            font-size: 12px;
-          }
-          span {
-            font-size: 12px;
-            color: #333;
-          }
-          span:hover{
-            text-decoration: underline;
-          }
-        }
-      }
-    }
-   
-    .right {
-      width: 50%;
-      ul {
         padding: 25px 0;
         display: flex;
         overflow: hidden;
@@ -199,21 +152,38 @@ export default {
           }
           h2 {
             line-height: 30px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 12px;
           }
           p {
             line-height: 30px;
 
             span {
+              font-size: 12px;
+              color: #333;
               display: block;
               width: 100%;
               overflow: hidden;
               white-space: nowrap; /* 设置文本是否换行.. */
               text-overflow: ellipsis; /* 超出文本出现省略号代替 */
             }
+            span:hover {
+              text-decoration: underline;
+            }
           }
         }
       }
     }
+  }
+}
+
+@keyframes eng_ {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 </style>

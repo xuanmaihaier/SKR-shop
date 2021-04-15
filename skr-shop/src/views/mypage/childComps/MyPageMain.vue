@@ -67,11 +67,11 @@
       </div>
     </div>
 
-    <div style="height:372px;padding:50px 0">
+    <!-- <div style="height:372px;padding:50px 0">
       <div style="height:100%;background-color:#848484">
         <h1>底部占位</h1>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -104,6 +104,7 @@ export default {
 .myPageMain {
   margin: 0 auto;
   width: 1240px;
+  margin-bottom: 180px;
   .activityImg {
     margin-bottom: 60px;
     cursor: pointer;

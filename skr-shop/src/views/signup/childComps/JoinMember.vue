@@ -28,7 +28,7 @@ export default {
 
 <style lang="less" scoped>
 .joinMember{
-  margin: 0 auto;
+  margin: 0 auto 180px;
   width: 1240px;
 }
 </style>
