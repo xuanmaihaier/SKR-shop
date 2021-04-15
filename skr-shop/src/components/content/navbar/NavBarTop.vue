@@ -90,6 +90,7 @@ export default {
     position: relative;
     cursor: pointer;
     .icon{
+      min-width: 70px;
       width: calc(100%/3 - 15px);
       position: relative;
       .anticon{

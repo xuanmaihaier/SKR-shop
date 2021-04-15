@@ -51,8 +51,9 @@
       
     </div>
     <!-- 搜索 -->
-    <div class="nav_search" v-if="isChage" v-show="Search_Show">
-      <NavSearch></NavSearch>
+    <!--  -->
+    <div class="nav_search"  v-if="$store.state.SearchShow">
+      <NavSearch :focusFlag="focusFlag"></NavSearch>
     </div>
   </a-affix>
 </template>
@@ -70,7 +71,8 @@ export default {
       navRightPath: ["/exclusive", "/wdna"],
       navIndex: 0,
       isChage: false,
-      Search_Show:false
+      // Search_Show:false,
+      focusFlag:false
     };
   },
   props: {
@@ -105,8 +107,9 @@ export default {
     },
     // 搜索点击
     clickSearch(){
-      this.Search_Show = !this.Search_Show
-      console.log(123);
+      this.focusFlag = true
+      this.$store.dispatch("commitSearchShow", true);
+     
     }
   },
   mounted() {
@@ -179,12 +182,12 @@ export default {
 
 .nav_search{
   position: absolute;
-  top: 0;
+  top:0px;
   right: 5%;
   height: 65px;
   // width: 15%;
   padding-top: 12px;
-  animation: navs_search 1s linear;
+  animation: navs_search 0.5s linear;
   animation-fill-mode: forwards;
   .ipt{
     width: 100%;
