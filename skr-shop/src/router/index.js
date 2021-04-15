@@ -27,19 +27,20 @@ const routes = [
       },
     ]
   },
-  // 登录
+  // 详情
   {
     path: '/details/:id',
     name: 'Details',
     props: true,
     component: () => import("views/details/Details")
   },
-  // 详情
+  // 购物车
   {
     path: '/shopcart',
     name: 'ShopCart',
     component: () => import("views/shopcart/ShopCart")
   },
+  // 登录
   {
     path: '/login',
     name: 'Login',
@@ -117,11 +118,18 @@ const router = new VueRouter({
 
 //挂载路由导航守卫
 router.beforeEach((to, from, next) => {
-  store.dispatch('commitLoading', true)//loading出现
+  console.log(to,from);
+  store.dispatch('commitLoading', true)//loading出现  
   NProgress.start();//进度条开始加载
+  if(to.path=='/login'&&from.path=='/signup'){  // 判断是否由注册页跳转到登录页
+    sessionStorage.setItem('fristLogin',1)
+  }else{
+    sessionStorage.removeItem('fristLogin')
+  }
+ 
   setTimeout(() => {
     // ...
-    const auth = ['/shopcar', '/mypage']
+    const auth = ['/shopcart', '/mypage']
     const tokenStr = window.sessionStorage.getItem('token')
     // console.log(tokenStr);
     if (!tokenStr) {
@@ -137,7 +145,7 @@ router.beforeEach((to, from, next) => {
     }
   }, 1000);
 })
-router.afterEach(() => {
+router.afterEach((to,from) => {
   store.dispatch('commitLoading', false)//loading结束
   setTimeout(() => {
     NProgress.done();//进度条加载完毕
