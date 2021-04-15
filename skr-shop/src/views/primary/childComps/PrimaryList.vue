@@ -114,7 +114,6 @@ export default {
         let TypeOne = [];
         TypeOne = res.res;
         this.TypeOne = TypeOne;
-        console.log(this.TypeOne);
         this.TypeOneLength = res.res.length;
         // 价格从高到低的数据
         let TypeOneHeight = [];
