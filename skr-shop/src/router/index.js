@@ -29,21 +29,21 @@ const routes = [
   },
   // 登录
   {
-    path:'/details/:id',
-    name:'Details',
+    path: '/details/:id',
+    name: 'Details',
     props: true,
-    component:()=>import("views/details/Details")
+    component: () => import("views/details/Details")
   },
   // 详情
   {
-    path:'/shopcart',
-    name:'ShopCart',
-    component:()=>import("views/shopcart/ShopCart")
+    path: '/shopcart',
+    name: 'ShopCart',
+    component: () => import("views/shopcart/ShopCart")
   },
   {
-    path:'/login',
-    name:'Login',
-    component:()=>import("views/login/Login.vue")
+    path: '/login',
+    name: 'Login',
+    component: () => import("views/login/Login.vue")
   },
   // 注册
   {
@@ -117,24 +117,30 @@ const router = new VueRouter({
 
 //挂载路由导航守卫
 router.beforeEach((to, from, next) => {
-  NProgress.start();//加载进度条
+  // NProgress.start();//加载进度条
+  setTimeout(() => {
+    NProgress.start();//加载进度条
+  }, 100);
   // ...
   const auth = ['/shopcar', '/mypage']
-  const tokenStr=window.sessionStorage.getItem('token')
+  const tokenStr = window.sessionStorage.getItem('token')
   // console.log(tokenStr);
   if (!tokenStr) {
-    store.dispatch('commitNavbarShow',true)
-    if(auth.includes(to.fullPath)){
+    store.dispatch('commitNavbarShow', true)
+    if (auth.includes(to.fullPath)) {
       return next('/login')
     }
     return next()
   } else {
-    store.dispatch('commitNavbarShow',false)
+    store.dispatch('commitNavbarShow', false)
     console.log(store);
     next()
   }
 })
-router.afterEach(()=>{
-  NProgress.done();//进度条加载完毕
+router.afterEach(() => {
+  // NProgress.done();//进度条加载完毕
+  setTimeout(() => {
+    NProgress.done();//进度条加载完毕
+  }, 100);
 })
 export default router
