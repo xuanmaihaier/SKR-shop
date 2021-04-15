@@ -117,28 +117,28 @@ const router = new VueRouter({
 
 //挂载路由导航守卫
 router.beforeEach((to, from, next) => {
-  // NProgress.start();//加载进度条
+  store.dispatch('commitLoading', true)//loading出现
+  NProgress.start();//进度条开始加载
   setTimeout(() => {
-    NProgress.start();//加载进度条
-  }, 100);
-  // ...
-  const auth = ['/shopcar', '/mypage']
-  const tokenStr = window.sessionStorage.getItem('token')
-  // console.log(tokenStr);
-  if (!tokenStr) {
-    store.dispatch('commitNavbarShow', true)
-    if (auth.includes(to.fullPath)) {
-      return next('/login')
+    // ...
+    const auth = ['/shopcar', '/mypage']
+    const tokenStr = window.sessionStorage.getItem('token')
+    // console.log(tokenStr);
+    if (!tokenStr) {
+      store.dispatch('commitNavbarShow', true)
+      if (auth.includes(to.fullPath)) {
+        return next('/login')
+      }
+      return next()
+    } else {
+      store.dispatch('commitNavbarShow', false)
+      console.log(store);
+      next()
     }
-    return next()
-  } else {
-    store.dispatch('commitNavbarShow', false)
-    console.log(store);
-    next()
-  }
+  }, 1000);
 })
 router.afterEach(() => {
-  // NProgress.done();//进度条加载完毕
+  store.dispatch('commitLoading', false)//loading结束
   setTimeout(() => {
     NProgress.done();//进度条加载完毕
   }, 100);
