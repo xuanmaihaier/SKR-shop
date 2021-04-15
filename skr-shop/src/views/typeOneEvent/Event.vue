@@ -41,9 +41,8 @@ export default {
 </script>
 
 <style lang='less' scoped>
-.tab{
-  width: 85%;
+.event{
+  width: 97%;
   margin: auto;
 }
-
 </style>

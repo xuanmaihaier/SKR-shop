@@ -52,10 +52,13 @@ export default {
   ul {
     display: flex;
     flex-flow: wrap;
+    justify-content: space-between;
     width: 100%;
+    margin-bottom: 20px;
     li {
       width: 18%;
-      margin: 0 0 55px 20px;
+      // margin: 0 0 55px 20px;
+      margin-bottom: 10px;
       a {
         width: 100%;
         img {
