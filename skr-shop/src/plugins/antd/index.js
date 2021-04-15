@@ -4,9 +4,10 @@ import Vue from "vue"
 import {
     Button, Radio, Message, Input, Icon, Tabs, Affix, Card,Row,Col,List,Select,Pagination,Table,FormModel,Upload,Checkbox,PageHeader,Steps,
 } from "ant-design-vue"
+import operateCookie from "../operateCookie/operateCookie";
 // use使用
 const vueUse = {
-    Button, Radio, Input, Icon, Tabs, Affix, Card,Row,Col,List,Select,Pagination,Table,FormModel,Upload,Checkbox,PageHeader,Steps
+    Button, Radio, Input, Icon, Tabs, Affix, Card,Row,Col,List,Select,Pagination,Table,FormModel,operateCookie,Upload,Checkbox,PageHeader,Steps
 }
 Object.keys(vueUse).forEach(item => {
     Vue.use(vueUse[item])
