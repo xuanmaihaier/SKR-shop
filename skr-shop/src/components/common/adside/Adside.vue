@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 侧边栏 -->
     <div class="side_menu" ref="sidemenu">
       <div class="side_M" ref="side_M">
         <!-- 客服窗口 -->
@@ -36,35 +37,53 @@
     </div>
     <!-- 拓展页面 -->
     <div class="expand" ref="expand">
-      <router-view />
+      <!-- <router-view /> -->
+      <shopCar v-if="isShowService" @isCloseBar="isClose"></shopCar>
+      <service v-if="isShowHistory" @isCloseBar="isClose"></service>
     </div>
   </div>
 </template>
 
 <script>
+import shopCar from "./ShopCar";
+import service from "./Service";
 export default {
+  components: {
+    shopCar,
+    service,
+  },
   data() {
     return {
       isShowUp: false,
       isShowDown: true,
       //右侧页面的显示隐藏
       last: "",
+      isShowService: true,
+      isShowHistory: false,
+      flag: true, //节流阀
     };
   },
-  created() {
-   
-  },
   methods: {
+    isClose(val) {
+      // 侧边栏右上角按钮的点击事件
+      this.showExpanBar(val);
+    },
     returnTop() {
-      let tance = window.pageYOffset;
-      this.animate(0,tance)
+      // 返回顶部
+      if (this.flag) {
+        this.flag = false;
+        this.animateScroll(pageYOffset,0,()=>this.flag=true)
+      }
     },
     returnBottom() {
-      let tance = window.pageYOffset;
-      let bodyHeight = document.body.scrollHeight;
-      this.animate(bodyHeight,tance)
+      // 返回底部
+      if (this.flag) {
+        this.flag = false;
+        this.animateScroll(pageYOffset,document.body.scrollHeight,()=>this.flag=true)
+      }
     },
     showExpanBar(value) {
+      // value 为true，则显示侧边栏
       if (value) {
         this.$refs.expand.style.right = 0 + "px";
         this.$refs.sidemenu.style.right = 300 + "px";
@@ -80,7 +99,9 @@ export default {
         this.last = "";
       } else {
         this.showExpanBar(true);
-        this.$router.push("/service");
+        // this.$router.push("/service");
+        this.isShowService = true;
+        this.isShowHistory = false;
         this.last = a;
       }
     },
@@ -90,23 +111,13 @@ export default {
         this.last = "";
       } else {
         this.showExpanBar(true);
-        this.$router.push("/history");
+        // this.$router.push("/history");
+        this.isShowHistory = true;
+        this.isShowService = false;
         this.last = a;
       }
     },
-    animate(tan, now) {
-      var timer;
-      timer = setInterval(function () {
-        now = now - (now - tan) / 25;
-        now = now - tan < 0 ? Math.ceil(now) : Math.floor(now);
-        if (now == tan) {
-          clearInterval(timer);
-        }
-        document.documentElement.scrollTop = now;
-      }, 16.7);
-    },
   },
-
   mounted() {
     // 返回顶部、返回底部按钮的显示隐藏
     window.onscroll = function () {
@@ -117,20 +128,19 @@ export default {
       // 可视区高度
       let clientH = document.body.clientHeight;
       // console.log(scrollBar, bodyHeight, clientH);
-      if (scrollBar <= 100) {
+      if (scrollBar <= 19) {
         this.isShowUp = false;
       } else {
         this.isShowUp = true;
       }
-      if (clientH + scrollBar >= bodyHeight - 100) {
+      if (clientH + scrollBar >= bodyHeight - 19) {
         this.isShowDown = false;
       } else {
         this.isShowDown = true;
       }
     }.bind(this);
-    
   },
-};
+}
 </script>
 
 <style lang="less" scoped>
@@ -192,7 +202,6 @@ export default {
   width: 300px;
   height: 100vh;
   transition: all 0.7s;
-  border: 1px solid red;
   z-index: 999;
 }
 </style>

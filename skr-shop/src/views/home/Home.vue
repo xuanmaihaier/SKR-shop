@@ -43,7 +43,6 @@ import SwiperTab from "./childComps/SwiperTab";
 import ShopListTab from "./childComps/ShopListTab";
 import Footer from "./childComps/Footer";
 
-
 export default {
   name: "Home",
   components: {

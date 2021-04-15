@@ -7,9 +7,7 @@
                         <strong>{{ imgArrMiddle.num + index }}</strong>
                         <p>BEST</p>
                     </span>
-                    <div class="img">
                         <img :src="item" alt="" />
-                    </div>
                     <div class="textMax">
                         <div class="text_wrap">
                             <div class="brand">vunque</div>
@@ -58,16 +56,15 @@ export default {
     margin: 0 auto;
     background-color: #f2f2f2;
     .lst_middle {
-        padding: 50px 0 0 50px;
+        padding: 40px 0 0 21px;
     }
     ul {
         display: flex;
-        flex-wrap: wrap;
+        justify-content: space-around;
         margin-right: 21px;
         li{
-            width: calc((100% - 33px *4) / 4);
+            width: calc((100% / 4 - 4% )  );
             height: 549.66px;
-            margin: 0 33px 9px 0;
             position: relative;
             .icon_best {
                 width: 50px;
@@ -88,15 +85,11 @@ export default {
                     display: none;
                 }
             }
-            .img {
-                width: 260px;
-                height: 346.66px;
                 img {
                     width: 100%;
-                }
             }
             .textMax {
-                width: 260px;
+                width: 100%;
                 height: 186px;
                 .text_wrap {
                     height: 91px;

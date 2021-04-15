@@ -4,12 +4,10 @@
             <ul>
                 <li v-for="(item, index) in imgArrTop.imgs" :key="index">
                     <span class="icon_best">
-                        <strong>{{ ++index}}</strong>
+                        <strong>{{ ++index }}</strong>
                         <p>BEST</p>
                     </span>
-                    <div class="img">
-                        <img :src="item" alt="" />
-                    </div>
+                    <img :src="item" alt="" />
                     <div class="textMax">
                         <div class="text_wrap">
                             <div class="brand">LOEUVRE</div>
@@ -41,16 +39,15 @@
 </template>
 
 <script>
-
 export default {
-    props:{
-        imgArrTop:{
-            type:Object,
-            defalut:function(){
+    props: {
+        imgArrTop: {
+            type: Object,
+            defalut: function () {
                 return {};
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>
 
@@ -60,17 +57,16 @@ export default {
     margin: 0 auto;
     background-color: #f2f2f2;
     .lst_top {
-        padding: 50px 0 0 50px;
+        padding: 50px 20px 0 20px;
     }
     ul {
+        width: 100%;
         display: flex;
         flex-wrap: wrap;
-        // margin-right: -22px;
+        justify-content: space-around;
         li {
-           width: calc((100% - 50px * 3)/3);
-            // width: 346px;
+            width: calc((100% / 3 - 4%));
             height: 664.34px;
-            margin: 0 50px 19px 0;
             position: relative;
             .icon_best {
                 width: 70px;
@@ -95,15 +91,12 @@ export default {
                     font-family: "ProximaNova-Regular";
                 }
             }
-            .img {
-                width: 346px;
-                height: 461.34px;
-                img {
-                    width: 100%;
-                }
+            img {
+                width: 100%;
             }
+
             .textMax {
-                width: 346px;
+                width: 100%;
                 height: 186px;
                 .text_wrap {
                     height: 91px;
@@ -123,29 +116,29 @@ export default {
                         margin-bottom: 9px;
                         padding-top: 3px;
                     }
-                    .product{
+                    .product {
                         line-height: 15px;
                         color: #555;
                         overflow: hidden;
                         margin-bottom: 16px;
                     }
                 }
-                .price{
+                .price {
                     position: relative;
                     font-family: "ProximaNova-Regular";
                     line-height: 100%;
                     margin-bottom: 10px;
-                    .discount_price{
+                    .discount_price {
                         font-size: 16px;
                         color: #000 !important;
                         margin-right: 8px;
                     }
-                    .base_price{
+                    .base_price {
                         font-size: 12px;
                         color: #808080;
                         text-decoration: line-through;
                     }
-                    .discount_rate{
+                    .discount_rate {
                         display: block;
                         position: absolute;
                         top: 0;
@@ -154,7 +147,7 @@ export default {
                         color: #ff4000;
                     }
                 }
-                .reservation{
+                .reservation {
                     border: 1px solid #9b9b9b;
                     font-size: 12px;
                     text-align: center;
@@ -168,5 +161,4 @@ export default {
         }
     }
 }
-
 </style>

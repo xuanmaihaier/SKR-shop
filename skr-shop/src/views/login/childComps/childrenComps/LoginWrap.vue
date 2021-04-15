@@ -37,7 +37,7 @@
             width="32px"
             v-show="!imgShow"
           />
-          <label for="">记住账号</label>
+          <label>记住账号</label>
         </span>
         <div class="warning">
           <span v-show="nameShow">用户名不能为空</span>
@@ -60,15 +60,19 @@
 </template>
 
 <script>
+import { userLogin } from "@/network/userJoin.js";
 export default {
   data() {
     return {
       imgShow: true,
-      userName: "",
-      userPassWord: "",
+      userName: this.getCookie('username'),
+      userPassWord: this.getCookie('userPwd'),
       nameShow: false,
       passWordShow: false,
-    };
+    }
+  },
+  created() {
+    this.imgShow=this.getCookie('username')?false:true;
   },
   methods: {
     showImg() {
@@ -82,7 +86,35 @@ export default {
         this.passWordShow = true;
         return;
       }
-      this.$router.push("/home");
+      userLogin({
+        username: this.userName,
+        password: this.userPassWord,
+      }).then((res) => {
+        console.log(res);
+        if (res.code == 200) {
+          if (this.imgShow) {
+            this.delCookie('username')
+            this.delCookie('userPwd')
+          } else {
+            this.addCookie('username',this.userName,7)
+            this.addCookie('userPwd',this.userPassWord,7)
+          }
+          sessionStorage.setItem("token", res.data.token);
+          sessionStorage.setItem("userId", res.data.userInfo.id);
+          this.$message.success("登录成功！祝您购物愉快😀");
+          if (sessionStorage.getItem("fristLogin")) { //判断是否由注册页跳转过来
+            sessionStorage.removeItem("fristLogin");
+            this.$router.push("/home");
+          } else {
+            this.$router.go(-1);
+          }
+        } else {
+          this.$message.error({
+            content: "用户名或密码错误，请重新输入！",
+            duration: 0.8,
+          });
+        }
+      });
     },
     showText(e) {
       if (e.target.id == "user") {
@@ -98,7 +130,7 @@ export default {
       } else if (e.target.id == "password") {
         e.target.placeholder = "请输入您的密码";
       }
-    }
+    },
   },
 };
 </script>

@@ -41,6 +41,20 @@ export default {
                 imgs:[
                 "//image.wconcept.co.kr/productimg/image/img1/57/301252257.jpg?RS=300",
                 "//image.wconcept.co.kr/productimg/image/img1/04/301193004.jpg?RS=300",
+                "//image.wconcept.co.kr/productimg/image/img1/57/301252257.jpg?RS=300",
+                "//image.wconcept.co.kr/productimg/image/img1/04/301193004.jpg?RS=300",
+                "//image.wconcept.co.kr/productimg/image/img1/57/301252257.jpg?RS=300",
+                "//image.wconcept.co.kr/productimg/image/img1/04/301193004.jpg?RS=300",
+                "//image.wconcept.co.kr/productimg/image/img1/57/301252257.jpg?RS=300",
+                "//image.wconcept.co.kr/productimg/image/img1/04/301193004.jpg?RS=300",
+                "//image.wconcept.co.kr/productimg/image/img1/57/301252257.jpg?RS=300",
+                "//image.wconcept.co.kr/productimg/image/img1/04/301193004.jpg?RS=300",
+                "//image.wconcept.co.kr/productimg/image/img1/57/301252257.jpg?RS=300",
+                "//image.wconcept.co.kr/productimg/image/img1/04/301193004.jpg?RS=300",
+                "//image.wconcept.co.kr/productimg/image/img1/57/301252257.jpg?RS=300",
+                "//image.wconcept.co.kr/productimg/image/img1/04/301193004.jpg?RS=300",
+                "//image.wconcept.co.kr/productimg/image/img1/57/301252257.jpg?RS=300",
+                "//image.wconcept.co.kr/productimg/image/img1/04/301193004.jpg?RS=300",
             ]
             }
             

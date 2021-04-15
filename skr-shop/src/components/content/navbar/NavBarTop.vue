@@ -1,25 +1,38 @@
 <template>
   <div class="nav">
     <div class="navs" @click="handleClick">
-
-      <img src="../../../assets/images/log.png" alt="" />
+      <img src="~assets/img/logo/log.png" alt="" />
       <a-affix :offset-top="top">
-        <img src="../../../assets/images/log1.png" alt="" class="affixImg" />
+        <img src="~assets/img/logo/log1.png" alt="" class="affixImg" />
       </a-affix>
     </div>
     <nav-search></nav-search>
-    <div class="icons">
+    <div class="icons" v-if="$store.state.NavbarShow">
       <div class="icon">
-        <a-icon type="user" />
-        <span @click="goSignup">加入</span>
+        <a-icon type="user-add" />
+        <p @click="goSignup">加入</p>
       </div>
       <div class="icon">
-        <a-icon type="select" />
-        <span @click="goLogin">登录</span>
+        <a-icon type="login" />
+        <p @click="goLogin">登录</p>
       </div>
       <div class="icon">
         <a-icon type="shopping-cart" />
-        <span>0</span>
+        <p @click="goShopCart">0</p>
+      </div>
+    </div>
+    <div class="icons" v-else>
+      <div class="icon">
+        <a-icon type="logout" />
+        <p @click="outLogin">LOGOUT</p>
+      </div>
+      <div class="icon">
+        <a-icon type="user" />
+        <p @click="goMypage">MY</p>
+      </div>
+      <div class="icon">
+        <a-icon type="shopping-cart" />
+        <p @click="goShopCart">0</p>
       </div>
     </div>
   </div>
@@ -32,20 +45,48 @@ export default {
   components: { NavSearch },
   data() {
     return {
-      top:0
-    }
+      top: 0,
+      NavbarShow: false,
+    };
   },
   methods: {
-    goSignup(){
-      this.$router.push('/signup')
+    goSignup() {
+      this.$router.push("/signup");
     },
-    goLogin(){
-      this.$router.push('/login')
+    goLogin() {
+      this.$router.push("/login");
     },
 
-    handleClick(){
-      this.$router.push('/home')
-    }
+    handleClick() {
+      this.$router.push("/home");
+    },
+    outLogin() {
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("userId");
+      this.$store.dispatch("commitNavbarShow", true);
+      const auth = ["/shopcart", "/mypage"];
+      const tokenStr = window.sessionStorage.getItem("token");
+      if (!tokenStr) {
+        if (auth.includes(this.$route.path)) {
+          this.$router.push("/login");
+        }
+      }
+    },
+    goMypage() {
+      this.$router.push("/mypage");
+    },
+    goShopCart() {
+      if (sessionStorage.getItem("token")) {
+        this.$router.push("/shopcart");
+      } else {
+        this.$message.destroy();//解决多次点击显示多个弹窗
+        this.$message.warning({
+          content: "请先登录！",
+          duration: 1,
+        });
+        this.$router.push("/login");
+      }
+    },
   },
 };
 </script>
@@ -59,10 +100,10 @@ export default {
   overflow: hidden;
   .navs {
     cursor: pointer;
-    div{
-       /deep/ .ant-affix {
-      z-index: 999;
-    }
+    div {
+      /deep/ .ant-affix {
+        z-index: 999;
+      }
     }
   }
   > div {
@@ -72,27 +113,33 @@ export default {
   .icons {
     width: 15%;
     display: flex;
-  }
-}
-.icon {
-  margin: 0 10px;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-  i {
-    font-size: 20px;
-    transform: translate(20px, 10px);
-  }
-  span {
-    text-align: center;
-    display: block;
-    width: 32px;
-    transform: translate(-5px, 12px);
+    position: relative;
+    cursor: pointer;
+    .icon{
+      min-width: 70px;
+      width: calc(100%/3 - 15px);
+      position: relative;
+      .anticon {
+        font-size: 18px;
+        font-weight: 700;
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        padding-top: 5px;
+      }
+      p {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+    }
   }
 }
 
 .affixImg {
   position: relative;
- height: 60px;
+  height: 60px;
 }
 </style>

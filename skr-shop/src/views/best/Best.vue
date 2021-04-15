@@ -5,9 +5,9 @@
         </Title>
         <div class="topseller">
             <tab-item> </tab-item>
-            <!-- <div class="selects">
+            <div class="selects">
                 <Select />
-            </div> -->
+            </div>
 
             <Render />
         </div>
@@ -20,14 +20,14 @@
 <script>
 import Title from "components/common/title/Title";
 import TabItem from "./childComps/TabItem";
-// import Select from "./childComps/Select";
+import Select from "./childComps/Select";
 import Render from "./childComps/Render";
 import Pagination from "./childComps/Pagination"
 export default {
     components: {
         Title,
         TabItem,
-        // Select,
+        Select,
         Render,
         Pagination
     },
@@ -37,7 +37,7 @@ export default {
 <style lang="less" scoped>
 .topseller {
     width: 100%;
-    margin: 0 auto;
+    margin: 10px auto;
 }
 .selects {
     width: 82%;

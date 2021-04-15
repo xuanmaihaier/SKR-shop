@@ -6,15 +6,14 @@
                     <span class="icon_best">
                         <strong>{{ imgArrBottom.num + index }}</strong>
                     </span>
-                    <div class="img">
-                        <img :src="item" alt="" />
-                    </div>
+                    <img :src="item" alt="" />
                     <div class="textMax">
                         <div class="text_wrap">
                             <div class="brand">Dunst for WOMEN</div>
                             <div class="front">[04/23 예약배송]</div>
                             <div class="product">
-                                HALF-SLEEVES BELTED SUMMER-WOOL JACKET SOFT GREIGE_UDJA1E211G1
+                                HALF-SLEEVES BELTED SUMMER-WOOL JACKET SOFT
+                                GREIGE_UDJA1E211G1
                             </div>
                         </div>
                         <div class="price">
@@ -25,7 +24,7 @@
                         <p class="reservation">预定</p>
                         <div class="review_box">
                             <div class="graph">
-                                <span class="inner" style="width:98%"></span>
+                                <span class="inner" style="width: 98%"></span>
                             </div>
                             <div class="review_count"></div>
                         </div>
@@ -38,14 +37,14 @@
 
 <script>
 export default {
-     props:{
-        imgArrBottom:{
-            type:Object,
-            defalut:function(){
+    props: {
+        imgArrBottom: {
+            type: Object,
+            defalut: function () {
                 return {};
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>
 
@@ -87,15 +86,11 @@ export default {
                     font-family: "ProximaNova-Regular";
                 }
             }
-            .img {
-                width: 190px;
-                height: 253.34px;
-                img {
-                    width: 100%;
-                }
+            img {
+                width: 100%;
             }
             .textMax {
-                width: 190px;
+                width: 100%;
                 height: 186px;
                 .text_wrap {
                     height: 91px;
@@ -115,7 +110,7 @@ export default {
                         margin-bottom: 9px;
                         padding-top: 3px;
                     }
-                    .product{
+                    .product {
                         font-size: 12px;
                         height: 30px;
                         line-height: 15px;
@@ -124,22 +119,22 @@ export default {
                         margin-bottom: 16px;
                     }
                 }
-                .price{
+                .price {
                     position: relative;
                     font-family: "ProximaNova-Regular";
                     line-height: 100%;
                     margin-bottom: 10px;
-                    .discount_price{
+                    .discount_price {
                         font-size: 16px;
                         color: #000 !important;
                         margin-right: 8px;
                     }
-                    .base_price{
+                    .base_price {
                         font-size: 12px;
                         color: #808080;
                         text-decoration: line-through;
                     }
-                    .discount_rate{
+                    .discount_rate {
                         display: block;
                         position: absolute;
                         top: 0;
@@ -148,7 +143,7 @@ export default {
                         color: #ff4000;
                     }
                 }
-                .reservation{
+                .reservation {
                     border: 1px solid #9b9b9b;
                     font-size: 12px;
                     text-align: center;
@@ -162,5 +157,4 @@ export default {
         }
     }
 }
-
 </style>
