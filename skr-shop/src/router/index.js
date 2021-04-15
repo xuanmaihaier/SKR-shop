@@ -48,6 +48,11 @@ const routes = [
     path:'/mypage',
     name:'MyPage',
     component:()=>import("views/mypage/MyPage.vue")
+  },
+  {
+    path:'/:item',
+    name:'Best',
+    component:()=>import("views/best/Best.vue")
   }
 ]
 
