@@ -1,11 +1,18 @@
 <template>
   <div class="ipt">
-       <a-input-search placeholder="input search text" :style="inputStyle"  />
+       <a-input-search placeholder="input search text" :style="inputStyle"  ref="input" @blur="changeFcous"/>
+      
   </div>
 </template>
 
 <script>
 export default {
+    props:{
+        focusFlag:{
+            type:Boolean,
+            default:false
+        }
+    },
     data() {
         return {
             inputStyle:{
@@ -15,6 +22,23 @@ export default {
             }
         }
     },
+    methods: {
+        // 聚焦
+        onFcous(){
+                  this.$refs.input.focus()
+        },
+        // 失去焦点
+        changeFcous(){
+            this.$store.dispatch("commitSearchShow", false);
+        }
+    },
+   mounted() {
+       if(this.focusFlag){
+           this.onFcous()
+       }
+   },
+ 
+  
 }
 </script>
 
