@@ -118,7 +118,7 @@ const router = new VueRouter({
 
 //挂载路由导航守卫
 router.beforeEach((to, from, next) => {
-  console.log(to,from);
+  // console.log(to,from);
   store.dispatch('commitLoading', true)//loading出现  
   NProgress.start();//进度条开始加载
   if(to.path=='/login'&&from.path=='/signup'){  // 判断是否由注册页跳转到登录页
@@ -140,7 +140,7 @@ router.beforeEach((to, from, next) => {
       return next()
     } else {
       store.dispatch('commitNavbarShow', false)
-      console.log(store);
+      // console.log(store);
       next()
     }
   }, 1000);
