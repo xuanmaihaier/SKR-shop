@@ -114,8 +114,9 @@ export default {
     display: flex;
     position: relative;
     cursor: pointer;
-    .icon {
-      width: calc(100% / 3 - 15px);
+    .icon{
+      min-width: 70px;
+      width: calc(100%/3 - 15px);
       position: relative;
       .anticon {
         font-size: 18px;

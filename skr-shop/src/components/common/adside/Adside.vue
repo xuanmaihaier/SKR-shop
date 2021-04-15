@@ -125,7 +125,7 @@ export default {
         this.isShowService = false;
         this.last = a;
       }
-    },
+    },                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
     animate(tan, now) {
       // 动画函数
       var timer;
@@ -160,7 +160,6 @@ export default {
         this.isShowDown = true;
       }
     }.bind(this);
-    
   },
 };
 </script>

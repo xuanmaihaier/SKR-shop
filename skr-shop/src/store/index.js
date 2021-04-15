@@ -8,8 +8,8 @@ let store= new Vuex.Store({
     // NavBarTop 的显示隐藏
     NavbarShow:true,
     isShow: false,
-    loadingStatus: false //loading全局开关
-
+    loadingStatus: false, //loading全局开关。
+    SearchShow:false  //Navbottom 的Search 的显示隐藏
   },
   mutations: {
     changeShow(state, value) {
@@ -20,6 +20,9 @@ let store= new Vuex.Store({
     },
     changeNavbarShow(state, val){
       state.NavbarShow = val
+    },
+    changeSearchShow(state, val){
+      state.SearchShow = val
     }
   },
   actions: {
@@ -34,7 +37,11 @@ let store= new Vuex.Store({
     //更改NavbarShow
     commitNavbarShow(store,val){
       store.commit('changeNavbarShow',val)
-    }
+    },
+    // 更改SearchShow
+    commitSearchShow(store,val){
+      store.commit('changeSearchShow',val)
+    },
   },
   modules: {
   }
