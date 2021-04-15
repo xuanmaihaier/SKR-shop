@@ -17,7 +17,9 @@ export default {
     },
     methods: {
         onSearch(val){
-            this.$router.push(`/search/${val}`)
+            if(val.length != 0){
+                this.$router.push(`/search/${val}`)
+            }
         }
     }
 }
