@@ -112,6 +112,75 @@
         </li>
       </ul>
     </div>
+    <div class="problem">
+      <div class="pro_left">
+        <div class="left_title">
+          <h3>十大常见问题</h3>
+          <span>+</span>
+        </div>
+        <div class="left_main">
+          <p>
+            <span>Q1</span> <font>[开具证明文件]如何申请开具现金收据？</font>
+          </p>
+          <p>
+            <span>Q1</span> <font>[开具证明文件]如何申请开具现金收据？</font>
+          </p>
+          <p>
+            <span>Q1</span> <font>[开具证明文件]如何申请开具现金收据？</font>
+          </p>
+          <p>
+            <span>Q1</span> <font>[开具证明文件]如何申请开具现金收据？</font>
+          </p>
+          <p>
+            <span>Q1</span> <font>[开具证明文件]如何申请开具现金收据？</font>
+          </p>
+          <p>
+            <span>Q1</span> <font>[开具证明文件]如何申请开具现金收据？</font>
+          </p>
+          <p>
+            <span>Q1</span> <font>[开具证明文件]如何申请开具现金收据？</font>
+          </p>
+          <p>
+            <span>Q1</span> <font>[开具证明文件]如何申请开具现金收据？</font>
+          </p>
+        </div>
+      </div>
+      <div class="pro_right">
+        <div class="left_title">
+          <h3>活动获奖者公告</h3>
+          <span>+</span>
+        </div>
+        <div class="left_main">
+          <p>
+            <span>Q1</span> <font>[开具证明文件]如何申请开具现金收据？</font>
+          </p>
+          <p>
+            <span>Q1</span> <font>[开具证明文件]如何申请开具现金收据？</font>
+          </p>
+          <p>
+            <span>Q1</span> <font>[开具证明文件]如何申请开具现金收据？</font>
+          </p>
+           <p>
+            <span>Q1</span> <font>[开具证明文件]如何申请开具现金收据？</font>
+          </p>
+        </div>
+        <div class="left_title">
+          <h3>消息</h3>
+          <span>+</span>
+        </div>
+        <div class="left_main">
+          <p>
+            <span>Q1</span> <font>[开具证明文件]如何申请开具现金收据？</font>
+          </p>
+          <p>
+            <span>Q1</span> <font>[开具证明文件]如何申请开具现金收据？</font>
+          </p>
+          <p>
+            <span>Q1</span> <font>[开具证明文件]如何申请开具现金收据？</font>
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -263,7 +332,7 @@ export default {
         color: #333;
         width: 100%;
       }
-      li{
+      li {
         position: relative;
       }
       li::after {
@@ -275,8 +344,49 @@ export default {
         top: 8px;
         left: 50%;
         margin-left: -40px;
-        background: url("../../../assets/img/following/icon_quick.png") 50% 50% no-repeat;
+        background: url("../../../assets/img/following/icon_quick.png") 50% 50%
+          no-repeat;
         background-position: 10px 10px;
+      }
+    }
+  }
+  .problem {
+    width: 80%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .pro_left,
+    .pro_right {
+      width: 50%;
+      padding: 10px;
+    }
+    .pro_left,
+    .pro_right {
+      .left_title {
+        padding-bottom: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 26px;
+        border-bottom: 2px solid #333;
+        span {
+          font-size: 32px;
+        }
+      }
+      .left_main {
+        p {
+          height: 40px;
+          line-height: 40px;
+          font-size: 14px;
+          border-bottom: 1px solid #ececec;
+          span {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+          }
+        }
       }
     }
   }

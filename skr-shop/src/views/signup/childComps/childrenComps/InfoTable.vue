@@ -120,12 +120,12 @@ export default {
         email: this.email,
       }).then((res) => {
         console.log(res);
-        if(res.code == 501){
+        if (res.code == 501) {
           this.$message.error({
-            content:'用户名已被注册，请重新输入！',
-            duration:.5
+            content: "用户名已被注册，请重新输入！",
+            duration: 0.5,
           });
-          return
+          return;
         }
         this.$emit("successedBtn", true);
         this.disabled = true;
