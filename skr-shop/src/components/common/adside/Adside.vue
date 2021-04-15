@@ -160,7 +160,6 @@ export default {
         this.isShowDown = true;
       }
     }.bind(this);
-    
   },
 };
 </script>
