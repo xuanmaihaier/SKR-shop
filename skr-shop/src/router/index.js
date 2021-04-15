@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store/index.js'
+// NProgress 加载进度条
+import NProgress from '../plugins/nprogress/index'
+
 Vue.use(VueRouter)
 // 导航冗余报错解决
 const originalPush = VueRouter.prototype.push
@@ -23,13 +26,25 @@ const routes = [{
       component: () => import("components/common/adside/Service")
     }, ]
   },
+  // 详情
+  {
+    path: '/details/:id',
+    name: 'Details',
+    props: true,
+    component: () => import("views/details/Details")
+  },
+  // 购物车
+  {
+    path: '/shopcart',
+    name: 'ShopCart',
+    component: () => import("views/shopcart/ShopCart")
+  },
   // 登录
   {
     path: '/login',
     name: 'Login',
     component: () => import("views/login/Login.vue")
   },
-  // 详情
   {
 
     path: '/signup',
@@ -61,7 +76,6 @@ const routes = [{
     path: '/exclusive',
     name: 'Exclusive',
     component: () => import("views/exclusive/Exclusive.vue")
-
   },
   //WDNA
   {
@@ -122,8 +136,6 @@ const routes = [{
   },
 ]
 
-
-
 const router = new VueRouter({
   mode: 'history',
   routes
@@ -147,7 +159,38 @@ router.beforeEach((to, from, next) => {
     store.dispatch('commitNavbarShow', false)
     console.log(store);
     next()
+  // console.log(to,from);
+  store.dispatch('commitLoading', true)//loading出现  
+  NProgress.start();//进度条开始加载
+  if(to.path=='/login'&&from.path=='/signup'){  // 判断是否由注册页跳转到登录页
+    sessionStorage.setItem('fristLogin',1)
+  }else{
+    sessionStorage.removeItem('fristLogin')
   }
+}
+  setTimeout(() => {
+    // ...
+    const auth = ['/shopcart', '/mypage']
+    const tokenStr = window.sessionStorage.getItem('token')
+    // console.log(tokenStr);
+    if (!tokenStr) {
+      store.dispatch('commitNavbarShow', true)
+      if (auth.includes(to.fullPath)) {
+        return next('/login')
+      }
+      return next()
+    } else {
+      store.dispatch('commitNavbarShow', false)
+      // console.log(store);
+      next()
+    }
+  }, 1000);
+})
+router.afterEach((to,from) => {
+  store.dispatch('commitLoading', false)//loading结束
+  setTimeout(() => {
+    NProgress.done();//进度条加载完毕
+  }, 100);
 })
 
 export default router
