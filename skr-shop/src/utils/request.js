@@ -2,7 +2,7 @@ import axios from 'axios'
 import store from '../store/index'
 const instance = axios.create({
   baseURL: process.env.VUE_APP_BASE_URL,
-  timeout: 5000
+  timeout: 2000
 })
 
 instance.interceptors.request.use(config => {
@@ -16,7 +16,7 @@ instance.interceptors.response.use(response => {
   return response.data
 },
   error => {
-    console.log(error)
+    // console.log(error)
     store.dispatch('commitLoading', false)
     return new Promise(() => { })
   }

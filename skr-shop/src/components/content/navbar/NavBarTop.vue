@@ -62,6 +62,7 @@ export default {
     },
     outLogin() {
       sessionStorage.removeItem("token");
+      sessionStorage.removeItem("userId");
       this.$store.dispatch("commitNavbarShow", true);
       const auth = ["/shopcart", "/mypage"];
       const tokenStr = window.sessionStorage.getItem("token");
