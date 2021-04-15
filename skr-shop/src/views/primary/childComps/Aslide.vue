@@ -1,13 +1,12 @@
 <template>
   <div class="Aslide">
     <div class="mask">
-      <p>DATA</p>
-      <p>this is item</p>
-      <span>second item</span>
+      <p>{{$route.params.id}}</p>
+      <span>stride.fun</span>
     </div>
     <div>
       <div class="header">
-        <p>ITEM</p>
+        <p>类别</p>
       </div>
       <a-list item-layout="horizontal" :data-source="data">
         <a-list-item slot="renderItem" slot-scope="item, index">
