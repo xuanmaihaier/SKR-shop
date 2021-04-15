@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store/index.js'
+// NProgress 加载进度条
+import NProgress from '../plugins/nprogress/index'
+
 Vue.use(VueRouter)
 // 导航冗余报错解决
 const originalPush = VueRouter.prototype.push
@@ -53,8 +56,6 @@ const routes = [
     path: '/exclusive',
     name: 'Exclusive',
     component: () => import("views/exclusive/Exclusive.vue")
-
-
   },
   //WDNA
   {
@@ -62,6 +63,7 @@ const routes = [
     name: 'Wdna',
     component: () => import("views/wdna/Wdna.vue")
   },
+  // 个人中心
   {
     path: '/mypage',
     name: 'MyPage',
@@ -108,8 +110,6 @@ const routes = [
   },
 ]
 
-
-
 const router = new VueRouter({
   mode: 'history',
   routes
@@ -117,6 +117,7 @@ const router = new VueRouter({
 
 //挂载路由导航守卫
 router.beforeEach((to, from, next) => {
+  NProgress.start();//加载进度条
   // ...
   const auth = ['/shopcar', '/mypage']
   const tokenStr=window.sessionStorage.getItem('token')
@@ -128,10 +129,12 @@ router.beforeEach((to, from, next) => {
     }
     return next()
   } else {
-   
     store.dispatch('commitNavbarShow',false)
     console.log(store);
     next()
   }
+})
+router.afterEach(()=>{
+  NProgress.done();//进度条加载完毕
 })
 export default router
