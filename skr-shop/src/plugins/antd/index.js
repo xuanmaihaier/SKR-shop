@@ -12,6 +12,3 @@ Object.keys(vueUse).forEach(item => {
     Vue.use(vueUse[item])
 })
 Vue.prototype.$message = Message
-
-
-
