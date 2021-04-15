@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import {getTypeOneList} from "network/getList"
 import Title from "components/common/title/Title.vue";
 import Tag from "components/content/tag/Tag.vue";
 import Aslide from "./childComps/Aslide.vue";
