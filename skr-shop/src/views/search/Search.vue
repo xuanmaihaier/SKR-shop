@@ -1,15 +1,20 @@
 <template>
   <div class="search">
-      <h1>我是搜索页面</h1>
+      <!-- 显示搜索个数，再次搜索 -->
+      <AgainSearch></AgainSearch>
   </div>
 </template>
 
 <script>
+import AgainSearch from './childComps/AgainSearch.vue'
 export default {
-
+  name: 'Search',
+  components: {
+    AgainSearch
+  }
 }
 </script>
 
-<style>
+<style lang="less" scoped>
 
 </style>

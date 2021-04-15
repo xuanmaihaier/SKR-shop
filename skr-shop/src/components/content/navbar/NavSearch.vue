@@ -1,5 +1,6 @@
 <template>
   <div class="ipt">
+      <!-- 只有搜索二级分类 -->
        <a-input-search placeholder="input search text" :style="inputStyle"  @search="onSearch"/>
   </div>
 </template>
