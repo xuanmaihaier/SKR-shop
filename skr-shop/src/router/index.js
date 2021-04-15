@@ -159,15 +159,15 @@ router.beforeEach((to, from, next) => {
     store.dispatch('commitNavbarShow', false)
     console.log(store);
     next()
-  // console.log(to,from);
-  store.dispatch('commitLoading', true)//loading出现  
-  NProgress.start();//进度条开始加载
-  if(to.path=='/login'&&from.path=='/signup'){  // 判断是否由注册页跳转到登录页
-    sessionStorage.setItem('fristLogin',1)
-  }else{
-    sessionStorage.removeItem('fristLogin')
+    // console.log(to,from);
+    store.dispatch('commitLoading', true) //loading出现  
+    NProgress.start(); //进度条开始加载
+    if (to.path == '/login' && from.path == '/signup') { // 判断是否由注册页跳转到登录页
+      sessionStorage.setItem('fristLogin', 1)
+    } else {
+      sessionStorage.removeItem('fristLogin')
+    }
   }
-}
   setTimeout(() => {
     // ...
     const auth = ['/shopcart', '/mypage']
@@ -186,10 +186,10 @@ router.beforeEach((to, from, next) => {
     }
   }, 1000);
 })
-router.afterEach((to,from) => {
-  store.dispatch('commitLoading', false)//loading结束
+router.afterEach((to, from) => {
+  store.dispatch('commitLoading', false) //loading结束
   setTimeout(() => {
-    NProgress.done();//进度条加载完毕
+    NProgress.done(); //进度条加载完毕
   }, 100);
 })
 

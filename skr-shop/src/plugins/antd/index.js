@@ -3,6 +3,7 @@ import Vue from "vue"
 import {
     Button, Radio, Message, Input, Icon, Tabs, Affix, Card,Row,Col,List,Select,Pagination,Dropdown,Menu,Table,FormModel,Upload,Checkbox,PageHeader,Steps,
 } from "ant-design-vue"
+import operateCookie from "../operateCookie/operateCookie";
 // use使用
 const vueUse = {
     Button, Radio, Input, Icon, Tabs, Affix, Card,Row,Col,List,Select,Pagination,Dropdown,Menu,Table,FormModel,Upload,Checkbox,PageHeader,Steps,
