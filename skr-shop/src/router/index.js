@@ -26,15 +26,21 @@ const routes = [
   },
   // 登录
   {
-    path: '/login',
-    name: 'Login',
-    component: () => import("views/login/Login.vue")
+    path:'/details/:id',
+    name:'Details',
+    props: true,
+    component:()=>import("views/details/Details")
   },
   // 详情
   {
-    path: '/details',
-    name: 'Details',
-    component: () => import("views/details/Details")
+    path:'/shopcart',
+    name:'ShopCart',
+    component:()=>import("views/shopcart/ShopCart")
+  },
+  {
+    path:'/login',
+    name:'Login',
+    component:()=>import("views/login/Login.vue")
   },
   // 注册
   {
