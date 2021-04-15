@@ -2,7 +2,7 @@ import Vue from "vue"
 // 按需引入
 
 import {
-    Button, Radio, Message, Input, Icon, Tabs, Affix, Card,Row,Col,List,Select,Pagination,Table,FormModel,Upload,Checkbox,PageHeader,Steps
+    Button, Radio, Message, Input, Icon, Tabs, Affix, Card,Row,Col,List,Select,Pagination,Table,FormModel,Upload,Checkbox,PageHeader,Steps,
 } from "ant-design-vue"
 // use使用
 const vueUse = {
