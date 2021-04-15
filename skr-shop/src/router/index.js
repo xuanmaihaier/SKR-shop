@@ -119,36 +119,28 @@ const router = new VueRouter({
 //挂载路由导航守卫
 router.beforeEach((to, from, next) => {
   // console.log(to,from);
-  store.dispatch('commitLoading', true)//loading出现  
   NProgress.start();//进度条开始加载
-  if(to.path=='/login'&&from.path=='/signup'){  // 判断是否由注册页跳转到登录页
-    sessionStorage.setItem('fristLogin',1)
-  }else{
+  if (to.path == '/login' && from.path == '/signup') {  // 判断是否由注册页跳转到登录页
+    sessionStorage.setItem('fristLogin', 1)
+  } else {
     sessionStorage.removeItem('fristLogin')
   }
- 
-  setTimeout(() => {
-    // ...
-    const auth = ['/shopcart', '/mypage']
-    const tokenStr = window.sessionStorage.getItem('token')
-    // console.log(tokenStr);
-    if (!tokenStr) {
-      store.dispatch('commitNavbarShow', true)
-      if (auth.includes(to.fullPath)) {
-        return next('/login')
-      }
-      return next()
-    } else {
-      store.dispatch('commitNavbarShow', false)
-      // console.log(store);
-      next()
+  // ...
+  const auth = ['/shopcart', '/mypage']
+  const tokenStr = window.sessionStorage.getItem('token')
+  // console.log(tokenStr);
+  if (!tokenStr) {
+    if (auth.includes(to.fullPath)) {
+      return next('/login')
     }
-  }, 1000);
+    return next()
+  } else {
+    // console.log(store);
+    next()
+  }
+
 })
-router.afterEach((to,from) => {
-  store.dispatch('commitLoading', false)//loading结束
-  setTimeout(() => {
+router.afterEach((to, from) => {
     NProgress.done();//进度条加载完毕
-  }, 100);
 })
 export default router
