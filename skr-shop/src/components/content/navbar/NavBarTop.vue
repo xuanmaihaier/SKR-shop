@@ -1,9 +1,9 @@
 <template>
   <div class="nav">
     <div class="navs" @click="handleClick">
-      <img src="../../../assets/images/log.png" alt="" />
+      <img src="~assets/img/logo/log.png" alt="" />
       <a-affix :offset-top="top">
-        <img src="../../../assets/images/log1.png" alt="" class="affixImg" />
+        <img src="~assets/img/logo/log1.png" alt="" class="affixImg" />
       </a-affix>
     </div>
     <nav-search></nav-search>
