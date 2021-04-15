@@ -3,8 +3,9 @@
     <swiper ref="MySwiper" :options="MySwiper">
       <swiper-slide v-for="(item, index) in imgs" :key="index">
         <img alt="example" :src="item" />
+        <slot></slot>
       </swiper-slide>
-      <div class="swiper-pagination" slot="pagination"></div>
+      <div class="swiper-pagination" slot="pagination" v-show="swiperShow"></div>
       　　
       <div class="swiper-button-prev" slot="button-prev"></div>
       　　
@@ -24,6 +25,11 @@ export default {
     Mystyle:{
       type:Object,
       default: () => {},
+    },
+    swiperShow:{
+      type:Boolean,
+      default: true,
+
     }
   },
   data() {
@@ -64,7 +70,10 @@ export default {
   position: relative;
   cursor: pointer;
   height: 100%;
- 
+ img{
+   width: 100%;
+   height: 100%;
+ }
 }
 .swiper-container {
   width: 100%;
