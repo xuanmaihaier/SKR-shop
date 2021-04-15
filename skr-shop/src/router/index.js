@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store/index.js'
+// NProgress 加载进度条
+import NProgress from '../plugins/nprogress/index'
+
 Vue.use(VueRouter)
 // 导航冗余报错解决
 const originalPush = VueRouter.prototype.push
@@ -26,15 +29,21 @@ const routes = [
   },
   // 登录
   {
-    path: '/login',
-    name: 'Login',
-    component: () => import("views/login/Login.vue")
+    path: '/details/:id',
+    name: 'Details',
+    props: true,
+    component: () => import("views/details/Details")
   },
   // 详情
   {
-    path: '/details',
-    name: 'Details',
-    component: () => import("views/details/Details")
+    path: '/shopcart',
+    name: 'ShopCart',
+    component: () => import("views/shopcart/ShopCart")
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import("views/login/Login.vue")
   },
   // 注册
   {
@@ -47,8 +56,6 @@ const routes = [
     path: '/exclusive',
     name: 'Exclusive',
     component: () => import("views/exclusive/Exclusive.vue")
-
-
   },
   //WDNA
   {
@@ -56,6 +63,7 @@ const routes = [
     name: 'Wdna',
     component: () => import("views/wdna/Wdna.vue")
   },
+  // 个人中心
   {
     path: '/mypage',
     name: 'MyPage',
@@ -107,8 +115,6 @@ const routes = [
   },
 ]
 
-
-
 const router = new VueRouter({
   mode: 'history',
   routes
@@ -116,21 +122,30 @@ const router = new VueRouter({
 
 //挂载路由导航守卫
 router.beforeEach((to, from, next) => {
-  // ...
-  const auth = ['/shopcar', '/mypage']
-  const tokenStr=window.sessionStorage.getItem('token')
-  // console.log(tokenStr);
-  if (!tokenStr) {
-    store.dispatch('commitNavbarShow',true)
-    if(auth.includes(to.fullPath)){
-      return next('/login')
+  store.dispatch('commitLoading', true)//loading出现
+  NProgress.start();//进度条开始加载
+  setTimeout(() => {
+    // ...
+    const auth = ['/shopcar', '/mypage']
+    const tokenStr = window.sessionStorage.getItem('token')
+    // console.log(tokenStr);
+    if (!tokenStr) {
+      store.dispatch('commitNavbarShow', true)
+      if (auth.includes(to.fullPath)) {
+        return next('/login')
+      }
+      return next()
+    } else {
+      store.dispatch('commitNavbarShow', false)
+      console.log(store);
+      next()
     }
-    return next()
-  } else {
-   
-    store.dispatch('commitNavbarShow',false)
-    console.log(store);
-    next()
-  }
+  }, 1000);
+})
+router.afterEach(() => {
+  store.dispatch('commitLoading', false)//loading结束
+  setTimeout(() => {
+    NProgress.done();//进度条加载完毕
+  }, 100);
 })
 export default router
