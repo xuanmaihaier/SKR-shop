@@ -93,6 +93,12 @@ const routes = [
     name: 'MyPage',
     component: () => import("views/mypage/MyPage.vue")
   },
+  // 二级数据
+  {
+    path: "/secondary/:id",
+    name: "SeconDary",
+    component: () => import("../views/secondary/SeconDary.vue")
+  },
   // 底部路由跳转 
   {
     path: '/about', // 关于我们

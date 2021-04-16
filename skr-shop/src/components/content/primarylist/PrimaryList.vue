@@ -40,8 +40,8 @@
         <a-card
           hoverable
           class="card"
-          v-for="(item, index) in TypeOne.slice(sliceStart, sliceEnd)"
-          :key="item.id"
+          v-for="(item, index) in TypeOne_init.slice(sliceStart, sliceEnd)"
+          :key="index"
           @click="itemClick(item.id)"
         >
           <img slot="cover" alt="example" :src="item.img" />
@@ -67,8 +67,7 @@
 
 <script>
 // by stride
-import { getTypeOneList } from "network/getList";
-import bus from "utils/bus";
+// 一级二级列表渲染
 export default {
   name: "PrimaryList",
   data() {
@@ -77,10 +76,6 @@ export default {
       PageLength: ["30", "60", "90"],
       // 四种排序
       SortChange: ["默认", "价格最高", "价格最低", "销量最高"],
-      // 商品
-      TypeOne: [],
-      // 总条数
-      TypeOneLength: 0,
       // 每页条数
       thisPageLength: 30,
       // 截取条数从第几个开始
@@ -88,9 +83,32 @@ export default {
       sliceEnd: 30,
       // 页数
       current: 1,
-      SortChange_list: [],
-      HotSale: [],
+      TypeOne_init: [],
     };
+  },
+  props: {
+    TypeOne: {
+      type: Array,
+      default: () => [],
+    },
+    TypeOneLength: {
+      type: Number,
+      default: 0,
+    },
+    SortChange_list: {
+      type: Array,
+      default: () => [],
+    },
+    HotSale: {
+      type: Array,
+      default: () => [],
+    },
+  },
+  created() {},
+  watch: {
+    TypeOne: function (val) {
+      this.TypeOne_init = this.TypeOne;
+    },
   },
   methods: {
     // 选择框选择的条数传给每页条数
@@ -99,7 +117,7 @@ export default {
       this.sliceStart = 0;
       this.thisPageLength = parseInt(key);
       this.sliceEnd = parseInt(key);
-      this.getTypeOneList_init();
+      // this.getTypeOneList_init();
     },
     // 截取的数据从多少条开始 == 页码*每页条数
     changepage(page) {
@@ -109,45 +127,11 @@ export default {
     },
     // 点击选择框渲染对应排序数据
     handleChangeType(key, index) {
-      this.TypeOne = this.SortChange_list[index.key];
-    },
-    getTypeOneList_init() {
-      getTypeOneList(this.$route.params.id).then((res) => {
-        if (res.code != 200) return;
-        let TypeOne = [];
-        TypeOne = res.res;
-        this.TypeOne = TypeOne;
-        this.TypeOneLength = res.res.length;
-        // 价格从高到低的数据
-        let TypeOneHeight = [];
-        let data = JSON.parse(JSON.stringify(res.res));
-        TypeOneHeight = data.sort((a, b) => a.price - b.price);
-        let data_ = JSON.parse(JSON.stringify(res.res));
-        // 价格从低到高的数据
-        let TypeOneLow = [];
-        TypeOneLow = data_.sort((a, b) => b.price - a.price);
-        // 销量从高到低
-        let datas_ = JSON.parse(JSON.stringify(res.res));
-        let TypeOneCount = [];
-        TypeOneCount = datas_.sort((a, b) => b.sale - a.sale);
-        // 热销商品截取展示
-        this.HotSale = TypeOneCount.slice(0, 10);
-        // 传输到兄弟组件
-        bus.$emit("HotSale", this.HotSale);
-        this.SortChange_list = [
-          TypeOne,
-          TypeOneLow,
-          TypeOneHeight,
-          TypeOneCount,
-        ];
-      });
+      this.TypeOne_init = this.SortChange_list[index.key];
     },
     itemClick(id) {
       this.$router.push(`/details/${id}`);
     },
-  },
-  created() {
-    this.getTypeOneList_init();
   },
 };
 </script>
