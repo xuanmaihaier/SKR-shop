@@ -139,12 +139,18 @@ const router = new VueRouter({
   mode: 'history',
   routes,
   scrollBehavior(to, from, savedPosition) { // 解决vue页面跳转只有页面不是在顶部的问题
+  
     // savedPosition 会在你使用浏览器前进或后退按钮时候生效
     if (savedPosition) {
-      return savedPosition
+      return  {
+        behavior: 'smooth', //平滑滚动效果
+        selector: savedPosition
+      }
     } else {
       return { x: 0, y: 0 }
     }
+    // console.log(to.hash,from.path,savedPosition);
+
   }
 })
 
