@@ -19,7 +19,7 @@ export default {
     methods: {
         onSearch(val){
             if(val.length != 0){
-                this.$router.push(`/search/${val}`)
+                this.$router.push({name: 'Search',params: {'word': val}})
             }
         }
     }

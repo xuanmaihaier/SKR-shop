@@ -78,7 +78,25 @@ const routes = [
   // 搜索
   {
     path: '/search/:word',
-    component: () => import("views/search/Search.vue")
+    name: 'Search',
+    component: () => import("views/search/Search.vue"),
+    children: [
+      {
+        path: '/search/product',
+        name: 'Product',
+        component: () => import("views/search/childComps/Product.vue")
+      },
+      {
+        path: '/search/activity',
+        name: 'Activity',
+        component: () => import("views/search/childComps/Activity.vue")
+      },
+      {
+        path: '/search/show',
+        name: 'Show',
+        component: () => import("views/search/childComps/Show.vue")
+      },
+    ]
   },
   // 底部路由跳转 
   {
