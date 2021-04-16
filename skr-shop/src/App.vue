@@ -1,26 +1,28 @@
 <template>
   <div id="app">
-    <NavBar/>
-    <router-view :key="$route.fullPath" />
-    <FooterNav/>
-    <Adside/>
-    <Loading/>
+    <NavBar />
+    <keep-alive exclude="PrimaryList,Login,Details,Render,NavBar">
+      <router-view :key="$route.fullPath" />
+    </keep-alive>
+    <FooterNav />
+    <Adside />
+    <Loading />
   </div>
 </template>
 <script>
-import NavBar from 'components/content/navbar/NavBar.vue'
-import FooterNav from "components/common/footer/FooterNav"
+import NavBar from "components/content/navbar/NavBar.vue";
+import FooterNav from "components/common/footer/FooterNav";
 import Adside from "components/common/adside/Adside";
-import Loading from './components/common/loading/Loading.vue';
+import Loading from "./components/common/loading/Loading.vue";
 export default {
-  name:'App',
-  components:{
+  name: "App",
+  components: {
     NavBar,
     FooterNav,
     Adside,
     Loading,
-  }
-}
+  },
+};
 </script>
 <style>
 @import url("./assets/css/params.less");
