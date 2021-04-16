@@ -62,6 +62,7 @@
 <script>
 import { userLogin } from "@/network/userJoin.js";
 export default {
+  name:'LoginWrap',
   data() {
     return {
       imgShow: true,

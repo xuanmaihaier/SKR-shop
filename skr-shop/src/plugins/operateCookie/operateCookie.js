@@ -8,7 +8,7 @@ let apis = {
         clearInterval(timer);
         if (typeof callback == "function") callback()
       }
-      console.log(from)
+      // console.log(from)
       document.documentElement.scrollTop = from + 1;
     }, 11.1);
   },
@@ -40,11 +40,13 @@ let apis = {
 }
 
 
-Object.keys(apis).forEach((key) => {
-  Vue.prototype[key] = apis[key]
-})
-
-
+export default {
+  install(Vue) {
+      Object.keys(apis).forEach((key) => {
+          Vue.prototype[key] = apis[key]
+      })
+  }
+}
 
 
 
