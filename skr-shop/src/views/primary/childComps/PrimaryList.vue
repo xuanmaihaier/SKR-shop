@@ -68,6 +68,7 @@
 <script>
 // by stride
 import { getTypeOneList } from "network/getList";
+import bus from "utils/bus";
 export default {
   name: "PrimaryList",
   data() {
@@ -88,6 +89,7 @@ export default {
       // 页数
       current: 1,
       SortChange_list: [],
+      HotSale: [],
     };
   },
   methods: {
@@ -111,6 +113,7 @@ export default {
     },
     getTypeOneList_init() {
       getTypeOneList(this.$route.params.id).then((res) => {
+        if (res.code != 200) return;
         let TypeOne = [];
         TypeOne = res.res;
         this.TypeOne = TypeOne;
@@ -123,9 +126,20 @@ export default {
         // 价格从低到高的数据
         let TypeOneLow = [];
         TypeOneLow = data_.sort((a, b) => b.price - a.price);
-        this.TypeOneLow = TypeOneLow;
-        this.TypeOneHeight = TypeOneHeight;
-        this.SortChange_list = [TypeOne, TypeOneHeight, TypeOneLow, TypeOne];
+        // 销量从高到低
+        let datas_ = JSON.parse(JSON.stringify(res.res));
+        let TypeOneCount = [];
+        TypeOneCount = datas_.sort((a, b) => b.sale - a.sale);
+        // 热销商品截取展示
+        this.HotSale = TypeOneCount.slice(0, 10);
+        // 传输到兄弟组件
+        bus.$emit("HotSale", this.HotSale);
+        this.SortChange_list = [
+          TypeOne,
+          TypeOneLow,
+          TypeOneHeight,
+          TypeOneCount,
+        ];
       });
     },
     itemClick(id) {
