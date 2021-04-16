@@ -42,11 +42,7 @@ export default {
       ],
     };
   },
-  // methods:{
-  //   onlogin(){
-  //     this.$router.push({path:'/login'})
-  //   }
-  // }
+  
 };
 </script>
 
