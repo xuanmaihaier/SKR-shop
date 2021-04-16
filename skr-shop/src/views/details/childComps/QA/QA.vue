@@ -1,46 +1,24 @@
+<!--
+ * @Description: 
+ * @Author: He Xiantao
+ * @Date: 2021-04-13 10:43:26
+ * @LastEditTime: 2021-04-15 12:52:30
+ * @LastEditors: He Xiantao
+-->
 <template>
   <div id="qa">
     <div class="tapOne">
-      <a-button class="mybtn">상품문의</a-button>
+      <a-button class="mybtn">商品咨询</a-button>
     </div>
     <div class="rate">
       <ul>
-        <li>
-          <span class="answer">답변완</span>
-          <span class="question">111<i></i></span>
+        <li v-for="(item,index) in 6" :key="index">
+          <span class="answer">完整回答</span>
+          <span class="question"> {{index}} <i></i></span>
           <span class="username">haey***</span>
-          <span class="time">2021. 03. 31</span>
+          <span class="time">2021. 04. 1{{index}}</span>
         </li>
-        <li>
-          <span class="answer">답변완</span>
-          <span class="question">111<i></i></span>
-          <span class="username">haey***</span>
-          <span class="time">2021. 03. 31</span>
-        </li>
-        <li>
-          <span class="answer">답변완</span>
-          <span class="question">111<i></i></span>
-          <span class="username">haey***</span>
-          <span class="time">2021. 03. 31</span>
-        </li>
-        <li>
-          <span class="answer">답변완</span>
-          <span class="question">111<i></i></span>
-          <span class="username">haey***</span>
-          <span class="time">2021. 03. 31</span>
-        </li>
-        <li>
-          <span class="answer">답변완</span>
-          <span class="question">111<i></i></span>
-          <span class="username">haey***</span>
-          <span class="time">2021. 03. 31</span>
-        </li>
-        <li>
-          <span class="answer">답변완</span>
-          <span class="question">111<i></i></span>
-          <span class="username">haey***</span>
-          <span class="time">2021. 03. 31</span>
-        </li>
+        
       </ul>
     </div>
     <div class="page">

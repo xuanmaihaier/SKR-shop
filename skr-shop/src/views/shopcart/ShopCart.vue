@@ -1,6 +1,13 @@
+<!--
+ * @Description: shopcart
+ * @Author: He Xiantao
+ * @Date: 2021-04-14 23:35:14
+ * @LastEditTime: 2021-04-16 17:30:49
+ * @LastEditors: He Xiantao
+-->
 <template>
   <div>
-    <div style="display:block" class="cart-to-login fixed-width">
+    <div v-if="$store.state.NavbarShow" class="cart-to-login fixed-width">
       <h4>您还没有登入</h4>
       <p>
         立即去
@@ -13,20 +20,20 @@
     <div class="shop-cart fixed-width">
       <h3 class="cart-title">
         <span>我的购物车</span>
-        <i class="total-num">共 1 件</i>
+        <i class="total-num">共 {{shopCart.length}} 件</i>
       </h3>
       <div class="cart-top">
         <label class="checkbox-label checkbox-all">
-          <input checked='false' type="checkbox" class="checkbox-input">
+          <input type="checkbox" class="checkbox-input" :value="checkAll">
           <i></i>
           <span>全选</span>
         </label>
       </div>
       <ul class="cart-list fixed-width">
-        <li class="goods-item"  v-for="(item,index) in 6" :key="index">
+        <li class="goods-item"  v-for="(shop) in shopCart" :key="shop.id">
           <div class="checkbox-item">
             <label class="checkbox-label checkbox-one">
-              <input checked='false' type="checkbox" class="checkbox-input">
+              <input type="checkbox" :value="item" class="checkbox-input" v-model="arr">
               <i></i>
             </label>
           </div>
@@ -84,8 +91,27 @@
 </template>
 
 <script type="text/ecmascript-6">
+import {mapState} from "vuex";
   export default {
-    
+    data(){
+      return {
+        arr: []
+      }
+    },
+    computed:{
+      ...mapState({
+        shopCart: state => state.shopCart.shopCart
+      }),
+      checkAll(){
+        if (this.arr.length === this.shopCart) {
+          
+        }
+        return
+      },
+      created(){
+        this.$store.dispatch('initShopCart')
+      }
+    }
   }
 </script>
 
@@ -98,7 +124,7 @@
     padding 0
     border none
     &:checked + i:after
-      opacity 0
+      opacity 1
   i 
     display inline-block
     width 15px
@@ -110,7 +136,7 @@
     top 3px
     cursor pointer
     &:after
-      opacity 1
+      opacity 0
       content: ''   
       position: absolute;
       width: 9px;    
@@ -254,7 +280,7 @@
 .cart-foot
   width 100%
   height 70px
-  background-color #3E3E3E
+  background-color #3e3e3e
   .left
     float left
     width 1000px

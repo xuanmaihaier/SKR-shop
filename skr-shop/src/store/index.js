@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import details from "./modules/details";
+import shopCart from "./modules/shopCart";
+
 Vue.use(Vuex)
 // 请按照规范 使用action触发mutations
 let store= new Vuex.Store({
@@ -9,7 +12,7 @@ let store= new Vuex.Store({
     NavbarShow:true,
     isShow: false,
     loadingStatus: false //loading全局开关
-
+    
   },
   mutations: {
     changeShow(state, value) {
@@ -37,6 +40,8 @@ let store= new Vuex.Store({
     }
   },
   modules: {
+    details,
+    shopCart,
   }
 })
 export default store

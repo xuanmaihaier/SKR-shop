@@ -130,7 +130,7 @@ router.beforeEach((to, from, next) => {
   } else {
    
     store.dispatch('commitNavbarShow',false)
-    console.log(store);
+    // console.log(store);
     next()
   }
 })
