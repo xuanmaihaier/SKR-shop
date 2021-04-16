@@ -2,7 +2,7 @@
  * @Description: 详情页面模块数据管理
  * @Author: He Xiantao
  * @Date: 2021-04-15 09:56:31
- * @LastEditTime: 2021-04-16 19:51:33
+ * @LastEditTime: 2021-04-16 20:20:41
  * @LastEditors: He Xiantao
  */
 
