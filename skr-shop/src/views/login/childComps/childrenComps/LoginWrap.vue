@@ -66,12 +66,14 @@ export default {
     return {
       imgShow: true,
       userName: this.getCookie('username'),
-      userPassWord: this.getCookie('userPwd'),
+      userPassWord: this.getCookie('username'),
       nameShow: false,
       passWordShow: false,
     }
   },
   created() {
+    // console.log(xxx);
+    // console.log(this.getCookie('username'));
     this.imgShow=this.getCookie('username')?false:true;
   },
   methods: {
