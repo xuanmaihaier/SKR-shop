@@ -143,7 +143,7 @@ const router = new VueRouter({
     // savedPosition 会在你使用浏览器前进或后退按钮时候生效
     if (savedPosition) {
       return  {
-        behavior: 'smooth', //平滑滚动效果
+        // behavior: 'smooth', //平滑滚动效果
         selector: savedPosition
       }
     } else {
