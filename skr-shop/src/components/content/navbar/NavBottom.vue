@@ -68,7 +68,7 @@ export default {
     return {
       top: 0,
       navRight: ["独家的", "WDNA", "事件", "最好的"],
-      navRightPath: ["/exclusive", "/wdna",'/event'],
+      navRightPath: ["/exclusive", "/wdna",'/event','/best'],
       navIndex: 0,
       isChage: false,
       // Search_Show:false,
@@ -96,6 +96,7 @@ export default {
     handleClicka(item) {
       this.$router.push(`/primary/${item}`);
     },
+
     //Right的点击事件
     handleClickb(index) {
       this.$router.push(this.navRightPath[index]);
