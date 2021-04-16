@@ -20,7 +20,6 @@
         <a-pagination size="small" :total="100" />
       </div>
     </div>
-    <!-- <button @click="onMsg">???</button> -->
   </div>
 </template>
 
@@ -28,16 +27,14 @@
 export default {
   props:{
     // 父组件接收的值 btn按钮的值
-    msg:{
+    list:{
       type:String,
-      default:''
+      default: ''
     }
   },
   methods:{
-    // onMsg(){
-    //   this.$emit('showMsg','这是子组件给父组件传的值')
-    // }
-  }
+    
+  },
 };
 </script>
 

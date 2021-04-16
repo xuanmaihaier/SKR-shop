@@ -33,9 +33,10 @@ module.exports = {
   },
   // 配置代理
   devServer: {
+    open: true,
     proxy: {
       '/dev-api': {
-        target: 'http://192.168.1.138:3000/',
+        target: 'http://192.168.1.104:3000/',
         // target: 'http://192.168.1.144:3000/',
         // target:' http://www.stride.fun:80', 
         changeOrigin: true,
@@ -44,7 +45,6 @@ module.exports = {
         }
       },
     },
-    open: true
   },
   // 第三方插件配置
   pluginOptions: {
