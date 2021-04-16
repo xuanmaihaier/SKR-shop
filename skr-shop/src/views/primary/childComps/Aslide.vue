@@ -34,7 +34,6 @@ export default {
   },
   mounted() {
     bus.$on("HotSale", (res) => {
-      console.log(res);
       this.data = res;
     });
   },
@@ -78,6 +77,7 @@ export default {
   justify-content: space-between;
 }
 .ant-list-item-meta-title{
+  width: 80%;
   a{
     font-size: 12px;
   }
