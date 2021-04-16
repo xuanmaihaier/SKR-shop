@@ -2,7 +2,7 @@
  * @Description: shopCart
  * @Author: He Xiantao
  * @Date: 2021-04-15 12:09:19
- * @LastEditTime: 2021-04-16 19:02:03
+ * @LastEditTime: 2021-04-16 19:59:20
  * @LastEditors: He Xiantao
  */
 
@@ -13,7 +13,7 @@ import {
 } from "../mutations-type";
 
 
-import { getShopById, reqShopCart } from "../../network/getShopById";
+import { getShopById, reqShopCart, addToShopCart } from "../../network/getShopById";
 
 export default {
   state: ()=> ({
@@ -36,26 +36,36 @@ export default {
     }
   },
   actions: {
-    updateShopCart ({commit,state},shopInfo){
+    async updateShopCart ({commit,state},shopInfo){
+      shopInfo = shopInfo[0] ? shopInfo[0] : shopInfo
       if (state.shopCart.length < 1) { // 第一次添加
-        commit(ADD_SHOP_TO_SHOP_CART,shopInfo[0])
+        commit(ADD_SHOP_TO_SHOP_CART,shopInfo)
       }else{ 
         let countIsSame = false
         let sameShopIndex = 0
         state.shopCart.forEach((shop,index)=>{
-          console.log(shop.sku_id,'----',shopInfo[0].sku_id);
-          if (shop.id == shopInfo[0].id && shop.params.every((item,index)=> item == shopInfo[0].params[index] ) ) {
+          // console.log(shop.sku_id,'----',shopInfo[0].sku_id);
+          if (shop.id == shopInfo.id && shop.params.every((item,index)=> item == shopInfo.params[index] ) ) {
             countIsSame = true
             sameShopIndex = index
           }
         })
         if (countIsSame) {
           // 商品样式和id都一样,只是增加了数量
-          commit(ADD_SHOP_NUM,{index:sameShopIndex,num:shopInfo[0].num})
+          commit(ADD_SHOP_NUM,{index:sameShopIndex,num:shopInfo.num})
         }else{
           // 商品id或品种不一样
-          commit(ADD_SHOP_TO_SHOP_CART,shopInfo[0])
+          commit(ADD_SHOP_TO_SHOP_CART,shopInfo)
         }
+      }
+      // 用户登录, 商品添加到数据库
+      if (window.sessionStorage.token) { 
+        await addToShopCart({
+          customer_id: window.sessionStorage.userid,
+          sku_id: shopInfo.sku_id || shopInfo.id,
+          num: shopInfo.num,
+          params: shopInfo.params,
+        })
       }
       console.log(state.shopCart);
       //将购物车内容存储到sessionStorage里面
@@ -69,7 +79,8 @@ export default {
       commit(ADD_SESSIONSTORAGESHOPCART,sessionStorageShopCart)
     },
 
-    initShopCart ({commit}){
+    // 初始化页面购物车
+    initShopCart ({commit,dispatch}){
       console.log(111);
       const shopCart = window.sessionStorage.shopCart
       if (shopCart) { // 
@@ -83,21 +94,21 @@ export default {
         let allShopCart = []
         idList.forEach(async item=>{
           const result = await getShopById({id:item})
-          if (window.sessionStorage.token) {  //用户登录后的购物车结构
+          // 
+          JSON.parse(shopCart).forEach((item1)=>{
+            console.log(item1);
+            if (item1.sku_id == item) {
+              result.data[0].customer_id = window.sessionStorage.userid
+              result.data[0].num = item1.num
+              result.data[0].params = item1.params
+              commit(ADD_SHOP_TO_SHOP_CART,result.data[0])
+            }
+          })
+          if (window.sessionStorage.token) {
             const newResult = await reqShopCart({customer_id:window.sessionStorage.userid})
-            
-
-
-          }else{ //用户未登录时的购物车结构
-            
-            JSON.parse(shopCart).forEach((item1)=>{
-              console.log(item1);
-              if (item1.sku_id == item) {
-                result.data[0].num = item1.num
-                result.data[0].params = item1.params
-                
-                commit(ADD_SHOP_TO_SHOP_CART,result.data[0])
-              }
+            allShopCart.concat(newResult)
+            allShopCart.forEach(item=>{
+              dispatch('updateShopCart',item)
             })
           }
         })
