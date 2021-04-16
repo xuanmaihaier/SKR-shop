@@ -80,19 +80,20 @@ const routes = [
     path: '/search/:word',
     name: 'Search',
     component: () => import("views/search/Search.vue"),
+    // redirect:'/product',
     children: [
       {
-        path: '/search/product',
+        path: '/product',
         name: 'Product',
         component: () => import("views/search/childComps/Product.vue")
       },
       {
-        path: '/search/activity',
+        path: '/activity',
         name: 'Activity',
         component: () => import("views/search/childComps/Activity.vue")
       },
       {
-        path: '/search/show',
+        path: '/show',
         name: 'Show',
         component: () => import("views/search/childComps/Show.vue")
       },

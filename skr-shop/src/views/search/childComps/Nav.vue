@@ -1,7 +1,7 @@
 <template>
   <div class="nav">
       <nav>
-        <router-link :to="'/search/product'" :class="firstA">产品 ({{productNumber}})</router-link>
+        <router-link :to="`/search/product`" :class="firstA">产品 ({{productNumber}})</router-link>
         <router-link :to="'/search/activity'">活动 ({{activityNumber}})</router-link>
         <router-link :to="'/search/show'">买家秀 ({{showNumber}})</router-link>
       </nav>
