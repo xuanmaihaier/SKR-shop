@@ -40,8 +40,9 @@ export default {
     margin: 10px auto;
 }
 .selects {
+    line-height: 60px;
     width: 82%;
-    margin: 0 auto;
+    margin: 20px auto;
     height: 60px;
 }
 .pagination{
