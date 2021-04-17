@@ -120,6 +120,7 @@ export default {
           });
         }
       });
+      this.$store.commit('showSerBar',true)
     },
     showText(e) {
       if (e.target.id == "user") {
