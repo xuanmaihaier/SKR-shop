@@ -39,7 +39,7 @@ export default {
     loadSearch() {
       this.word = getLocalStorage("word");
       getSearch(this.$route.params.word).then((res) => {
-        this.searchNumber = res.res.length;
+        this.searchNumber = res.data.length;
       });
       this.$router.replace({ path: "/search/product" });
     },
