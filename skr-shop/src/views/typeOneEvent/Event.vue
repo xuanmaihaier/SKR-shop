@@ -5,7 +5,7 @@
     <cet-nav />
     <hot-key-word />
     <tab-btn @listTma="getChild" />
-    <thumnail :msg="msg" />
+    <thumnail :list="msg" />
 
   </div>
 </template>
@@ -29,7 +29,7 @@ export default {
   },
   data() {
     return {
-      msg: "", // 接收Tab子组件的值 按钮的值
+      msg: "All", // 接收Tab子组件的值 按钮的值
     };
   },
   methods: {
@@ -41,9 +41,8 @@ export default {
 </script>
 
 <style lang='less' scoped>
-.tab{
-  width: 85%;
+.event{
+  width: 97%;
   margin: auto;
 }
-
 </style>
