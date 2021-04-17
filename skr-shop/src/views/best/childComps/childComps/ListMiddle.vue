@@ -53,10 +53,10 @@ export default {
 <style lang="less" scoped>
 .topseller_list {
     width: 82%;
-    margin: 0 auto;
+    margin: auto;
     background-color: #f2f2f2;
     .lst_middle {
-        padding: 40px 0 0 21px;
+        padding: 0px 0 0 21px;
     }
     ul {
         display: flex;

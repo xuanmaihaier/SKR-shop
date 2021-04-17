@@ -57,11 +57,12 @@ export default {
     margin: 0 auto;
     background-color: #f2f2f2;
     .lst_top {
-        padding: 50px 20px 0 20px;
+        padding: 4% 20px 0 20px;
     }
     ul {
         width: 100%;
         display: flex;
+        padding-bottom: 50px;
         flex-wrap: wrap;
         justify-content: space-around;
         li {

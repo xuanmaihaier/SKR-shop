@@ -20,7 +20,6 @@
         <a-pagination size="small" :total="100" />
       </div>
     </div>
-    <!-- <button @click="onMsg">???</button> -->
   </div>
 </template>
 
@@ -28,16 +27,14 @@
 export default {
   props:{
     // 父组件接收的值 btn按钮的值
-    msg:{
+    list:{
       type:String,
-      default:''
+      default: ''
     }
   },
   methods:{
-    // onMsg(){
-    //   this.$emit('showMsg','这是子组件给父组件传的值')
-    // }
-  }
+    
+  },
 };
 </script>
 
@@ -52,10 +49,13 @@ export default {
   ul {
     display: flex;
     flex-flow: wrap;
+    justify-content: space-between;
     width: 100%;
+    margin-bottom: 20px;
     li {
       width: 18%;
-      margin: 0 0 55px 20px;
+      // margin: 0 0 55px 20px;
+      margin-bottom: 10px;
       a {
         width: 100%;
         img {

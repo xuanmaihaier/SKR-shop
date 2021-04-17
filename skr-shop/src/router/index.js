@@ -12,7 +12,12 @@ VueRouter.prototype.push = function push(location) {
 }
 
 
-const routes = [{
+const routes = [
+  {
+    path: '*',
+    component: () => import('@/components/common/404/Error.vue')
+  },
+  {
     path: "/",
     redirect: "home"
   },
@@ -24,7 +29,7 @@ const routes = [{
     children: [{
       path: '/service',
       component: () => import("components/common/adside/Service")
-    }, ]
+    },]
   },
   // 详情
   {
@@ -51,26 +56,12 @@ const routes = [{
     name: 'Signup',
     component: () => import("views/signup/Signup.vue")
   },
-  {
-    path: '/details',
-    name: 'Details',
-    component: () => import("views/details/Details")
-  },
   // 注册
   {
     // 一级分类界面
     path: '/primary/:id',
     name: 'Primary',
     component: () => import("views/primary/Primary.vue")
-  },
-  {
-
-    path: '/mypage',
-    name: 'MyPage',
-    component: () => import("views/mypage/MyPage.vue"),
-    path: '/signup',
-    name: 'Signup',
-    component: () => import("views/signup/Signup.vue")
   },
   // 独家的
   {
@@ -102,11 +93,34 @@ const routes = [{
     name: 'MyPage',
     component: () => import("views/mypage/MyPage.vue")
   },
+  // 二级数据
   {
-    // 一级分类界面
-    path: '/primary/:id',
-    name: 'Primary',
-    component: () => import("views/primary/Primary.vue")
+    path: "/secondary/:id",
+    name: "SeconDary",
+    component: () => import("../views/secondary/SeconDary.vue")
+  },
+  // 搜索
+  {
+    path: '/search/:word',
+    name: 'Search',
+    component: () => import("views/search/Search.vue"),
+    children: [
+      {
+        path: '/search/product',
+        name: 'Product',
+        component: () => import("views/search/childComps/Product.vue")
+      },
+      {
+        path: '/search/activity',
+        name: 'Activity',
+        component: () => import("views/search/childComps/Activity.vue")
+      },
+      {
+        path: '/search/show',
+        name: 'Show',
+        component: () => import("views/search/childComps/Show.vue")
+      },
+    ]
   },
   // 底部路由跳转 
   {
@@ -146,56 +160,48 @@ const routes = [{
 
 const router = new VueRouter({
   mode: 'history',
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) { // 解决vue页面跳转只有页面不是在顶部的问题
+  
+    // savedPosition 会在你使用浏览器前进或后退按钮时候生效
+    if (savedPosition) {
+      return  {
+        // behavior: 'smooth', //平滑滚动效果
+        selector: savedPosition
+      }
+    } else {
+      return { x: 0, y: 0 }
+    }
+    // console.log(to.hash,from.path,savedPosition);
+
+  }
 })
 
 //挂载路由导航守卫
 router.beforeEach((to, from, next) => {
+  NProgress.start(); //进度条开始加载
+  if (to.path == '/login' && from.path == '/signup') { // 判断是否由注册页跳转到登录页
+    sessionStorage.setItem('fristLogin', 1)
+  } else {
+    sessionStorage.removeItem('fristLogin')
+  }
   // ...
-  const auth = ['/shopcar', '/mypage']
+  const auth = ['/shopcart', '/mypage']
   const tokenStr = window.sessionStorage.getItem('token')
   // console.log(tokenStr);
   if (!tokenStr) {
     // console.log(123);
-    store.dispatch('commitNavbarShow', true)
     if (auth.includes(to.fullPath)) {
       return next('/login')
     }
     return next()
   } else {
-
     store.dispatch('commitNavbarShow', false)
-    console.log(store);
+
     next()
-    // console.log(to,from);
-    store.dispatch('commitLoading', true) //loading出现  
-    NProgress.start(); //进度条开始加载
-    if (to.path == '/login' && from.path == '/signup') { // 判断是否由注册页跳转到登录页
-      sessionStorage.setItem('fristLogin', 1)
-    } else {
-      sessionStorage.removeItem('fristLogin')
-    }
   }
-  setTimeout(() => {
-    // ...
-    const auth = ['/shopcart', '/mypage']
-    const tokenStr = window.sessionStorage.getItem('token')
-    // console.log(tokenStr);
-    if (!tokenStr) {
-      store.dispatch('commitNavbarShow', true)
-      if (auth.includes(to.fullPath)) {
-        return next('/login')
-      }
-      return next()
-    } else {
-      store.dispatch('commitNavbarShow', false)
-      // console.log(store);
-      next()
-    }
-  }, 1000);
 })
 router.afterEach((to, from) => {
-  store.dispatch('commitLoading', false) //loading结束
   setTimeout(() => {
     NProgress.done(); //进度条加载完毕
   }, 100);
