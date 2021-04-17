@@ -7,7 +7,6 @@ let apis = {
                 clearInterval(timer);
                 if (typeof callback == "function") callback()
             }
-            console.log(from)
             document.documentElement.scrollTop = from + 1;
         }, 11.1);
     },
