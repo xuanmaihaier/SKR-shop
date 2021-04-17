@@ -46,10 +46,13 @@ export default {
     align-items: center;
     margin: 5vh 0;
     margin-top: 7vh;
+    li{
+      margin-bottom: 4vh;
+    }
   }
 }
 /deep/ .ant-card {
-  width: 10.15vw;
+  width: 12vw !important;
   margin-top: 1vh;
   // border: none ;
   .ant-card-body {
