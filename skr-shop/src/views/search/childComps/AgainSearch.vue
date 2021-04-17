@@ -8,30 +8,41 @@
 
 <script>
 import getSearch from 'network/getSearch.js'
+import {getLocalStorage} from 'utils/storage.js'
 export default {
     name: 'AgainSearch',
     data: function () {
         return {
-            word: '',
             searchNumber: 0,
+            word: ''
         }
     },
     created() {
-        this.loadSearch();
+        // word要不等于search下的三个子路由product activity show
+        if(this.$route.name != 'Product' && this.$route.name != 'Activity' && this.$route.name != 'Show'){
+            this.loadSearch();
+        }
+        // 如果为子路由则显示原先的word
+        else{
+            this.word = getLocalStorage('word')
+        }
     },
     methods: {
+      // 获取用户输入搜搜的字段
       loadSearch(){
-          this. word = this.$route.params.word
+          this.word = getLocalStorage('word')
           getSearch(this.$route.params.word).then((res) => {
               this.searchNumber = res.res.length
-          })
+          });
+          this.$router.replace({path: '/search/product'});
       },
     },
     watch: {
         $route: function ()  {
-            console.log(this.$route)
-            // 如果路由有params并且不等于原来的word则重新发请求
-            if(this.$route.params.lengtn != 0 && this.$route.params != this.word){
+            // console.log(this.$route,'==============')
+            // 如果路由有params,并且word要不等于search下的三个子路由product activity show
+            if(this.$route.params.lengtn != 0  && 
+            this.$route.name != 'Product' && this.$route.name != 'Activity' && this.$route.name != 'Show'){
                 this.loadSearch();
             }
         }
