@@ -1,8 +1,8 @@
 <template>
   <div id="shop_detail">
     <a-button-group class="back_or_forward">
-      <a-button @click="$router.go(-1)" type="primary"> <a-icon type="left" />Go back </a-button>
-      <a-button  @click="$router.go(1)" type="primary"> Go forward<a-icon type="right" /> </a-button>
+      <a-button @click="$router.go(-1)" type="link">Go back</a-button>
+      <a-button  @click="$router.go(1)" type="link">Go forward</a-button>
     </a-button-group>
 
     <div class="good" >
@@ -83,7 +83,6 @@
     </div>
 
 
-
     <div class="detail">
       <DetailSortNav @jumptoWhich="whichOne" ref="DETAIL" :currentIndexIsOn="0" />
       <Detail :imgs="shop1.length>0 ?  JSON.parse(shop1[0].imgs) : []" />
@@ -110,7 +109,6 @@ import Vue from 'vue'
 import { Button, Pagination, Rate, Breadcrumb, Dropdown, Menu, Icon, Modal } from 'ant-design-vue';
 Vue.use(Button);Vue.use(Pagination);Vue.use(Rate);Vue.use(Breadcrumb);Vue.use(Dropdown);Vue.use(Menu);Vue.use(Icon);
 Vue.use(Modal)
-
 import DetailSortNav from "./childComps/DetailSortNav/DetailSortNav";
 import QA from "./childComps/QA/QA";
 import ReturnDelivery from "./childComps/ReturnDelivery/ReturnDelivery";
@@ -182,7 +180,7 @@ import { mapState } from "vuex";
         this.$refs.bigImgLeft.src = event.target.src
         this.$refs.bigImgRight.src = event.target.src
         this.currentIndex = index
-        console.log(event.target.title);
+        // console.log(event.target.title);
         this.currentStyle = event.target.title
       },
       //添加至购物车
@@ -198,6 +196,7 @@ import { mapState } from "vuex";
             num: this.shopNum,
             params: [this.currentStyle,this.styleSize],
           })
+          console.log(143253647869708654);
           // 再将修改后的当前商品详情添加至shopCart的vuex的state中
           this.$store.dispatch('updateShopCart',this.shop1) 
           this.$message.success("添加成功");
@@ -219,15 +218,10 @@ import { mapState } from "vuex";
       },
       // 确认登录,页面跳转
       handleOk(e) {
-        console.log(e);
+        // console.log(e);
         alert('跳转至登陆界面');
         this.visible = false;
       },
-    },
-    created(){
-      const {id} = this
-      this.$store.dispatch('getShop',id)
-      this.$store.dispatch('initShopCart')
     },
     computed:{
       ...mapState({
@@ -235,6 +229,23 @@ import { mapState } from "vuex";
         shop2: state => state.details.shop2,
       })
     },
+    beforeCreate(){
+      console.log('beforeCreate');
+    },
+    created(){
+      console.log('created');
+      const {id} = this
+      this.$store.dispatch('getShop',id)
+    },
+    activated(){
+      console.log('kkkk');
+      // 给窗口绑定一个卸载的监听(刷新页面的时候触发)
+      window.addEventListener('load',()=>{
+        console.log(111111);
+        this.$store.dispatch('initShopCart')
+      })
+    },
+    
   }
 </script>
 
@@ -247,9 +258,12 @@ import { mapState } from "vuex";
   width 1240px
   height 100%
   margin 0 auto 
-  .back_or_forward
+  /deep/.back_or_forward
     margin 30px 0 40px
-    opacity 0.4
+    background-color #fff 
+    color skyblue
+    /deep/.ant-btn
+      outline none
   .nav
     font-size 12px
     margin 28px 0 28px
