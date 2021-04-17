@@ -39,7 +39,7 @@
       </div>
       <div class="good_right" v-if="shop1.length">
         <div class="top">
-          <span>梭织短裤</span>
+          <span></span>
           <h3> {{shop1[0].title}} </h3>
           <span class="price">￥{{shop2[0].special_price}} </span>
           <span class="price underline">￥ {{shop2[0].price}} </span>
@@ -207,7 +207,7 @@ import { mapState } from "vuex";
       toPay(){
         if (window.sessionStorage.token) {
           const options = {
-            customer_id: window.sessionStorage.userid,
+            customer_id: window.sessionStorage.userId,
             sku_id: shop1.id,
             num: this.shopNum,
             params: [this.currentStyle,this.styleSize]

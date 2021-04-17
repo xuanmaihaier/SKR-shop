@@ -6,4 +6,4 @@
  * @LastEditors: He Xiantao
  */
 import axios from "utils/request.js";
-export const addToShopCart = (options) => axios.post('/shopCar/addShopCar',options)
+export const addToShopCart = (options) => axios.post('/shopcar/addShopCar',options)
