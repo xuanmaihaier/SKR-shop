@@ -16,7 +16,7 @@ export default {
         return {
             productNumber: 0,
             activityNumber: 0,
-            showNumber: 0,
+            showNumber: 120,
             firstA: ''
         }
     },

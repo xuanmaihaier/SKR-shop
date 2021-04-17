@@ -1,9 +1,9 @@
 <template>
   <div class="search">
       <!-- 显示搜索个数，再次搜索 -->
-      <AgainSearch></AgainSearch>
+      <AgainSearch/>
       <!-- 主导航栏 -->
-      <Nav />
+      <Nav/>
   </div>
 </template>
 

@@ -46,18 +46,16 @@ export default {
   },
   watch: {
     $route: function () {
-    //   console.log(this.$route, "==============");
+      console.log(this.$route, "==============");
       // 如果路由有params,并且word要不等于search下的三个子路由product activity show
       if (
-        this.$route.params.lengtn != 0 &&
+        this.$route.params.length != 0 &&
         this.$route.name == "Search" &&
         this.$route.name != "Product" &&
         this.$route.name != "Activity" &&
         this.$route.name != "Show"
       ) {
         this.loadSearch();
-      } else if (this.$route.params.word != this.word) {
-        location.reload()
       }
     },
   },

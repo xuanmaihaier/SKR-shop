@@ -47,7 +47,7 @@ export default {
     margin: 5vh 0;
     margin-top: 7vh;
     li{
-      margin-bottom: 4vh;
+      margin-bottom: 3vh;
     }
   }
 }
