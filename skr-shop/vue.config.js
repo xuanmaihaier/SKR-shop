@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: He Xiantao
  * @Date: 2021-04-12 17:42:12
- * @LastEditTime: 2021-04-14 23:56:08
+ * @LastEditTime: 2021-04-16 20:01:38
  * @LastEditors: He Xiantao
  */
 const path = require('path')
@@ -37,6 +37,7 @@ module.exports = {
     proxy: {
       '/dev-api': {
         target: 'http://192.168.1.104:3000/',
+
         // target: 'http://192.168.1.144:3000/',
         // target:' http://www.stride.fun:80', 
         changeOrigin: true,
