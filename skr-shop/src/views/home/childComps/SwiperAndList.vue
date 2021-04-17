@@ -1,11 +1,11 @@
 <template>
   <div class="SwiperAndList">
     <div class="swiper">
-      <swiper ref="mySwiper" :options="swiperOptions">
-        <swiper-slide v-for="(item, index) in 4" :key="index">
+      <swiper ref="mySwiper" :options="swiperOptions" @click="swiperClick(swiper)">
+        <swiper-slide v-for="(item, index) in SwiperAndList_list.slice(8, 16)" :key="index">
           <img
             alt="example"
-            src="//image.wconcept.co.kr/images/builder/1/4/15/310/(iwlt)헤어샴푸_20210412100522.jpg"
+            :src="item.img" width="100%"
           />
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
@@ -16,21 +16,24 @@
       </swiper>
     </div>
 
-   <div class="list">
+    <div class="list">
       <div class="AnCard">
-      <a-card hoverable class="card" v-for="(item, index) in SwiperAndList_list.slice(0,8)" :key="index">
-        <img
-          alt="example"
-          :src="item.img" width="100%"
-        />
-        <a-card-meta :title="item.title">
-          <template slot="description">
-            <p class="description">www.stride.fun</p>
-          </template>
-        </a-card-meta>
-      </a-card>
+        <a-card
+          hoverable
+          class="card"
+          v-for="(item, index) in SwiperAndList_list.slice(8, 16)"
+          :key="index"
+          @click="cardclick(item.id)"
+        >
+          <img alt="example" :src="item.img" width="100%" />
+          <a-card-meta :title="item.title">
+            <template slot="description">
+              <p class="description">www.stride.fun</p>
+            </template>
+          </a-card-meta>
+        </a-card>
+      </div>
     </div>
-   </div>
   </div>
 </template>
 
@@ -40,7 +43,7 @@ export default {
   data() {
     return {
       swiperOptions: {
-        slidesPerView: "auto",
+        slidesPerView: "1",
         loop: true,
         observer: true, //修改swiper自己或子元素时，自动初始化swiper
         observeParents: true, //修改swiper的父元素时，自动初始化swiper
@@ -60,16 +63,25 @@ export default {
       },
     };
   },
-  props:{
-    SwiperAndList_list:{
-      type:Array,
-      default:()=>{}
-    }
+  props: {
+    SwiperAndList_list: {
+      type: Array,
+      default: () => {},
+    },
   },
   computed: {
     swiper() {
       return this.$refs.mySwiper.$swiper;
     },
+  },
+  methods: {
+    cardclick(id) {
+      this.$router.push(`/details/${id}`);
+    },
+    swiperClick(swiper){
+      let data = this.SwiperAndList_list[swiper.realIndex+8].id
+      this.$router.push(`/details/${data}`)
+    }
   },
   mounted() {
     this.swiper.slideTo(3, 1000, false);
@@ -85,6 +97,9 @@ export default {
 .swiper {
   position: relative;
   width: 40%;
+  cursor: grab;
+
+  object-fit: cover;
 }
 .swiper-container {
   width: 100%;
