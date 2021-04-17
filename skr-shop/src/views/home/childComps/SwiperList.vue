@@ -1,16 +1,16 @@
 <template>
   <div class="SwiperList">
-    <swiper ref="SwiperList" :options="SwiperList">
-      <swiper-slide v-for="(item, index) in 8" :key="index">
+    <swiper ref="SwiperList" :options="SwiperList" @click="swiperClick(swiper)">
+      <swiper-slide v-for="(item, index) in SwiperList_list.slice(0,8)" :key="index">
         <a-card hoverable class="card">
           <img
             slot="cover"
             alt="example"
-            src="//image.wconcept.co.kr/productimg/image/img1/48/300986048.jpg?RS=384"
+            :src="item.img"
           />
-          <a-card-meta title="Europe Street beat">
+          <a-card-meta :title="item.title">
             <template slot="description">
-              <p class="description">www.instagram.com</p>
+              <p class="description">www.stride.fun</p>
             </template>
           </a-card-meta>
         </a-card>
@@ -45,10 +45,23 @@ export default {
       },
     };
   },
+  props:{
+    SwiperList_list:{
+      type:Array,
+      default:()=>[]
+    }
+  },
   computed: {
     swiper() {
       return this.$refs.SwiperList.$swiper;
     },
+  },
+  methods: {
+     swiperClick(swiper){
+      let data = this.SwiperList_list[swiper.realIndex].id
+      this.$router.push(`/details/${data}`)
+     
+    }
   },
   mounted() {
     this.swiper.slideTo(3, 1000, false);

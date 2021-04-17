@@ -174,6 +174,7 @@ router.beforeEach((to, from, next) => {
     return next()
   } else {
     store.dispatch('commitNavbarShow', false)
+
     next()
   }
 })

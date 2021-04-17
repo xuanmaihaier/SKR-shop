@@ -1,19 +1,17 @@
 <template>
   <div id="shop_detail">
-    <nav class="nav">
-      <a-breadcrumb>
-        <a-breadcrumb-item style="cursor: pointer"><a href="/home">Home</a></a-breadcrumb-item>
-        <a-breadcrumb-item>Details</a-breadcrumb-item>
-      </a-breadcrumb>
-    </nav>
+    <a-button-group class="back_or_forward">
+      <a-button @click="$router.go(-1)" type="primary"> <a-icon type="left" />Go back </a-button>
+      <a-button  @click="$router.go(1)" type="primary"> Go forward<a-icon type="right" /> </a-button>
+    </a-button-group>
 
     <div class="good" >
       <div class="good_left" >
-        <div class="wrap" v-if="shopById.length">
+        <div class="wrap" v-if="shop1.length">
           <!-- 左边显示正常图片的外元素 -->
           <div class="left"> 
             <!-- 图片 -->
-            <img class="leftImg" ref="bigImgLeft" :src="JSON.parse(shopById[0].imgs)[0].small">
+            <img class="leftImg" ref="bigImgLeft" :src="JSON.parse(shop1[0].imgs)[0].small">
             <!-- 鼠标层罩 -->
             <div ref="mask" v-show="topShow" class="top" :style="topStyle"></div>
             <!-- 最顶层覆盖了整个原图空间的透明层罩 -->
@@ -25,13 +23,13 @@
           <!-- 显示放大效果的外元素 -->
           <div v-show="rShow" class="right">
             <!-- 放大图片 -->
-            <img :style="r_img" ref="bigImgRight" class="rightImg" :src="JSON.parse(shopById[0].imgs)[0].normal">
+            <img :style="r_img" ref="bigImgRight" class="rightImg" :src="JSON.parse(shop1[0].imgs)[0].normal">
           </div>
         </div>
-        <div class="imgList" v-if="shopById.length">
+        <div class="imgList" v-if="shop1.length">
           <ul>
             <li 
-              v-for="(img,index) in JSON.parse(shopById[0].imgs)"
+              v-for="(img,index) in JSON.parse(shop1[0].imgs)"
               :key="index"
             >
               <img @click="changeImg($event)" :src="img.small">
@@ -39,14 +37,14 @@
           </ul>
         </div>
       </div>
-      <div class="good_right" v-if="shopById.length">
+      <div class="good_right" v-if="shop1.length">
         <div class="top">
           <span>梭织短裤</span>
-          <h3> {{shopById[0].title}} </h3>
-          <span class="price">￥{{shopById[0].price}} </span>
-          <span class="price underline">￥ {{shopById2[0].special_price}} </span>
+          <h3> {{shop1[0].title}} </h3>
+          <span class="price">￥{{shop2[0].special_price}} </span>
+          <span class="price underline">￥ {{shop2[0].price}} </span>
           <div class="promotion">
-            <span class="title" v-if="shopById2[0].is_special"> {{ shopById2[0].is_special == 1 ? '促销' : '抢购' }} </span>
+            <span class="title" v-if="shop2[0].is_special"> {{ shop2[0].is_special == 1 ? '促销' : '抢购' }} </span>
             <span class="con">官方商城全场包邮</span>
           </div>
           <span></span>
@@ -54,27 +52,32 @@
         <div class="middel">
             <ul>
               <li 
-                v-for="(img,index) in JSON.parse(shopById[0].imgs)"
+                v-for="(img,index) in JSON.parse(shop1[0].imgs)"
                 :key="index"
+                :class="{on: currentIndex === index}"
               >
-                <img @click="changeImg($event)" :src="img.small">
+                <img 
+                  @click="changeImg($event,index)" 
+                  :src="img.small"
+                  :title="JSON.parse(shop1[0].param)[index]"
+                >
               </li>
             </ul>
-            <div class="sort">
-              <span v-for="item in JSON.parse(shopById[0].param)"> {{item}} </span>
-            </div>
             <div class="choose">
               <label for="size">尺码</label>
-              <select name="size" id="size">
+              <select name="size" id="size" v-model="styleSize">
                 <option :value="item" v-for="(item,index) in size"> {{item}} </option>
               </select>
               <label for="count">数量: </label>
-              <input id="count" type="number" value="1" max="10" min="1">
+              <input id="count" type="number" max="10" min="1" v-model="shopNum">
             </div>
         </div>
         <div class="down">
-          <span class="a">加入购物车</span>
-          <span class="b">立即购买</span>
+          <span class="a" @click="addShop">加入购物车</span>
+          <span class="b" @click="toPay">立即购买</span>
+          <a-modal v-model="visible"  @ok="handleOk">
+            <p>未登录,是否需要登录</p>
+          </a-modal>
         </div>
       </div>
     </div>
@@ -83,7 +86,7 @@
 
     <div class="detail">
       <DetailSortNav @jumptoWhich="whichOne" ref="DETAIL" :currentIndexIsOn="0" />
-      <Detail :imgs="shopById.length>0 ?  JSON.parse(shopById[0].imgs) : []" />
+      <Detail :imgs="shop1.length>0 ?  JSON.parse(shop1[0].imgs) : []" />
     </div>
     <div class="review">
       <DetailSortNav @jumptoWhich="whichOne"  ref="REVIEW" :currentIndexIsOn="1" />
@@ -103,19 +106,18 @@
 
 <script type="text/ecmascript-6">
 
-import { getShopById, getShopById2 } from "@/network/getShopById.js";
-import axios from "axios";
-
 import Vue from 'vue'
-import { Button, Pagination, Rate, Breadcrumb, Dropdown, Menu, Icon } from 'ant-design-vue';
+import { Button, Pagination, Rate, Breadcrumb, Dropdown, Menu, Icon, Modal } from 'ant-design-vue';
 Vue.use(Button);Vue.use(Pagination);Vue.use(Rate);Vue.use(Breadcrumb);Vue.use(Dropdown);Vue.use(Menu);Vue.use(Icon);
-
+Vue.use(Modal)
 
 import DetailSortNav from "./childComps/DetailSortNav/DetailSortNav";
 import QA from "./childComps/QA/QA";
 import ReturnDelivery from "./childComps/ReturnDelivery/ReturnDelivery";
 import Review from "./childComps/Review/Review";
 import Detail from "./childComps/Detail/Detail";
+
+import { mapState } from "vuex";
 
   export default {
     name: 'Details',
@@ -137,9 +139,12 @@ import Detail from "./childComps/Detail/Detail";
         imgWidthRight: '',
         mackWidth: '',
         mackHeight: '',
-        shopById: [],
-        shopById2: [],
-        size: ['XS','S','M','L','XL','2XL','3XL','4XL','5XL']
+        size: ['XS','S','M','L','XL','2XL','3XL','4XL','5XL'],
+        shopNum: 1,
+        currentIndex: '',
+        currentStyle: '',
+        styleSize: 'XS',
+        visible: false,
       }
     },
     methods : {
@@ -173,18 +178,62 @@ import Detail from "./childComps/Detail/Detail";
         this.r_img.transform = `translate(-${this.imgWidthRight*((topX)/this.imgWidthLeft)}px,-${this.imgWidthRight*((topY)/this.imgWidthLeft)}px)`
       },
       // 点击小图切换大图
-      changeImg(event){
+      changeImg(event,index){
         this.$refs.bigImgLeft.src = event.target.src
         this.$refs.bigImgRight.src = event.target.src
-      }
+        this.currentIndex = index
+        console.log(event.target.title);
+        this.currentStyle = event.target.title
+      },
+      //添加至购物车
+      addShop(){
+        if (!this.currentStyle) {
+          this.$message.config({
+            top: '750px',
+          })
+          this.$message.info("未选择颜色");
+        }else{
+          // 先将数量,样式,尺寸在当前详情界面商品信息添加修改
+          this.$store.dispatch('updateShopInfo',{
+            num: this.shopNum,
+            params: [this.currentStyle,this.styleSize],
+          })
+          // 再将修改后的当前商品详情添加至shopCart的vuex的state中
+          this.$store.dispatch('updateShopCart',this.shop1) 
+          this.$message.success("添加成功");
+        }
+      },
+      // 立即购买
+      toPay(){
+        if (window.sessionStorage.token) {
+          const options = {
+            customer_id: window.sessionStorage.userid,
+            sku_id: shop1.id,
+            num: this.shopNum,
+            params: [this.currentStyle,this.styleSize]
+          }
+          alert('跳转至支付界面')
+        }else{
+          this.visible = true;
+        }
+      },
+      // 确认登录,页面跳转
+      handleOk(e) {
+        console.log(e);
+        alert('跳转至登陆界面');
+        this.visible = false;
+      },
     },
-    async created(){
+    created(){
       const {id} = this
-      // 同时发送两个请求
-      const result = await axios.all([getShopById({id}),getShopById2({id})])
-      this.shopById = result[0].data
-      this.shopById2 = result[1].data
-      console.log(this.shopById2);
+      this.$store.dispatch('getShop',id)
+      this.$store.dispatch('initShopCart')
+    },
+    computed:{
+      ...mapState({
+        shop1: state => state.details.shop1,
+        shop2: state => state.details.shop2,
+      })
     },
   }
 </script>
@@ -198,6 +247,9 @@ import Detail from "./childComps/Detail/Detail";
   width 1240px
   height 100%
   margin 0 auto 
+  .back_or_forward
+    margin 30px 0 40px
+    opacity 0.4
   .nav
     font-size 12px
     margin 28px 0 28px
@@ -248,22 +300,28 @@ import Detail from "./childComps/Detail/Detail";
             color #000
       .middel
         height 280px
+        margin-bottom 30px
+        display flex
+        flex-direction column
+        justify-content space-around
         ul 
           display flex 
           // margin-bottom 10px
+          flex-wrap wrap
+          
+          li 
+            box-sizing border-box
+            width 65px
+            height 65px
+            margin 0px 10px 10px 0
+          li.on 
+            border 1px solid #000
           img 
             cursor pointer
-            width 60px
-            height 60px
-            margin 0px 10px 10px 0
-        .sort
-          margin-bottom 20px
-          span 
-            display inline-block
-            width 60px
-            text-align center
-            margin-right 10px
-            cursor pointer
+            width 63px
+            height 63px
+            display block
+            margin 0 auto
         .choose
           width 100%
           height 50px

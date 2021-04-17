@@ -18,14 +18,14 @@
 
    <div class="list">
       <div class="AnCard">
-      <a-card hoverable class="card" v-for="(item, index) in 8" :key="index">
+      <a-card hoverable class="card" v-for="(item, index) in SwiperAndList_list.slice(0,8)" :key="index">
         <img
           alt="example"
-          src="//image.wconcept.co.kr/productimg/image/img1/33/301234133.jpg?RS=216" width="100%"
+          :src="item.img" width="100%"
         />
-        <a-card-meta title="Europe Street beat">
+        <a-card-meta :title="item.title">
           <template slot="description">
-            <p class="description">www.instagram.com</p>
+            <p class="description">www.stride.fun</p>
           </template>
         </a-card-meta>
       </a-card>
@@ -59,6 +59,12 @@ export default {
         },
       },
     };
+  },
+  props:{
+    SwiperAndList_list:{
+      type:Array,
+      default:()=>{}
+    }
   },
   computed: {
     swiper() {
@@ -118,12 +124,6 @@ export default {
     word-break: keep-all;
   }
 }
-/deep/ .ant-card-body{
-  padding: 0;
-}
-.ant-card-bordered{
-  border: none;
-}
 /deep/ .ant-card-meta-title {
   overflow: hidden;
   white-space: nowrap;
@@ -131,5 +131,6 @@ export default {
   color: #333;
   font-family: "ProximaNova-Bold";
   font-size: 20px;
+  padding-top: 30px;
 }
 </style>

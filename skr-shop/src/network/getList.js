@@ -12,6 +12,6 @@ export async function getTypeOneList(parent_name) {
  * url: /wares/getSpu
  * 参数：name
  */
-export async function getTypeOTwoist(name) {
-  return await axios({ method: "post", url: "/wares/getSpu", data: { name } })
+export async function getTypeOTwoList(name,series) {
+  return await axios({ method: "post", url: "/wares/getSpu", data: { name,series } })
 }
