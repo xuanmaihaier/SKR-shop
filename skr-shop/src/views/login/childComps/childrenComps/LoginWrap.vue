@@ -67,7 +67,7 @@ export default {
     return {
       imgShow: true,
       userName: this.getCookie('username'),
-      userPassWord: this.getCookie('username'),
+      userPassWord: this.getCookie('userPwd'),
       nameShow: false,
       passWordShow: false,
     }
@@ -122,6 +122,7 @@ export default {
           });
         }
       });
+      this.$store.commit('showSerBar',true)
     },
     showText(e) {
       if (e.target.id == "user") {

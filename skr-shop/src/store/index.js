@@ -12,7 +12,8 @@ let store= new Vuex.Store({
     NavbarShow:true,
     isShow: false,
     loadingStatus: false, //loading全局开关。
-    SearchShow:false  //Navbottom 的Search 的显示隐藏
+    SearchShow:false,  //Navbottom 的Search 的显示隐藏
+    isShowSer:false, //侧边栏开关
   },
   mutations: {
     changeShow(state, value) {
@@ -26,6 +27,9 @@ let store= new Vuex.Store({
     },
     changeSearchShow(state, val){
       state.SearchShow = val
+    },
+    showSerBar(state,val){
+      state.isShowSer = val;
     }
   },
   actions: {

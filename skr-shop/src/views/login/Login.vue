@@ -13,6 +13,9 @@ import MemberJoin from './childComps/MemberJoin.vue';
 export default {
   components: { TitleWarp,MemberJoin },
   name: "Login",
+  created(){
+    this.$store.commit("changeLoading", false);
+  }
 };
 </script>
 
