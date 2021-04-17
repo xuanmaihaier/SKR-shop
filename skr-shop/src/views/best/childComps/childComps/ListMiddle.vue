@@ -64,7 +64,6 @@ export default {
         margin-right: 21px;
         li{
             width: calc((100% / 4 - 4% )  );
-            height: 549.66px;
             position: relative;
             .icon_best {
                 width: 50px;
