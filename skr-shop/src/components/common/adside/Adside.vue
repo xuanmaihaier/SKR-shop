@@ -72,23 +72,14 @@ export default {
       // 返回顶部
       if (this.flag) {
         this.flag = false;
-        let tance = window.pageYOffset;
-        this.animate(0, tance);
-        setTimeout(() => {
-          this.flag = true;
-        }, 1500);
+        this.animateScroll(pageYOffset,0,()=>this.flag=true)
       }
     },
     returnBottom() {
       // 返回底部
       if (this.flag) {
         this.flag = false;
-        let tance = window.pageYOffset;
-        let bodyHeight = document.body.scrollHeight;
-        this.animate(bodyHeight, tance);
-        setTimeout(() => {
-          this.flag = true;
-        }, 1500);
+        this.animateScroll(pageYOffset,document.body.scrollHeight,()=>this.flag=true)
       }
     },
     showExpanBar(value) {
@@ -126,18 +117,6 @@ export default {
         this.last = a;
       }
     },
-    animate(tan, now) {
-      // 动画函数
-      var timer;
-      timer = setInterval(function () {
-        now = now - (now - tan) / 10;
-        now = now - tan < 0 ? Math.ceil(now) : Math.floor(now);
-        if (now == tan) {
-          clearInterval(timer);
-        }
-        document.documentElement.scrollTop = now;
-      }, 10);
-    },
   },
   mounted() {
     // 返回顶部、返回底部按钮的显示隐藏
@@ -160,9 +139,8 @@ export default {
         this.isShowDown = true;
       }
     }.bind(this);
-    
   },
-};
+}
 </script>
 
 <style lang="less" scoped>

@@ -2,7 +2,7 @@
   <div class="eng" @mouseover="engraft" @mouseout="exgraft">
     <div class="conent">
       <ul class="left">
-        <li v-for="(item, index) in listOne[navIndex]" :key="index">
+        <li v-for="(item, index) in listOne[navIndex]" :key="index" @click="liclick(item)">
           {{item}}
         </li>
       </ul>
@@ -84,11 +84,14 @@ export default {
     exgraft() {
       this.$store.commit("changeShow", false);
     },
+    // li点击
+    liclick(item){
+      this.$router.push(`/secondary/${item}`)
+    }
   },
   mounted() {
     bus.$on("typeTwo", (res) => {
       this.listOne = res;
-      // console.log(this.listOne);
     });
   },
 };
@@ -103,7 +106,7 @@ export default {
   animation: eng_ 1s;
   position: absolute;
   background-color: rgba(255, 255, 255, 1);
-
+  box-shadow: 1px 1px 1px #fff;
   .conent {
     width: 70%;
     height: 100%;
@@ -116,15 +119,16 @@ export default {
       flex-wrap: wrap;
       padding: 25px 0;
         li{
-         color: #999;
+         color: rgb(78, 77, 77);
          height: 30px;
          line-height: 30px;
          width: 30%;
          cursor: pointer;
-         
+         font-size: 12px;
+        font-family: "ProximaNova-Regular","yg740";
         }
         li:hover{
-          color:#04bd9e ;
+          color:#333 ;
           text-decoration: underline;
         }
      
