@@ -1,6 +1,6 @@
 <template>
   <div class="activity">
-
+    <h1>我是活动页面</h1>
   </div>
 </template>
 

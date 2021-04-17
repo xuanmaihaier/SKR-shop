@@ -1,6 +1,6 @@
 <template>
   <div class="show">
-
+    <h1>我是买家秀</h1>
   </div>
 </template>
 

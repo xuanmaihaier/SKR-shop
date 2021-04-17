@@ -206,8 +206,5 @@ router.afterEach((to, from) => {
     NProgress.done(); //进度条加载完毕
   }, 100);
 })
-<<<<<<< HEAD
-=======
 
->>>>>>> 4a3393736b33a4706dd0c904a1ad8d0f26c27b91
 export default router
