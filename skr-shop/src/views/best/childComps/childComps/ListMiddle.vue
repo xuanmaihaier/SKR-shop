@@ -53,10 +53,10 @@ export default {
 <style lang="less" scoped>
 .topseller_list {
     width: 82%;
-    margin: 0 auto;
+    margin: auto;
     background-color: #f2f2f2;
     .lst_middle {
-        padding: 40px 0 0 21px;
+        padding: 0px 0 0 21px;
     }
     ul {
         display: flex;
@@ -64,7 +64,6 @@ export default {
         margin-right: 21px;
         li{
             width: calc((100% / 4 - 4% )  );
-            height: 549.66px;
             position: relative;
             .icon_best {
                 width: 50px;

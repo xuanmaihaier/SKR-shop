@@ -2,7 +2,7 @@
   <div class="eng" @mouseover="engraft" @mouseout="exgraft">
     <div class="conent">
       <ul class="left">
-        <li v-for="(item, index) in listOne[navIndex]" :key="index">
+        <li v-for="(item, index) in listOne[navIndex]" :key="index" @click="liclick(item)">
           {{item}}
         </li>
       </ul>
@@ -84,11 +84,14 @@ export default {
     exgraft() {
       this.$store.commit("changeShow", false);
     },
+    // li点击
+    liclick(item){
+      this.$router.push(`/secondary/${item}`)
+    }
   },
   mounted() {
     bus.$on("typeTwo", (res) => {
       this.listOne = res;
-      // console.log(this.listOne);
     });
   },
 };
