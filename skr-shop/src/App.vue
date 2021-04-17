@@ -5,7 +5,7 @@
       <router-view :key="$route.fullPath" />
     </keep-alive>
     <FooterNav />
-    <Adside />
+    <Adside/>
     <Loading />
   </div>
 </template>

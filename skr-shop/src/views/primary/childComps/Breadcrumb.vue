@@ -26,8 +26,8 @@ export default {
           breadcrumbName: 'Home',
         },
         {
-          path: 'secondary',
-          breadcrumbName: 'Secondary',
+          path: 'primary',
+          breadcrumbName: 'Primary',
         },
       ],
     };

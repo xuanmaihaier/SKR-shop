@@ -29,7 +29,7 @@
             src="@/assets/img/login/forget.png"
             alt=""
             width="32px"
-            v-show.trim="imgShow"
+            v-show="imgShow"
           />
           <img
             src="@/assets/img/login/rember.png"
