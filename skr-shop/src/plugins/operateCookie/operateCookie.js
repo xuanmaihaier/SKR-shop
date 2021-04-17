@@ -1,4 +1,6 @@
+import Vue from 'vue'
 let apis = {
+
     animateScroll(from, to, callback) {
         let timer = setInterval(function () {
             from = from + (to - from) / 10;
@@ -22,26 +24,26 @@ let apis = {
     },
 
 
-//读Cookie
-    getCookie(objName) {//获取指定名称的cookie的值
-        let arrStr = document.cookie.split("; ");
-        for (let i = 0; i < arrStr.length; i++) {
-            let temp = arrStr[i].split("=");
-            if (temp[0] == objName) return unescape(temp[1]);  //解码
-        }
-        return "";
-    },
-    delCookie(objName)//删除cookie
-    {
-        document.cookie = objName+"=;expires="+(new Date(0)).toGMTString();
+  //读Cookie
+  getCookie(objName) {//获取指定名称的cookie的值
+    let arrStr = document.cookie.split("; ");
+    for (let i = 0; i < arrStr.length; i++) {
+      let temp = arrStr[i].split("=");
+      if (temp[0] == objName) return unescape(temp[1]);  //解码
     }
+    return "";
+  },
+  delCookie(objName)//删除cookie
+  {
+    document.cookie = objName + "=;expires=" + (new Date(0)).toGMTString();
+  }
 }
 export default {
-    install(Vue) {
-        Object.keys(apis).forEach((key) => {
-            Vue.prototype[key] = apis[key]
-        })
-    }
+  install(Vue) {
+    Object.keys(apis).forEach((key) => {
+      Vue.prototype[key] = apis[key]
+    })
+  }
 }
 
 

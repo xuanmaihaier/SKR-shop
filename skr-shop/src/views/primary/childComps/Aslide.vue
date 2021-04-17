@@ -1,17 +1,17 @@
 <template>
   <div class="Aslide">
     <div class="mask">
-      <p>{{$route.params.id}}</p>
+      <p>{{ $route.params.id }}</p>
       <span>stride.fun</span>
     </div>
     <div>
       <div class="header">
-        <p>类别</p>
+        <p>热销</p>
       </div>
       <a-list item-layout="horizontal" :data-source="data">
-        <a-list-item slot="renderItem" slot-scope="item, index">
-          <a-list-item-meta description="1000">
-            <a slot="title" href="https://www.antdv.com/">{{ item.title }}</a>
+        <a-list-item slot="renderItem" slot-scope="item, index" @click="onclick(item.id)">
+          <a-list-item-meta :description="`${item.sale}件`">
+            <a slot="title">{{ item.title }}</a>
           </a-list-item-meta>
         </a-list-item>
       </a-list>
@@ -19,38 +19,23 @@
   </div>
 </template>
 <script>
-const data = [
-  {
-    title: "Ant Design Title 1",
-  },
-  {
-    title: "Ant Design Title 2",
-  },
-  {
-    title: "Ant Design Title 3",
-  },
-  {
-    title: "Ant Design Title 4",
-  },
-  {
-    title: "Ant Design Title 5",
-  },
-  {
-    title: "Ant Design Title 6",
-  },
-  {
-    title: "Ant Design Title 7",
-  },
-  {
-    title: "Ant Design Title 8",
-  },
-];
+import bus from "utils/bus";
 export default {
   name: "Aslide",
   data() {
     return {
-      data,
+      data:[]
     };
+  },
+  methods: {
+    onclick(id){
+      this.$router.push(`/details/${id}`)
+    }
+  },
+  mounted() {
+    bus.$on("HotSale", (res) => {
+      this.data = res;
+    });
   },
 };
 </script>
@@ -84,11 +69,17 @@ export default {
     padding: 16px 0 16px 30px;
   }
 }
-.ant-list-item{
-    padding: 20px 30px 0 30px;
+.ant-list-item {
+  padding: 20px 30px 0 30px;
 }
-.ant-list-item-meta-content{
+.ant-list-item-meta-content {
   display: flex;
   justify-content: space-between;
+}
+.ant-list-item-meta-title{
+  width: 80%;
+  a{
+    font-size: 12px;
+  }
 }
 </style>

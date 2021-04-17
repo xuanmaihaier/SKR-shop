@@ -10,7 +10,6 @@ import './plugins/antd/index.js'
 // swiper
 import './plugins/swiper/index'
 
-
 new Vue({
   router,
   store,

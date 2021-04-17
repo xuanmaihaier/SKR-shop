@@ -71,6 +71,7 @@ export default {
           this.$router.push("/login");
         }
       }
+      this.$store.commit('showSerBar',false)
     },
     goMypage() {
       this.$router.push("/mypage");
