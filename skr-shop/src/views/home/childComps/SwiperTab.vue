@@ -3,7 +3,7 @@
     <ul class="tab">
       <li
         class="tabitem"
-        v-for="(item, index) in SwiperTab_list.slice(0,4)"
+        v-for="(item, index) in SwiperTab_list.slice(8,12)"
         @click="liclick(index)"
         :class="{ active: page == index }"
         :key="index"
@@ -12,7 +12,7 @@
       </li>
     </ul>
     <swiper ref="mySwiper" :options="SwiperTab"  @click="swiperClick(swiper)">
-      <swiper-slide v-for="(item, index) in SwiperTab_list.slice(0,4)" :key="index">
+      <swiper-slide v-for="(item, index) in SwiperTab_list.slice(8,12)" :key="index">
         <img
           :src="item.img"
         />
@@ -66,7 +66,7 @@ export default {
       this.page = index;
     },
       swiperClick(swiper){
-          let data = this.SwiperTab_list[swiper.realIndex].id
+          let data = this.SwiperTab_list[swiper.realIndex+8].id
       this.$router.push(`/details/${data}`)
     }
   },
