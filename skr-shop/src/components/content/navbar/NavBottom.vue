@@ -87,11 +87,11 @@ export default {
     },
   },
   created() {
-    this.getImg_({ parent_name: "鞋类", start: 5, end: 8 });
-    this.getImg_({ parent_name: "服饰", start: 5, end: 8 });
-    this.getImg_({ parent_name: "配件", start: 16, end: 18 });
-    this.getImg_({ parent_name: "儿童专区", start: 7, end: 10 });
-    console.log(this.navTypeOne);
+    this.getImg_( {parent_name:'鞋类',start:5,end:8})
+    this.getImg_( {parent_name:'服饰',start:5,end:8})
+    this.getImg_( {parent_name:'配件',start:16,end:18})
+    this.getImg_( {parent_name:'儿童专区',start:7,end:10})
+    // console.log(this.navTypeOne);
   },
   methods: {
     //截取4张小图片
