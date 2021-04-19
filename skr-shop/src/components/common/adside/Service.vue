@@ -228,15 +228,15 @@ export default {
   bottom: 5px;
 }
 /deep/ .contents {
-  padding: 20px;
-  height: 340px;
+  padding: 20px 0;
+  height: 380px;
   // overflow-y: scroll;
   overflow: auto;
 }
 /deep/.store_bar,
 /deep/.user_bar {
   display: flex;
-  width: 90%;
+  width: 95%;
   margin: 5px auto;
   .store_pic,
   .user_pic {
