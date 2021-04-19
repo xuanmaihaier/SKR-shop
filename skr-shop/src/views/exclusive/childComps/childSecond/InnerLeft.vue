@@ -1,31 +1,33 @@
 <template>
   <div class="inner_left">
-      <div class="inner_le">
-          <img src="//image.wconcept.co.kr/images/builder/1/4/56/257/PE5_789x402_1_20210407154209.jpg" alt="">
+      <div class="inner_le" v-for="(item,index) in $store.state.getImgs.getImgLista.slice(0,4)" :key="item" @click="handleClick(index)">
+          <img :src="item">
       </div>
-      <div>
-          <img src="//image.wconcept.co.kr/images/builder/1/4/56/257/PE5_789x402_2_20210407154242.jpg" alt="">
-      </div>
+     
   </div>
 </template>
 
 <script>
 export default {
-
+    methods: {
+        handleClick(index){
+            // console.log(this.$store.state.getImgs.getImgListaId[index]);
+            this.$router.push(`/details/${this.$store.state.getImgs.getImgListaId[index]}`)
+        }
+    },
 }
 </script>
 
 <style lang="less" scoped>
 .inner_left{
-    width: 45%;
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
     justify-content: space-between;
-    >div{
-        
-        margin: 0 4%;
-    }
- 
+   div{
+       padding: 0 10px;
+       cursor: pointer;
+   }
     img{
             width: 100%;
         }

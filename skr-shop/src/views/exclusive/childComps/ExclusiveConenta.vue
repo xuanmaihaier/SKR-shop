@@ -1,15 +1,15 @@
 <template>
   <div class="conenta">
       <InnerLeft/>
-      <InnerRight/>
+      <!-- <InnerRight/> -->
   </div>
 </template>
 
 <script>
 import InnerLeft from './childSecond/InnerLeft.vue'
-import InnerRight from './childSecond/InnerRight.vue'
+// import InnerRight from './childSecond/InnerRight.vue'
 export default {
-  components: { InnerLeft, InnerRight },
+  components: { InnerLeft},
 
 }
 </script>

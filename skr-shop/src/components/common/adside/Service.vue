@@ -7,14 +7,14 @@
     </div>
     <div class="ser_text">
       <div v-if="$store.state.isShowSer">
-        <div class="contents">
-        </div>
+        <div class="contents"></div>
         <a-textarea
           ref="textarea"
           class="textarea"
           placeholder="客服将尽快回复您"
-          :rows="2"
           v-model="message"
+          @keyup.enter="sendMessage_init"
+          :auto-size="{ minRows: 1, maxRows: 5 }"
         />
         <a-button class="send" @click="sendMessage_init">发送</a-button>
       </div>
@@ -27,6 +27,7 @@
 
 <script>
 import fork from "./Fork";
+import bus from "utils/bus";
 export default {
   components: {
     fork,
@@ -37,12 +38,15 @@ export default {
       login_: false,
       message: "",
       sendtext: "",
+      storePicUrl: require("assets/img/following/skr.png"),
+      userPicUrl: require("assets/img/following/client.jpeg"),
     };
   },
   created() {
+    this.tim.on(this.TIM.EVENT.MESSAGE_RECEIVED, this.getMessage);
     this.login_init();
-    this.tim.on(this.TIM.EVENT.MESSAGE_RECEIVED,this.getMessage);
   },
+
   methods: {
     handle() {
       this.close = false;
@@ -51,23 +55,28 @@ export default {
     returnLogin() {
       this.close = false;
       this.$emit("isCloseBar", this.close);
-      this.$store.state.loadingStatus = true;
-      setTimeout(() => {
-        this.$router.push("/login");
-      }, 1000);
+      if (this.$route.path !== "/login") {
+        this.$store.state.loadingStatus = true;
+        setTimeout(() => {
+          this.$router.push("/login");
+        }, 1000);
+      }
     },
     login_init() {
-      let that = this;
+      this.im_login();
       let user = sessionStorage.getItem("userId");
       if (user) {
         this.$store.commit("showSerBar", true);
       } else {
         this.$store.commit("showSerBar", false);
       }
+    },
+    im_login() {
+      let that = this;
       let promised = this.tim.login({
-        userID: "SKR",
+        userID: "user",
         userSig:
-          "eJwtzEsLgkAUhuH-ctYhZ8SxSWiVFWIXShdto7l0FMXUBiv675m6-J4P3g*ku8SxqoYAXAdhNmySqmxJ08BJfJ64kfm1qkhCwDxEjgtkYnxUV1Gteuecu4g4akvF33wm5hw9n00VMn0127O0u2cvHW5L9dCrDdrQPk-mkqumiIyNjusbmcM7FmIJ3x*eaTFd",
+          "eJyrVgrxCdYrSy1SslIy0jNQ0gHzM1NS80oy0zLBwqXFQAoiXpySnVhQkJmiZGVoYmBgamBpYGgBkUmtKMgsSgWKm5qaGhkYGEBESzJzQWJmhhYWhqZGlkZQUzLTgcYGarsU*JRk*Xt5R3kFeDkXBFsae6TG6CeH*mtXanv6RJSWeeYWR6ZVZnoGlNsq1QIAGGYxbQ__",
       });
       promised
         .then(function (imResponse) {
@@ -101,17 +110,28 @@ export default {
         });
         // 2. 发送消息
         let promise = this.tim.sendMessage(message);
+        // console.log(this.userPicUrl);
+        let userPicUrl = this.userPicUrl;
+        let storePicUrl = this.storePicUrl;
         promise
           .then(function (imResponse) {
             // 发送成功
             that.sendtext = imResponse.data.message.payload.text;
             that.message = "";
             let contents = document.querySelector(".contents");
+            // 创建div盒子
+            let user_bar = document.createElement("div");
+            user_bar.className = "user_bar";
             let user = document.createElement("p");
             user.className = "user_init";
             user.innerHTML = that.sendtext;
-            contents.appendChild(user);
-            console.log(contents);
+            user_bar.appendChild(user);
+            // 创建头像
+            let user_pic = document.createElement("img");
+            user_pic.className = "user_pic";
+            user_pic.src = userPicUrl;
+            user_bar.appendChild(user_pic);
+            contents.appendChild(user_bar);
           })
           .catch(function (imError) {
             // 发送失败
@@ -119,14 +139,31 @@ export default {
           });
       }
     },
-    getMessage (event) {
+    getMessage(event) {
       this.gettext = event.data[0].payload.text;
+
       let contents = document.querySelector(".contents");
-            let store = document.createElement("p");
-            store.className = "store_init";
-            store.innerHTML = this.gettext;
-            contents.appendChild(store);
-      
+      // 创建div盒子
+
+      let store_bar = document.createElement("div");
+      store_bar.className = "store_bar";
+
+      let store = document.createElement("p");
+
+      store.className = "store_init";
+
+      store.innerHTML = this.gettext;
+
+      let store_pic = document.createElement("img");
+
+      store_pic.className = "store_pic";
+      store_pic.src = this.storePicUrl;
+
+      store_bar.appendChild(store_pic);
+
+      store_bar.appendChild(store);
+      // console.log(store_bar);
+      contents.appendChild(store_bar);
     },
     sendMessage_init() {
       this.sedmessage();
@@ -162,7 +199,10 @@ export default {
 .ser_text {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 430px;
+  padding: 5px;
+  overflow: auto;
+  background-color: #ddd;
 }
 .ser_mask {
   position: relative;
@@ -187,25 +227,52 @@ export default {
   }
 }
 .textarea {
-  position: absolute;
-  bottom: 95px;
+  position: fixed;
+  width: 230px;
+  bottom: 5px;
 }
 .send {
-  position: absolute;
+  position: fixed;
   right: 0;
-  bottom: 60px;
+  bottom: 5px;
 }
-.content {
-  padding: 20px;
-  height: 340px;
-  overflow-y: scroll;
+/deep/ .contents {
+  padding: 20px 0;
+  height: 380px;
+  // overflow-y: scroll;
+  overflow: auto;
 }
-/deep/ .user_init {
+/deep/.store_bar,
+/deep/.user_bar {
   display: flex;
+  width: 95%;
+  margin: 5px auto;
+  .store_pic,
+  .user_pic {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin: 0 5px;
+    background-color: sandybrown;
+    vertical-align: middle;
+  }
+}
+
+/deep/.user_bar {
   justify-content: flex-end;
+  // background-color: aquamarine;
 }
-/deep/ .store_init {
-  display: flex;
-  justify-content: flex-start;
+// 客户
+/deep/ .store_init,
+/deep/ .user_init {
+  display: inline-block;
+  width: 160px;
+  min-height: 30px;
+  border: 1px solid #fff;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 5px;
+  text-indent: 10px;
+  vertical-align: middle;
 }
 </style>

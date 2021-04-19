@@ -2,38 +2,89 @@
   <div class="thumnail">
     <div class="issue_lst">
       <ul>
-        <li v-for="(item, index) in 10">
-          <a href=""
-            ><img
-              src="//image.wconcept.co.kr/images/disp_issue/T210414112317_48S.jpg"
-              alt=""
-            />
-            <div><img src="" alt="" /></div>
-            <p class="lst-titke">FILLCHIC</p>
-            <p class="multiline">필시크 21 SPRING 오픈</p>
+        <li v-for="(item, index) in shopList" @click="onDetail(item.id)">
+          <a href="javascript: void(0);"
+            ><img :src="item.img" alt="" />
+
+            <p class="multiline">{{ item.title }}</p>
           </a>
         </li>
       </ul>
     </div>
     <div class="pagination">
       <div id="components-pagination-demo-mini">
-        <a-pagination size="small" :total="100" />
+        <a-pagination
+          size="small"
+          :total="100"
+          @change="onChange"
+          :current="pages"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { getImg } from "network/getImg.js";
 export default {
-  props:{
+  props: {
     // 父组件接收的值 btn按钮的值
-    list:{
-      type:String,
-      default: ''
+    list: {
+      type: String,
+      default: "",
+    },
+  },
+  data() {
+    return {
+      shopList: [],
+      listAll: [],
+      pages: 1,
+    };
+  },
+  created() {
+    if (this.list == "All") {
+      this.getImg_("鞋类", 5, 7);
+      this.getImg_("服饰", 5, 7);
+      this.getImg_("配件", 5, 6);
+      this.getImg_("儿童专区", 5, 6);
+    } else {
+      this.getImg_(this.list, 1, 10);
     }
   },
-  methods:{
-    
+  methods: {
+    async getImg_(parent_name, start, end) {
+      const res = await getImg({ parent_name, start, end });
+      if (this.list == "All") {
+        this.shopList = this.shopList.concat(res);
+        this.listAll = this.shopList;
+      } else {
+        (this.shopList = []), (this.shopList = this.shopList.concat(res));
+      }
+      // console.log(this.shopList);
+      // console.log(this.listAll);
+    },
+    onChange(page) {
+      this.pages = page;
+      if (this.list != "All") {
+        let starts = (page - 1) * 10 + 1;
+        let ends = starts + 10 - 1;
+        this.getImg_(this.list, starts, ends);
+      }
+      // console.log(this.shopList);
+    },
+    onDetail(Id) {
+      this.$router.push(`/details/${Id}`);
+    },
+  },
+  watch: {
+    list() {
+      this.pages = 1;
+      if (this.list == "All") {
+        this.shopList = this.listAll;
+      } else {
+        this.getImg_(this.list, 1, 10);
+      }
+    },
   },
 };
 </script>
@@ -61,14 +112,13 @@ export default {
         img {
           width: 100%;
         }
-        .lst-titke {
-          text-align: center;
-          font-size: 14px;
-          color: #333;
-        }
         .multiline {
           text-align: center;
-          font-size: 12px;
+          margin-top: 10px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: 14px;
           color: #666;
         }
       }

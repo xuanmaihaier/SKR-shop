@@ -110,9 +110,9 @@ export default {
             this.$router.go(-1);
           }
           this.$store.dispatch('initShopCart')
-          console.log('初始化页面购物车');
-          this.$store.dispatch('initLocalShopTo')
-          console.log('初始化本地购物商品数据到数据库了');
+          // console.log('初始化页面购物车');
+          // this.$store.dispatch('initLocalShopTo')
+          // console.log('初始化本地购物商品数据到数据库了');
         } else {
           this.$message.error({
             content: "用户名或密码错误，请重新输入！",

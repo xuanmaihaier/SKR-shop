@@ -4,7 +4,7 @@
     <SwiperHreader :TopSwiper="TopSwiper" v-if="TopSwiper.length > 0" />
     <Title><p>Basketball shoes</p></Title>
     <AnCard :AnCard_list="AnCard_list" v-if="AnCard_list.length > 0" />
-    <StickyBanner />
+    <!-- <StickyBanner /> -->
     <Title><p>Skate shoes</p></Title>
     <SwiperList
       :SwiperList_list="SwiperList_list"

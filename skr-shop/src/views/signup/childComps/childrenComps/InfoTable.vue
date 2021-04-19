@@ -115,16 +115,21 @@ export default {
       codeShow: false,
       flag: true,
       regular,
+      phoneCode:0 //手机收到的验证码
     };
   },
   methods: {
     showText(e) {
-      if (e.target.id == "userName") {
-        this.userNameShow = false;
-      } else if (e.target.id == "passWord") {
-        this.pasWordShow = false;
-      } else if (e.target.id == "email") {
-        this.emailShow = false;
+      switch (e.target.id) {
+        case "userName":
+          this.userNameShow = false;
+          break;
+        case "passWord":
+          this.pasWordShow = false;
+          break;
+        case "email":
+          this.emailShow = false;
+          break;
       }
       e.target.placeholder = "";
     },
@@ -166,6 +171,7 @@ export default {
       let phone_init="+86"+this.phone
       getMessage({phoneNum:phone_init}).then(res=>{
         console.log(res);
+        this.phoneCode = res.data.Code
       })
     },
     successedBtn() {
@@ -179,11 +185,15 @@ export default {
       } else if (regular.test(this.email) == false) {
         this.emailShow = true;
         return;
+      } else if (this.code != this.phoneCode || this.code == ''){
+        this.codeShow =true
+        return
       }
       userSignUp({
         username: this.userName,
         password: this.passWord,
         email: this.email,
+        VerificationCode:this.phoneCode
       }).then((res) => {
         console.log(res);
         if (res.code == 501) {
@@ -252,6 +262,18 @@ export default {
                 background-color: #fff;
                 border-color: #000;
               }
+            }
+            .verification {
+              display: inline-block;
+              margin-left: 10px;
+              width: 100px;
+              height: 40px;
+              // border: 1px solid #fff;
+              border: none;
+              outline: none;
+              cursor: pointer;
+              background: #000;
+              color: #fff;
             }
             &:last-child {
               color: #ff4141;

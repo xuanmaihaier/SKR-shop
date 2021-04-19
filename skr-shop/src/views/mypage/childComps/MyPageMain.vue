@@ -27,7 +27,7 @@
       </thead>
       <tbody>
         <tr>
-          <td colspan="7" class="noData">您还没有订单。</td>
+          <td colspan="7" class="noData"><a-empty /></td>
         </tr>
       </tbody>
     </table>
@@ -66,16 +66,40 @@
         </ul>
       </div>
     </div>
-
-    <!-- <div style="height:372px;padding:50px 0">
-      <div style="height:100%;background-color:#848484">
-        <h1>底部占位</h1>
+    <div class="myAddress tableTitle">
+      <h3>我的地址</h3>
+      <div class="addAddress">
+        <button>+</button>
+        <small>新增地址</small>
       </div>
-    </div> -->
+      
+    </div>
+     <table class="cols">
+      <colgroup>
+        <col style="width: 135px" />
+        <col />
+        <col style="width: 130px" />
+      </colgroup>
+      <thead>
+        <tr>
+         <th>收货人姓名</th>
+         <th>收货人地址</th>
+         <th>收货人电话</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-show="addresses.length == 0">
+          <td colspan="3" class="noData">
+            <a-empty />
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
+import { delAddress } from "@/network/userAddress";
 const theadTitle = [
   "订单日期",
   "订单号",
@@ -90,6 +114,7 @@ export default {
   data() {
     return {
       theadTitle,
+      addresses:[]
     };
   },
   methods: {
@@ -134,6 +159,29 @@ export default {
       font-weight: 300;
     }
   }
+  .myAddress{
+    .addAddress{
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      button{
+        width: 30px;
+        height: 30px;
+        border-radius: 19px;
+        color: #fff;
+        background-color: #000;
+        border: none;
+        outline: none;
+        font-size: 18px;
+        cursor: pointer;
+      }
+      small{
+        font-size: 24px;
+      }
+    }
+  }
   table {
     width: 100%;
     border-collapse: collapse;
@@ -149,7 +197,7 @@ export default {
           font-size: 14px;
           padding: 0 14px;
           color: #000;
-          text-align: center;
+          // text-align: center;
           vertical-align: middle;
           border-bottom: 1px solid #b5b5b5;
         }
@@ -159,9 +207,9 @@ export default {
       tr {
         td {
           font-family: "ProximaNova-Light", "yg740";
-          text-align: center;
+          // text-align: center;
           vertical-align: middle;
-          padding: 14px 0;
+          padding: 14px;
           &.noData {
             height: 150px;
             color: #333;
@@ -172,6 +220,7 @@ export default {
     }
   }
   .myHeart {
+    margin-bottom: 60px;
     .tableTitle {
       border-bottom: 2px solid #000;
       padding-bottom: 10px;
