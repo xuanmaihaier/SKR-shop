@@ -3,20 +3,22 @@
   <div class="exclusive_wantneed">
    <div class="tit_wantneed">
       <Title>
-      <div class="tit_wrap">
+      <div class="tit_wrap" >
         <p>WANT.NEED</p>
-        <a-button> + ALL <span>(10943)</span></a-button>
+        <a-button @click="handleClick"> + ALL <span>(10943)</span></a-button>
       </div>
     </Title>
    </div>
     <ul class="thumbnail_list">
-      <a-card hoverable v-for="(item, index) in 8" :key="index">
+      <a-card hoverable v-for="(item, index) in $store.state.getImgs.getImgListd" :key="index" @click="clickHandle(item.id)">
         <img
           slot="cover"
           alt="example"
-          src="//image.wconcept.co.kr/productimg/image/img1/79/301235279.jpg?thumbnail=216x288"
+          :src="item.img"
         />
-
+       <a-card-meta :title="item.title">
+            <template slot="description"> www.stride.fun </template>
+          </a-card-meta>
       </a-card>
     </ul>
   </div>
@@ -27,6 +29,17 @@ import Title from "components/common/title/Title.vue";
 
 export default {
   components: { Title },
+    created() {
+    this.$store.dispatch('initGetImgd',{parent_name:'服饰',start:19,end:26})
+  },
+  methods: {
+    handleClick(){
+      this.$router.push(`/wdna`)
+    },
+    clickHandle(id){
+       this.$router.push(`/details/${id}`)
+    }
+  },
 };
 </script>
 
@@ -81,5 +94,9 @@ export default {
       }
     }
   }
+}
+/deep/.ant-card-meta-title{
+  padding-top: 5px;
+  font-size: 13px;
 }
 </style>

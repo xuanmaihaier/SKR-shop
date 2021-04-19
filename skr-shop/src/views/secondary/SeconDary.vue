@@ -77,6 +77,12 @@ export default {
   created() {
     this.flag = this.$route.params.id.indexOf("_") != -1;
   },
+  watch: {
+    $route(to, from) {
+      if(to.path!==from.path)
+      this.getTypeOTwoist_init()
+    },
+  },
 };
 </script>
 

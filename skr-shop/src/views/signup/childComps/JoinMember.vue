@@ -11,7 +11,7 @@
 import InfoTable from './childrenComps/InfoTable.vue'
 import JoinStep from './childrenComps/JoinStep.vue'
 export default {
-  components: { JoinStep, InfoTable },
+  components: { JoinStep, InfoTable},
   name:'JoinMember',
   data() {
     return {

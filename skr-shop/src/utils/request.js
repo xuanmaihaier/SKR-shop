@@ -12,7 +12,9 @@ instance.interceptors.request.use(config => {
 })
 
 instance.interceptors.response.use(response => {
-  store.dispatch('commitLoading', false)
+  setTimeout(() => {
+    store.dispatch('commitLoading', false)
+  }, 500);
   return response.data
 },
   error => {
