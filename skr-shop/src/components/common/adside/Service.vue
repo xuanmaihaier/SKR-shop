@@ -39,12 +39,14 @@ export default {
       message: "",
       sendtext: "",
       storePicUrl: require("assets/img/following/skr.png"),
+      store_news: 0,
       userPicUrl: require("assets/img/following/client.jpeg"),
     };
   },
   created() {
     this.tim.on(this.TIM.EVENT.MESSAGE_RECEIVED, this.getMessage);
     this.login_init();
+    this.tim.on(this.TIM.EVENT.MESSAGE_RECEIVED, this.getMessage);
   },
 
   methods: {
@@ -111,8 +113,6 @@ export default {
         // 2. 发送消息
         let promise = this.tim.sendMessage(message);
         // console.log(this.userPicUrl);
-        let userPicUrl = this.userPicUrl;
-        let storePicUrl = this.storePicUrl;
         promise
           .then(function (imResponse) {
             // 发送成功
@@ -129,7 +129,7 @@ export default {
             // 创建头像
             let user_pic = document.createElement("img");
             user_pic.className = "user_pic";
-            user_pic.src = userPicUrl;
+            user_pic.src = that.userPicUrl;
             user_bar.appendChild(user_pic);
             contents.appendChild(user_bar);
           })
@@ -139,7 +139,12 @@ export default {
           });
       }
     },
+    getNews() {
+      this.store_news++;
+      console.log(this.store_news);
+    },
     getMessage(event) {
+      this.getNews();
       this.gettext = event.data[0].payload.text;
 
       let contents = document.querySelector(".contents");
@@ -158,11 +163,8 @@ export default {
 
       store_pic.className = "store_pic";
       store_pic.src = this.storePicUrl;
-
       store_bar.appendChild(store_pic);
-
       store_bar.appendChild(store);
-      // console.log(store_bar);
       contents.appendChild(store_bar);
     },
     sendMessage_init() {
@@ -229,12 +231,12 @@ export default {
 .textarea {
   position: fixed;
   width: 230px;
-  bottom: 5px;
+  bottom: 8px;
 }
 .send {
-  position: fixed;
+  position: absolute;
   right: 0;
-  bottom: 5px;
+  bottom: 0;
 }
 /deep/ .contents {
   padding: 20px 0;

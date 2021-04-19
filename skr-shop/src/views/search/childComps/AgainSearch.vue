@@ -32,7 +32,9 @@ export default {
           this.searchNumber = res.data.length;
           this.data = res.data;
           this.$store.dispatch("commitSearchData", this.data);
-          this.$router.replace({ path: "/search/product" });
+          if(this.$route.name != 'Product'){
+            this.$router.replace({ path: "/search/product" });
+          }
         }
       });
     },
@@ -42,6 +44,7 @@ export default {
       // 当路由是搜索时重新搜索
       if (this.$route.name === "Search") {
         this.loadSearch();
+        return;
       }
     },
   },
