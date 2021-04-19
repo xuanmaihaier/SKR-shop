@@ -84,22 +84,30 @@ export default {
   },
   methods: {
     showText(e) {
-      if (e.target.id == "userName") {
-        this.userNameShow = false;
-      } else if (e.target.id == "passWord") {
-        this.pasWordShow = false;
-      } else if (e.target.id == "email") {
-        this.emailShow = false;
+      switch (e.target.id) {
+        case "userName":
+          this.userNameShow = false;
+          break;
+        case "passWord":
+          this.pasWordShow = false;
+          break;
+        case "email":
+          this.emailShow = false;
+          break;
       }
       e.target.placeholder = "";
     },
     hideText(e) {
-      if (e.target.id == "userName") {
-        e.target.placeholder = "请输入您的用户名";
-      } else if (e.target.id == "passWord") {
-        e.target.placeholder = "请输入您的密码";
-      } else if (e.target.id == "email") {
-        e.target.placeholder = "请输入您的邮箱";
+      switch (e.target.id) {
+        case "userName":
+          e.target.placeholder = "请输入您的用户名";
+          break;
+        case "passWord":
+          e.target.placeholder = "请输入您的密码";
+          break;
+        case "email":
+          e.target.placeholder = "请输入您的邮箱";
+          break;
       }
     },
     successedBtn() {
@@ -186,6 +194,18 @@ export default {
                 background-color: #fff;
                 border-color: #000;
               }
+            }
+            .verification {
+              display: inline-block;
+              margin-left: 10px;
+              width: 100px;
+              height: 40px;
+              // border: 1px solid #fff;
+              border: none;
+              outline: none;
+              cursor: pointer;
+              background: #000;
+              color: #fff;
             }
             &:last-child {
               color: #ff4141;

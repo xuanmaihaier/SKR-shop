@@ -15,3 +15,19 @@ export async function userSignUp(options){
     data:options
   })
 }
+// 个人信息请求
+export async function userInfo(options){
+  return await axios({
+    method:'post',
+    url:'/user/updateUserInfo',
+    data:options
+  })
+}
+// 修改密码请求
+export async function updatePassword(options){
+  return await axios({
+    method:'post',
+    url:'/user/changePassword',
+    data:options
+  })
+}
