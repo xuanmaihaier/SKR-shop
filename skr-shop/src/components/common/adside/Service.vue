@@ -7,8 +7,7 @@
     </div>
     <div class="ser_text">
       <div v-if="$store.state.isShowSer">
-        <div class="contents">
-        </div>
+        <div class="contents"></div>
         <a-textarea
           ref="textarea"
           class="textarea"
@@ -28,6 +27,7 @@
 
 <script>
 import fork from "./Fork";
+import bus from "utils/bus";
 export default {
   components: {
     fork,
@@ -42,13 +42,10 @@ export default {
   },
   created() {
     this.login_init();
-     this.tim.on(this.TIM.EVENT.MESSAGE_RECEIVED,this.getMessage);
-    
-   
-  },
-  mounted() {
 
+    this.tim.on(this.TIM.EVENT.MESSAGE_RECEIVED, this.getMessage);
   },
+  mounted() {},
   methods: {
     handle() {
       this.close = false;
@@ -63,13 +60,16 @@ export default {
       }, 1000);
     },
     login_init() {
-      let that = this;
+          this.im_login()
       let user = sessionStorage.getItem("userId");
       if (user) {
         this.$store.commit("showSerBar", true);
       } else {
         this.$store.commit("showSerBar", false);
       }
+    },
+    im_login() {
+      let that = this;
       let promised = this.tim.login({
         userID: "SKR",
         userSig:
@@ -125,14 +125,13 @@ export default {
           });
       }
     },
-    getMessage (event) {
+    getMessage(event) {
       this.gettext = event.data[0].payload.text;
       let contents = document.querySelector(".contents");
-            let store = document.createElement("p");
-            store.className = "store_init";
-            store.innerHTML = this.gettext;
-            contents.appendChild(store);
-      
+      let store = document.createElement("p");
+      store.className = "store_init";
+      store.innerHTML = this.gettext;
+      contents.appendChild(store);
     },
     sendMessage_init() {
       this.sedmessage();
