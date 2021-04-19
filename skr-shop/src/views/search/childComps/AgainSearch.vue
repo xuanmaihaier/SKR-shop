@@ -32,7 +32,7 @@ export default {
           this.searchNumber = res.data.length;
           this.data = res.data;
           this.$store.dispatch("commitSearchData", this.data);
-          this.$router.push({ path: "/search/product" });
+          this.$router.replace({ path: "/search/product" });
         }
       });
     },

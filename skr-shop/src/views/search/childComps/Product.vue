@@ -1,7 +1,7 @@
 <template>
   <div class="product">
     <ul>
-      <li v-for="item in data" :key="item.id">
+      <li v-for="item in data" :key="item.id" @click="goToDetails(item.id)">
         <a-card hoverable style="width: 240px">
           <img slot="cover" alt="example" :src="item.img" />
           <a-card-meta :title="item.title">
@@ -13,14 +13,8 @@
                   ><span class="discount">￥{{ item.price }}</span>
                 </p>
                 <span class="percentage"
-                  >{{
-                    Math.abs(
-                      (
-                        ((item.special_price - item.price) / item.price) *
-                        100
-                      ).toFixed(2)
-                    )
-                  }}%</span
+                  >{{ 100 - Math.round(Math.abs(((item.special_price - item.price) / item.price) * 100))}}
+                    %</span
                 >
               </div>
             </template>
@@ -43,21 +37,18 @@ export default {
     };
   },
   created() {
-      this.getData();
+    this.getData();
   },
   methods: {
     getData() {
       setTimeout(() => {
         this.data = this.$store.state.SearchData;
-      }, 500);
+      }, 700);
+    },
+    goToDetails(id) {
+      this.$router.push(`/details/${id}`);
     },
   },
-  // watch: {
-  //   $route: function () {
-  //     console.log(this.$route)
-  //     this.getData();
-  //   },
-  // },
 };
 </script>
 

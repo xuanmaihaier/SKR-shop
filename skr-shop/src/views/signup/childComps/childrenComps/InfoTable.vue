@@ -193,6 +193,7 @@ export default {
         username: this.userName,
         password: this.passWord,
         email: this.email,
+        VerificationCode:this.phoneCode
       }).then((res) => {
         console.log(res);
         if (res.code == 501) {
