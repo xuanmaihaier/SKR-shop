@@ -1,9 +1,9 @@
 <template>
   <div class="SwiperCarousel">
-    <swiper ref="mySwiper" :options="swiperOptions" @click="swiperClick(swiper)">
+    <swiper ref="mySwiper" :options="swiperOptions">
       <swiper-slide v-for="(item, index) in SwiperCarousel_list.slice(20,28)" :key="index">
         <a-card hoverable class="card">
-          <img
+          <img @click="swiperClick(item.id)"
             slot="cover"
             alt="example"
             :src="item.img"
@@ -65,9 +65,8 @@ export default {
     }
   },
    methods: {
-     swiperClick(swiper){
-      let data = this.SwiperCarousel_list[swiper.realIndex+20].id
-      this.$router.push(`/details/${data}`)
+     swiperClick(id){
+      this.$router.push(`/details/${id}`)
     }
   },
   mounted() {

@@ -1,14 +1,15 @@
 <template>
   <div class="SwiperAndList">
     <div class="swiper">
-      <swiper ref="mySwiper" :options="swiperOptions" @click="swiperClick(swiper)">
+      <swiper ref="mySwiper" :options="swiperOptions" >
         <swiper-slide v-for="(item, index) in SwiperAndList_list.slice(8, 16)" :key="index">
           <img
+          @click="swiperClick(item.id)"
             alt="example"
             :src="item.img" width="100%"
           />
         </swiper-slide>
-        <div class="swiper-pagination" slot="pagination"></div>
+        <div  class="swiper-pagination" slot="pagination"></div>
         　　
         <div class="swiper-button-prev" slot="button-prev"></div>
         　　
@@ -78,9 +79,8 @@ export default {
     cardclick(id) {
       this.$router.push(`/details/${id}`);
     },
-    swiperClick(swiper){
-      let data = this.SwiperAndList_list[swiper.realIndex+8].id
-      this.$router.push(`/details/${data}`)
+    swiperClick(id){
+    this.$router.push(`/details/${id}`);
     }
   },
   mounted() {
