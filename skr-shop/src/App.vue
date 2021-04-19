@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <NavBar />
-    <keep-alive exclude="Login,Details">
+    <keep-alive exclude="Login,Details,Primary">
       <router-view :key="$route.fullPath" />
     </keep-alive>
     <FooterNav />
