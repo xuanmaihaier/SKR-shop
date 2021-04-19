@@ -13,6 +13,9 @@
       <span>共 0 件宝贝</span>
       <button>管理</button>
     </p>
+    <div class="leary">
+        <img :src="shopCarPic" alt="">
+    </div>
   </div>
 </template>
 
@@ -25,6 +28,7 @@ export default {
   data() {
     return {
       close: true,
+      shopCarPic:require('assets/img/following/cart_empty_bg.jpg')
     };
   },
   created(){
@@ -50,6 +54,14 @@ export default {
   background-color: #fff;
   border: 2px solid #333;
   box-shadow: 10px 10px 10px 5px #333;
+  .leary{
+    width: 90%;
+    margin: 100px auto;
+    text-align: center;
+    img{
+      width: 90%;
+    }
+  }
 }
 header > h3 {
   width: 300px;
