@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 import details from "./modules/details";
 import shopCart from "./modules/shopCart";
-
+import addAddress from "./modules/addAddress";
 Vue.use(Vuex)
 // 请按照规范 使用action触发mutations
 let store= new Vuex.Store({
@@ -53,6 +53,7 @@ let store= new Vuex.Store({
   modules: {
     details,
     shopCart,
+    addAddress
   }
 })
 export default store
