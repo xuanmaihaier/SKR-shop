@@ -2,13 +2,12 @@
   <div class="Conent_b">
     <Title><p>TALKING</p></Title>
     <ul>
-      <li v-for="item in 3" :key="item">
+      <li v-for="(item,index) in $store.state.getImgs.getImgListc" :key="index" @click="handleClick(item.id)">
         <img
-          src="//image.wconcept.co.kr/images/builder/1/4/56/259/ME8_750x410_1_20210407155240.jpg"
-          alt=""
+          :src="item.img"
         />
-        <p class="tit">MY FAVORITE JACKET : #3. 설희의 재킷</p>
-        <p class="tit_">인플루언서 '설희'의 포멀한 재킷 스타일링</p>
+        <p class="tit">{{item.title}}</p>
+        <p class="tit_">www.stride.fun</p>
       </li>
     </ul>
   </div>
@@ -18,6 +17,14 @@
 import Title from "components/common/title/Title.vue";
 export default {
   components: { Title },
+  created() {
+    this.$store.dispatch('initGetImgc',{parent_name:'服饰',start:16,end:18})
+  },
+  methods: {
+    handleClick(id){
+      this.$router.push(`/details/${id}`)
+    }
+  },
 };
 </script>
 <style lang="less" scoped>
@@ -29,6 +36,7 @@ export default {
     display: flex;
     justify-content: space-evenly;
     li {
+      cursor: pointer;
       width: calc(100% / 3 - 2%);
       .tit {
         text-align: center;
@@ -37,6 +45,7 @@ export default {
         font-size: 20px;
         color: #333;
         line-height: normal;
+        
       }
       .tit_ {
         font-family: "yg740";

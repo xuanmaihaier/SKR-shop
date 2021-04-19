@@ -9,14 +9,14 @@
 
       <div class="right">
         <ul>
-          <li v-for="(ListItem, index) in rightList" :key="index">
-            <img :src="ListItem.url" alt="" />
+          <li v-for="(ListItem, index) in navTypeOne[navIndex]" :key="index">
+            <img :src="ListItem.img" alt="" />
             <h2>{{ ListItem.title }}</h2>
             <p>
               <span>{{ ListItem.particulars }}</span>
             </p>
             <p>
-              <span>{{ ListItem.particularsList }}</span>
+              <span>www.stride.fun</span>
             </p>
           </li>
         </ul>
@@ -35,6 +35,10 @@ export default {
       type: Number,
       default: 0,
     },
+    navTypeOne:{
+      type:Array,
+      default:()=>[]
+    }
   },
   data() {
     return {
@@ -75,6 +79,9 @@ export default {
       ],
     };
   },
+  created() {
+    this.getImg_()
+  },
   methods: {
     //移入
     engraft() {
@@ -87,6 +94,12 @@ export default {
     // li点击
     liclick(item){
       this.$router.push(`/secondary/${item}`)
+    },
+    //截取4张小图片
+    async getImg_(){
+      // console.log(this.navTypeOne);
+      //   const {res}=await getImg(this.navTypeOne)
+      //   console.log(res);
     }
   },
   mounted() {
@@ -117,7 +130,8 @@ export default {
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
-      padding: 25px 0;
+      padding: 25px 60px 25px 25px;
+      overflow: hidden;
         li{
          color: rgb(78, 77, 77);
          height: 30px;
@@ -140,11 +154,11 @@ export default {
       display: flex;
       ul {
         flex: 1;
-        padding: 25px 0;
+        padding: 25px 30px;
         display: flex;
         overflow: hidden;
         li {
-          width: 130px;
+          width: 140px;
           display: flex;
           height: 100%;
           flex-direction: column;
@@ -159,6 +173,9 @@ export default {
             text-align: center;
             font-weight: 700;
             font-size: 12px;
+             overflow: hidden;
+              white-space: nowrap; /* 设置文本是否换行.. */
+              text-overflow: ellipsis; 
           }
           p {
             line-height: 30px;
