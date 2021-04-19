@@ -1,17 +1,17 @@
 <template>
   <div class="wdna_main">
       <WdnaTop/>
-      <WdnaOn/>
-      <WdnaContainer/>
+      <!-- <WdnaOn/>
+      <WdnaContainer/> -->
   </div>
 </template>
 
 <script>
-import WdnaContainer from './childComps/WdnaContainer.vue'
-import WdnaOn from './childComps/WdnaOn.vue'
+// import WdnaContainer from './childComps/WdnaContainer.vue'
+// import WdnaOn from './childComps/WdnaOn.vue'
 import WdnaTop from './childComps/WdnaTop.vue'
 export default {
-  components: { WdnaTop, WdnaOn, WdnaContainer },
+  components: { WdnaTop, },
 
 }
 </script>

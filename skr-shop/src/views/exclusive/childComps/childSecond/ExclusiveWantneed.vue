@@ -10,23 +10,23 @@
     </Title>
    </div>
     <ul class="thumbnail_list">
-      <a-card hoverable v-for="(item, index) in 8" :key="index">
+      <a-card hoverable v-for="(item, index) in wantneedList" :key="index">
         <img
           slot="cover"
           alt="example"
-          src="//image.wconcept.co.kr/productimg/image/img1/79/301235279.jpg?thumbnail=216x288"
+          :src="item.img"
         />
-        <a-card-meta title="LOEUVRE">
+        <a-card-meta title=" ">
           <template slot="description">
-              <p class="front">[4월펀딩]</p> 
+              <p class="front">{{item.title}}</p> 
             </template>
           <template slot="description">
-              <p>Half Sleeve Tweed Crop Jacket SW1MJ201-52</p>
+              <p>www.stride.fun</p>
           </template>
           <template slot="description">
             <div class="price">
-              <p><span class="discount_after">161,50</span> <span class="discount">199,000</span></p>
-              <span class="percent">15%</span>
+              <p><span class="discount_after">{{item.special_price}}</span> <span class="discount">{{item.price}}</span></p>
+              <span class="percent">{{parseInt((item.special_price/item.price)*100)}}%</span>
             </div>
           </template>
         </a-card-meta>
@@ -36,15 +36,32 @@
 </template>
 
 <script>
-import Title from "components/common/title/Title.vue";
 
+import Title from "components/common/title/Title.vue";
+import {getTypeOneList} from 'network/getList.js'
 export default {
   components: { Title },
+  data() {
+    return {
+      wantneedList:[]
+    }
+  },
+  created() {
+    this.getTypeOneList_()
+  },
+  methods: {
+    async getTypeOneList_(){
+      const {res} =await getTypeOneList("服饰")
+      this.wantneedList=res.slice(200,208)
+   
+    }
+  },
 };
 </script>
 
 <style lang="less" scoped>
 .exclusive_wantneed {
+  min-width: 1240px;
   margin-top: 7%;
   .tit_wantneed{
     transform: translateY(-100%);

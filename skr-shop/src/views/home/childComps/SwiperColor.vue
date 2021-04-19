@@ -1,9 +1,9 @@
 <template>
   <div class="SwiperColor">
-    <swiper ref="SwiperColor" :options="SwiperColor" @click="swiperClick(swiper)">
+    <swiper ref="SwiperColor" :options="SwiperColor">
       <swiper-slide v-for="(item, index) in list_list.slice(23,32)" :key="index">
-        <img :src="item.img" />
-        <div class="mask" ref="mask" :style="{'backgroundColor':colorarr[index]}">
+        <img :src="item.img"/>
+        <div class="mask" ref="mask" @click="swiperClick(item.id)" :style="{'backgroundColor':colorarr[index]}">
           <p>{{item.title}}</p>
         </div>
       </swiper-slide>
@@ -47,9 +47,8 @@
       },
     },
     methods: {
-      swiperClick(swiper){
-      let data = this.list_list[swiper.realIndex+23].id
-      this.$router.push(`/details/${data}`)
+      swiperClick(id){
+      this.$router.push(`/details/${id}`)
     }
     },
     mounted() {
@@ -107,7 +106,7 @@
 
   .swiper-button-prev,
   .swiper-button-next {
-    --swiper-theme-color: #ffffff;
+    --swiper-theme-color: #black;
     /* 设置Swiper风格 */
   }
 
