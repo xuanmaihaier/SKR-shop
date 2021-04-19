@@ -13,7 +13,7 @@
 import NavBar from "components/content/navbar/NavBar.vue";
 import FooterNav from "components/common/footer/FooterNav";
 import Adside from "components/common/adside/Adside";
-import Loading from "./components/common/loading/Loading.vue";
+import Loading from "components/common/loading/Loading.vue";
 export default {
   name: "App",
   components: {
