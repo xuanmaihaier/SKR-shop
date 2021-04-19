@@ -36,12 +36,7 @@ module.exports = {
     open: true,
     proxy: {
       '/dev-api': {
-<<<<<<< HEAD
-        target: 'http://localhost:3000',
-        // target: 'http://192.168.1.144:3000',
-=======
         target: 'http://192.168.1.116:3000/',
->>>>>>> 91c33e64dfc8748aa35d5188ccbe08c1a7ccfd81
         // target: 'http://localhost:3000/',
         // target: 'http://192.168.1.144:3000/',
         // target:' http://www.stride.fun:80', 

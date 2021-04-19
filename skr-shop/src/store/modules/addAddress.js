@@ -8,6 +8,7 @@ export default {
     mutations: {
         get(state,params){
             state.addressList=params
+            console.log( state.addressList);
         }
     },
     actions: {
@@ -17,6 +18,7 @@ export default {
         },
         async add({dispatch}, params) {
             const res = await addAddress(params)
+            console.log(res);
             dispatch('get',res)
         },
     }
