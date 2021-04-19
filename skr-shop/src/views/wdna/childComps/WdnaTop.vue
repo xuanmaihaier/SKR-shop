@@ -5,12 +5,12 @@
         v-for="(item, index) in list_list.slice(23, 30)"
         :key="index"
         :style="{
-          'background-image': `linear-gradient(to right,#fff 70%,${colorarr[index]} 100%)`,
+          'background-image': `linear-gradient(to right,#fff 55%,${colorarr[index]} 100%)`,
         }"
       >
         <img :src="item.img" @click="swiperClick(item.id)"/>
         <p  :style="{'color':colorarr[index]}">{{ text[index] }}</p>
-        <span  v-if="index!=6" class="tip">右划查看下一个<a-icon type="caret-right" /></span>
+        <span  v-if="index!=6" class="tip">右划查看下一款<a-icon type="caret-right" /></span>
       </swiper-slide>
     </swiper>
   </div>
