@@ -32,6 +32,7 @@ export default {
         this.$router.push({ name: "Search", params: { word: item } });
     },
     RndNum(n, data) {
+      if(data==undefined) return
       let rnd = "";
       let arr = [];
       for (var i = 0; i < n; i++) {
