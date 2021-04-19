@@ -15,3 +15,11 @@ export async function userSignUp(options){
     data:options
   })
 }
+
+export async function getMessage(options){
+  return await axios({
+    method:'post',
+    url:'/user/getMessage',
+    data:options
+  })
+}

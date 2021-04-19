@@ -1,10 +1,11 @@
 <template>
   <div class="SwiperHreader">
     <swiper ref="SwiperHreader" :options="SwiperHreader">
-      <swiper-slide v-for="(item, index) in 4" :key="index">
+      <swiper-slide v-for="(item, index) in TopSwiper" :key="index" >
         <img
+         @click="swiperClick(index)"
           alt="example"
-          src="//image.wconcept.co.kr/images/builder/1/4/15/28/pc03_1920x600_20210409154158.jpg"
+          :src="item.swiperImg"
         />
       </swiper-slide>
       <div class="swiper-pagination" slot="pagination"></div>
@@ -22,7 +23,7 @@ export default {
   data() {
     return {
       SwiperHreader: {
-           slidesPerView: 1,
+        slidesPerView: 1,
         loop: true,
         observer: true, //修改swiper自己或子元素时，自动初始化swiper
         observeParents: true, //修改swiper的父元素时，自动初始化swiper
@@ -40,6 +41,22 @@ export default {
       },
       },
     };
+  },
+  props:{
+    TopSwiper:{
+      type:Array,
+      default:()=>[]
+    }
+  },
+  methods: {
+    swiperClick(index){
+      let data = JSON.parse(this.TopSwiper[index].params)
+      if(data.id!=undefined){
+        this.$router.push(`/details/${data.id}`)
+      }else{
+        this.$router.push(`/secondary/${data.name}_${data.series}`)
+      }
+    }
   },
   computed: {
     swiper() {
@@ -63,12 +80,14 @@ export default {
 }
 .swiper-button-prev {
   left: 30px;
+   z-index: 999;
 }
 .swiper-button-next {
   right: 30px;
 }
 .swiper-button-prev,
 .swiper-button-next {
+ 
   --swiper-theme-color: #ccc; /* 设置Swiper风格 */
 }
 </style>

@@ -67,7 +67,6 @@ export default {
         justify-content: space-around;
         li {
             width: calc((100% / 3 - 4%));
-            // height: 664.34px;
             position: relative;
             .icon_best {
                 width: 70px;

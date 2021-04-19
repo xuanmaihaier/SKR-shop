@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 
 import details from "./modules/details";
 import shopCart from "./modules/shopCart";
+import getImgs from "./modules/getImgs";
+
 
 Vue.use(Vuex)
 // 请按照规范 使用action触发mutations
@@ -10,9 +12,10 @@ let store= new Vuex.Store({
   state: {
     // NavBarTop 的显示隐藏
     NavbarShow:true,
-    isShow: false,
+    isShow: true,
     loadingStatus: false, //loading全局开关。
-    SearchShow:false  //Navbottom 的Search 的显示隐藏
+    SearchShow:false,  //Navbottom 的Search 的显示隐藏
+    isShowSer:false, //侧边栏开关
   },
   mutations: {
     changeShow(state, value) {
@@ -26,6 +29,9 @@ let store= new Vuex.Store({
     },
     changeSearchShow(state, val){
       state.SearchShow = val
+    },
+    showSerBar(state,val){
+      state.isShowSer = val;
     }
   },
   actions: {
@@ -49,6 +55,7 @@ let store= new Vuex.Store({
   modules: {
     details,
     shopCart,
+    getImgs
   }
 })
 export default store

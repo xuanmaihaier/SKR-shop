@@ -3,18 +3,19 @@
     <ul class="tab">
       <li
         class="tabitem"
-        v-for="(item, index) in 4"
+        v-for="(item, index) in SwiperTab_list.slice(8,12)"
         @click="liclick(index)"
         :class="{ active: page == index }"
         :key="index"
       >
-        item
+        {{arr[index]}}
       </li>
     </ul>
     <swiper ref="mySwiper" :options="SwiperTab">
-      <swiper-slide v-for="(item, index) in 4" :key="index">
+      <swiper-slide v-for="(item, index) in SwiperTab_list.slice(8,12)" :key="index">
         <img
-          src="//image.wconcept.co.kr/images/builder/1/4/15/38/P6_1000x600_02_20210409154908.jpg?RS=1000"
+          @click="swiperClick(item.id)"
+          :src="item.img"
         />
       </swiper-slide>
       　　
@@ -30,6 +31,7 @@ export default {
   name: "SwiperTab",
   data() {
     return {
+      arr:['富强',"民主",'和谐','平等'],
       page: 1,
       SwiperTab: {
         direction: "horizontal", //滑动方向，可设置水平(horizontal)或垂直(vertical)。
@@ -53,14 +55,23 @@ export default {
       },
     };
   },
+  props:{
+    SwiperTab_list:{
+      type:Array,
+      default:()=>[]
+    }
+  },
   methods: {
     liclick(index) {
       this.swiper.slideTo(index, 1000, false);
       this.page = index;
     },
+      swiperClick(id){
+      this.$router.push(`/details/${id}`)
+    }
   },
   computed: {
-    swiper() {
+    swiper(swiper) {
       return this.$refs.mySwiper.$swiper;
     },
   },
@@ -97,7 +108,7 @@ export default {
   height: 100%;
 }
 .swiper-container .swiper-wrapper .swiper-slide {
-  width: 60% !important;
+  width: 40% !important;
   overflow: hidden;
   display: flex;
   align-items: center;

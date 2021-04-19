@@ -3,24 +3,24 @@
       <ul class="tab">
     <li
       class="tabitem"
-      v-for="(item, index) in 5"
+      v-for="(item, index) in TypeTwoList"
       @click="liclick(index)"
       :class="{ active: page == index }"
     >
-      item
+      {{item}}
     </li>
       </ul>
       <div class="content">
          <div class="AnCard">
-    <a-card hoverable class="card" v-for="(item,index) in 6" :key="index">
+    <a-card hoverable class="card" v-for="(item,index) in ShopListTab_list[page]" :key="index" @click="cardclick(item.id)">
       <img
         slot="cover"
         alt="example"
-        src="//image.wconcept.co.kr/images/builder/1/4/15/37/마몽드_백예린_프로바이오틱스세라마이드크림 (1)_20210407101705.jpg"
+        :src="item.img"
       />
-      <a-card-meta title="Europe Street beat">
+      <a-card-meta :title="item.title">
         <template slot="description">
-          <p class="description">www.instagram.com</p>
+          <p class="description">www.stride.fun</p>
         </template>
       </a-card-meta>
     </a-card>
@@ -40,7 +40,21 @@ export default {
   methods: {
     liclick(index){
       this.page=index
+      console.log(index);
+    },
+    cardclick(id){
+      this.$router.push(`/details/${id}`)
     }
+  },
+  props:{
+    ShopListTab_list:{
+      type:Array,
+      default:()=>{}
+    },
+    TypeTwoList:{
+      type:Array,
+      default:()=>{}
+    },
   },
 };
 </script>
@@ -54,7 +68,7 @@ export default {
   padding: 10px 0;
   font-size: 20px;
   .tabitem {
-    width: 60px;
+    width: 100px;
     text-align: center;
     cursor: pointer;
     font-family: "ProximaNova-Semibold";

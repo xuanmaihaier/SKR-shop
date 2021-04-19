@@ -54,6 +54,36 @@
             </td>
           </td>
         </tr>
+          <tr>
+            <th>
+              手机号<span>*</span>
+            </th>
+            <td>
+              <p>
+                <input type="text" placeholder="请输入您的手机" @focus="showText" @blur="hideText"  v-model.trim="phone" id="phone">
+              </p>
+ 
+             <a-button @click="getCode" :disabled="!flag">获取验证码</a-button>
+              <p v-show="phoneShow">
+                <small>请填写正确的手机格式</small>
+              </p>
+            </td>
+          </td>
+        </tr>
+         <tr>
+            <th>
+              验证码<span>*</span>
+            </th>
+            <td>
+              <p>
+                <input  type="text" placeholder="请输入验证码" @focus="showText" @blur="hideText"  v-model.trim="code" id="code">
+              </p>
+              <p v-show="codeShow">
+                <small>请填写正确的验证码</small>
+              </p>
+            </td>
+          </td>
+        </tr>
       </tbody>
     </table>
     <div class="joinBtnWrap">
@@ -64,7 +94,7 @@
 </template>
 
 <script>
-import { userSignUp } from "@/network/userJoin";
+import { userSignUp,getMessage } from "@/network/userJoin";
 const key = "updatable";
 // 邮箱验证
 const regular = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -76,9 +106,14 @@ export default {
       userName: "",
       passWord: "",
       email: "",
+      phone: "",
+      code: "",
       userNameShow: false,
       pasWordShow: false,
       emailShow: false,
+      phoneShow: false,
+      codeShow: false,
+      flag: true,
       regular,
     };
   },
@@ -100,7 +135,38 @@ export default {
         e.target.placeholder = "请输入您的密码";
       } else if (e.target.id == "email") {
         e.target.placeholder = "请输入您的邮箱";
+      } else if (e.target.id == "phone") {
+        e.target.placeholder = "请输入您的手机";
+      } else if (e.target.id == "code") {
+        e.target.placeholder = "请输入验证码";
       }
+    },
+    getCode(e) {
+      // 此处正则先通过才能获取验证码 不然不倒计时
+      let phonetast = /^(?:(?:\+|00)86)?1\d{10}$/;
+      if (!phonetast.test(this.phone)) {
+        this.phoneShow = true;
+        return;
+      } 
+      this.phoneShow = false;
+      console.log(this.phone);
+      if (this.flag) {
+        this.flag = false;
+        let timer = 60;
+        let stttimer = setInterval(() => {
+          timer--;
+          e.target.innerText = `${timer}s后重新获取`;
+          if (timer <= 0) {
+            this.flag = true;
+            clearInterval(stttimer);
+            e.target.innerText = `获取验证码`;
+          }
+        }, 1000);
+      }
+      let phone_init="+86"+this.phone
+      getMessage({phoneNum:phone_init}).then(res=>{
+        console.log(res);
+      })
     },
     successedBtn() {
       // 信息验证
@@ -261,5 +327,12 @@ export default {
       }
     }
   }
+}
+.ant-btn {
+  margin-left: 20px;
+  height: 38px;
+  width: 100px;
+  padding: 0 3px;
+  font-size: 12px;
 }
 </style>

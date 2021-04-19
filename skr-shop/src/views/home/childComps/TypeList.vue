@@ -1,20 +1,20 @@
 <template>
   <div class="TypeList">
-    <div class="type">
-      <p>women</p>
+    <div class="type" @click="typeclick">
+      <p>{{TypeList}}</p>
       <p>more<a-icon type="caret-right" /></p>
     </div>
     <div class="list">
       <div class="AnCard">
-        <a-card hoverable class="card" v-for="(item, index) in 7" :key="index">
+        <a-card hoverable class="card" v-for="(item, index) in item" :key="index" @click="cardclick(item.id)">
           <img
             slot="cover"
             alt="example"
-            src="//image.wconcept.co.kr/productimg/image/img1/59/301236759.jpg?RS=216"
+            :src="item.img"
           />
-          <a-card-meta title="Europe Street beat">
+          <a-card-meta :title="item.title">
             <template slot="description">
-              <p class="description">www.instagram.com</p>
+              <p class="description">www.stride.fun</p>
             </template>
           </a-card-meta>
         </a-card>
@@ -25,6 +25,24 @@
 <script>
 export default {
   name: "TypeList",
+  props:{
+    item:{
+      type:Array,
+      default:()=>[]
+    },
+    TypeList:{
+      type:String,
+      default:""
+    }
+  },
+  methods: {
+    typeclick(){
+      this.$router.push(`/primary/${this.TypeList}`)
+    },
+    cardclick(id){
+       this.$router.push(`/details/${id}`)
+    }
+  },
 };
 </script>
 
