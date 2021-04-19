@@ -3,13 +3,9 @@ import Vuex from 'vuex'
 
 import details from "./modules/details";
 import shopCart from "./modules/shopCart";
-<<<<<<< HEAD
 import addAddress from "./modules/addAddress";
-=======
 import getImgs from "./modules/getImgs";
 
-
->>>>>>> master
 Vue.use(Vuex)
 // 请按照规范 使用action触发mutations
 let store= new Vuex.Store({
@@ -67,11 +63,8 @@ let store= new Vuex.Store({
   modules: {
     details,
     shopCart,
-<<<<<<< HEAD
-    addAddress
-=======
+    addAddress,
     getImgs
->>>>>>> master
   }
 })
 export default store
