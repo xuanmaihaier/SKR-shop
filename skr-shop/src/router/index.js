@@ -151,11 +151,6 @@ const routes = [
     path: '/offers', // 招聘信息
     component: () => import("components/common/Following/Offers.vue")
   },
-  {
-    path: '/global', // 全部
-    component: () => import("components/common/Following/Global.vue")
-  },
-
 ]
 
 const router = new VueRouter({
