@@ -127,16 +127,14 @@ export default {
     .left {
       width: 50%;
       height: 100%;
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
       padding: 25px 60px 25px 25px;
       overflow: hidden;
         li{
+          float: left;
          color: rgb(78, 77, 77);
          height: 30px;
          line-height: 30px;
-         width: 30%;
+         width:25%;
          cursor: pointer;
          font-size: 12px;
         font-family: "ProximaNova-Regular","yg740";
@@ -154,7 +152,7 @@ export default {
       display: flex;
       ul {
         flex: 1;
-        padding: 25px 30px;
+        padding: 25px 0;
         display: flex;
         overflow: hidden;
         li {

@@ -1,6 +1,6 @@
 <template>
   <div class="activity">
-    <h1>我是活动页面</h1>
+    <h1>目前没有活动</h1>
   </div>
 </template>
 
@@ -11,5 +11,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+.activity{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  h1{
+    margin-top: 8vh;
+  }
+}
 </style>

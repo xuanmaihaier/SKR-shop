@@ -1,24 +1,23 @@
 <template>
   <div class="search">
-      <!-- 显示搜索个数，再次搜索 -->
-      <AgainSearch></AgainSearch>
-      <!-- 主导航栏 -->
-      <Nav />
+    <!-- 显示搜索个数，再次搜索 -->
+    <AgainSearch />
+    <!-- 主导航栏 -->
+    <Nav />
   </div>
 </template>
 
 <script>
-import AgainSearch from './childComps/AgainSearch.vue'
-import Nav from './childComps/Nav.vue'
+import AgainSearch from "./childComps/AgainSearch.vue";
+import Nav from "./childComps/Nav.vue";
 export default {
-  name: 'Search',
+  name: "Search",
   components: {
     AgainSearch,
-    Nav
-  }
-}
+    Nav,
+  },
+};
 </script>
 
 <style lang="less" scoped>
-
 </style>
