@@ -43,18 +43,21 @@ export default {
     };
   },
   created() {
-    this.getData();
+      this.getData();
   },
   methods: {
     getData() {
-      this.data = this.$store.state.SearchData;
+      setTimeout(() => {
+        this.data = this.$store.state.SearchData;
+      }, 500);
     },
   },
-  watch: {
-    $route: function () {
-      this.getData();
-    },
-  },
+  // watch: {
+  //   $route: function () {
+  //     console.log(this.$route)
+  //     this.getData();
+  //   },
+  // },
 };
 </script>
 
