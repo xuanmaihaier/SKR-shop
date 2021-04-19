@@ -163,7 +163,7 @@ router.beforeEach((to, from, next) => {
     sessionStorage.removeItem('fristLogin')
   }
   // ...
-  const auth = [ '/mypage']
+  const auth = [ '/shopcart','/mypage']
   const tokenStr = window.sessionStorage.getItem('token')
   // console.log(tokenStr);
   if (!tokenStr) {

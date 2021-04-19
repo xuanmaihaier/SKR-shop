@@ -185,21 +185,34 @@ import { mapState } from "vuex";
       },
       //添加至购物车
       addShop(){
-        if (!this.currentStyle) {
-          this.$message.config({
-            top: '750px',
-          })
-          this.$message.info("未选择颜色");
+        // 判断是否登录
+        if (window.sessionStorage.token) {
+          // 判断是否选择款式
+          if (!this.currentStyle) {
+            this.$message.config({
+              top: '750px',
+            })
+            this.$message.info("未选择颜色");
+          }else{
+            // 先将数量,样式,尺寸在当前详情界面商品信息添加修改
+            this.$store.dispatch('updateShopInfo',{
+              num: this.shopNum,
+              params: [this.currentStyle,this.styleSize],
+            })
+            // 再将修改后的当前商品详情添加至shopCart的vuex的state中
+            // this.$store.dispatch('updateShopCart',this.shop1)
+            this.$store.dispatch('ToShopCart',{shopInfo:this.shop1})
+            //清空本地sessionStorage,以及本地shopCart
+            this.$store.commit('clear_shop_cart')
+            // 拉取数据库数据到本地shopCart,并且添加值sessionStorage
+            this.$store.dispatch('initShopCart')
+            // this.$store.dispatch('addToSession')
+            this.$message.success("添加成功");
+          }
         }else{
-          // 先将数量,样式,尺寸在当前详情界面商品信息添加修改
-          this.$store.dispatch('updateShopInfo',{
-            num: this.shopNum,
-            params: [this.currentStyle,this.styleSize],
-          })
-          console.log(143253647869708654);
-          // 再将修改后的当前商品详情添加至shopCart的vuex的state中
-          this.$store.dispatch('updateShopCart',this.shop1) 
-          this.$message.success("添加成功");
+          if (confirm('尚未登录,请先登录')) {
+            this.$router.push('/login')
+          }
         }
       },
       // 立即购买
@@ -229,19 +242,16 @@ import { mapState } from "vuex";
         shop2: state => state.details.shop2,
       })
     },
-    beforeCreate(){
-      console.log('beforeCreate');
-    },
     created(){
-      console.log('created');
+      // console.log('created');
       const {id} = this
       this.$store.dispatch('getShop',id)
     },
     activated(){
-      console.log('kkkk');
+      // console.log('kkkk');
       // 给窗口绑定一个卸载的监听(刷新页面的时候触发)
       window.addEventListener('load',()=>{
-        console.log(111111);
+        // console.log(111111);
         this.$store.dispatch('initShopCart')
       })
     },

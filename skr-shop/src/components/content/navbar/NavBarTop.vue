@@ -18,7 +18,7 @@
       </div>
       <div class="icon">
         <a-icon type="shopping-cart" />
-        <p @click="goShopCart">0</p>
+        <p @click="goShopCart">{{shopCart.length}}</p>
       </div>
     </div>
     <div class="icons" v-else>
@@ -32,7 +32,7 @@
       </div>
       <div class="icon">
         <a-icon type="shopping-cart" />
-        <p @click="goShopCart">0</p>
+        <p @click="goShopCart"> {{shopCart.length}} </p>
       </div>
     </div>
   </div>
@@ -40,7 +40,7 @@
 
 <script>
 import NavSearch from "./NavSearch.vue";
-
+import {mapState} from "vuex";
 export default {
   components: { NavSearch },
   data() {
@@ -61,6 +61,7 @@ export default {
       this.$router.push("/home");
     },
     outLogin() {
+      sessionStorage.removeItem('shopCart')
       sessionStorage.removeItem("token");
       sessionStorage.removeItem("userId");
       this.$store.dispatch("commitNavbarShow", true);
@@ -88,6 +89,11 @@ export default {
       }
     },
   },
+  computed:{
+    ...mapState({
+      shopCart: state => state.shopCart.shopCart
+    })
+  }
 };
 </script>
 
