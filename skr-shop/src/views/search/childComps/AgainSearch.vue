@@ -17,44 +17,30 @@ export default {
     return {
       searchNumber: 0,
       word: "",
+      data: [],
     };
   },
   created() {
-    // word要不等于search下的三个子路由product activity show
-    if (
-      this.$route.name == "Search" &&
-      this.$route.name != "Product" &&
-      this.$route.name != "Activity" &&
-      this.$route.name != "Show"
-    ) {
-      this.loadSearch();
-    }
-    // 如果为子路由则显示原先的word
-    else {
-      this.word = getLocalStorage("word");
-    }
+    this.loadSearch();
   },
   methods: {
     // 获取用户输入搜索的字段
     loadSearch() {
       this.word = getLocalStorage("word");
-      getSearch(this.$route.params.word).then((res) => {
-        this.searchNumber = res.data.length;
+      getSearch(this.word).then((res) => {
+        if (res.code == 200) {
+          this.searchNumber = res.data.length;
+          this.data = res.data;
+          this.$store.dispatch("commitSearchData", this.data);
+          this.$router.push({ path: "/search/product" });
+        }
       });
-      this.$router.replace({ path: "/search/product" });
     },
   },
   watch: {
     $route: function () {
-      console.log(this.$route, "==============");
-      // 如果路由有params,并且word要不等于search下的三个子路由product activity show
-      if (
-        this.$route.params.length != 0 &&
-        this.$route.name == "Search" &&
-        this.$route.name != "Product" &&
-        this.$route.name != "Activity" &&
-        this.$route.name != "Show"
-      ) {
+      // 当路由是搜索时重新搜索
+      if (this.$route.name === "Search") {
         this.loadSearch();
       }
     },

@@ -21,9 +21,12 @@ export default {
         }
     },
     created() {
+        this.getProductNumber()
     },
     methods: {
-        
+        getProductNumber(){
+            this.productNumber = (this.$store.state.SearchData).length
+        }
     },
     watch: {
         
