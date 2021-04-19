@@ -3,7 +3,7 @@
     <ul>
       <li v-for="x in 120" :key="x">
         <img src="http://image.wconcept.co.kr/images/upload/wdna/RP210413104342_KE8M.jpeg" alt="">
-        <div>@TZOF</div>
+        <div>@Drawpaint100</div>
       </li>
     </ul>
     <a-pagination :default-current="1" :total="6000" :pageSize="120" />

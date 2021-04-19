@@ -1,11 +1,18 @@
 <template>
   <div class="Primary">
-    <Title><p>{{ $route.params.id }}</p></Title>
+    <Title
+      ><p>{{ $route.params.id }}</p></Title
+    >
     <Tag />
-    <Breadcrumb class="Breadcrumb"/>
+    <Breadcrumb class="Breadcrumb" />
     <div class="PrimaryItem">
       <Aslide />
-      <PrimaryList :TypeOne="TypeOne" :TypeOneLength="TypeOneLength" :SortChange_list="SortChange_list" :HotSale="HotSale"/>
+      <PrimaryList
+        :TypeOne="TypeOne"
+        :TypeOneLength="TypeOneLength"
+        :SortChange_list="SortChange_list"
+        :HotSale="HotSale"
+      />
     </div>
   </div>
 </template>
@@ -17,7 +24,7 @@ import Title from "components/common/title/Title.vue";
 import Tag from "components/content/tag/Tag.vue";
 import PrimaryList from "components/content/primarylist/PrimaryList.vue";
 import Aslide from "./childComps/Aslide.vue";
-import Breadcrumb from "./childComps/Breadcrumb"
+import Breadcrumb from "./childComps/Breadcrumb";
 export default {
   name: "Primary",
   data() {
@@ -37,7 +44,7 @@ export default {
     Title,
     PrimaryList,
     Aslide,
-    Breadcrumb
+    Breadcrumb,
   },
   methods: {
     getTypeOneList_init() {
@@ -75,6 +82,11 @@ export default {
   created() {
     this.getTypeOneList_init();
   },
+  watch: {
+    $route(to, from) {
+      if (to.path !== from.path) this.getTypeOneList_init();
+    },
+  },
 };
 </script>
 
@@ -84,13 +96,13 @@ export default {
   display: flex;
   justify-content: space-between;
 }
-.Breadcrumb{
-    width: 58%;
-    display: flex;
-    align-items: center;
-    margin: 20px auto;
+.Breadcrumb {
+  width: 58%;
+  display: flex;
+  align-items: center;
+  margin: 20px auto;
 }
-/deep/ .ant-breadcrumb{
-    text-align: left;
-  }
+/deep/ .ant-breadcrumb {
+  text-align: left;
+}
 </style>

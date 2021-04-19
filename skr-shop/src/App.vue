@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <NavBar />
-    <keep-alive exclude="Login">
-      <router-view :key="$route.fullPath" />
+    <keep-alive exclude="Login,Details">
+      <router-view/>
     </keep-alive>
     <FooterNav />
     <Adside/>
