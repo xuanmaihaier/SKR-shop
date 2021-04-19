@@ -3,7 +3,7 @@
     <!-- 侧边栏 -->
     <div class="side_menu" ref="sidemenu">
       <div class="side_M" ref="side_M">
-        <!-- 客服窗口 -->
+        <!-- 购物历史 -->
         <div class="side_bar">
           <a-icon
             type="unordered-list"
@@ -12,7 +12,7 @@
           />
           <span class="number">0</span>
         </div>
-        <!-- 购物历史 -->
+        <!-- 客服窗口 -->
         <div class="quick_history">
           <a-icon type="history" :rotate="180" @click="showHistory(2)" />
           <span class="number">8</span>
@@ -197,7 +197,7 @@ export default {
 // 隐藏页面
 .expand {
   position: fixed;
-  top: 0;
+  bottom: 0;
   right: -300px;
   width: 300px;
   height: 100vh;

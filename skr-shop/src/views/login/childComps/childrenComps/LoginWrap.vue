@@ -10,7 +10,7 @@
             placeholder="请输入您的用户名"
             @focus="showText"
             @blur="hideText"
-            v-model="userName"
+            v-model.trim="userName"
           />
         </p>
         <p class="mt20">
@@ -29,7 +29,7 @@
             src="@/assets/img/login/forget.png"
             alt=""
             width="32px"
-            v-show.trim="imgShow"
+            v-show="imgShow"
           />
           <img
             src="@/assets/img/login/rember.png"
@@ -67,14 +67,12 @@ export default {
     return {
       imgShow: true,
       userName: this.getCookie('username'),
-      userPassWord: this.getCookie('username'),
+      userPassWord: this.getCookie('userPwd'),
       nameShow: false,
       passWordShow: false,
     }
   },
   created() {
-    // console.log(xxx);
-    // console.log(this.getCookie('username'));
     this.imgShow=this.getCookie('username')?false:true;
   },
   methods: {
@@ -122,6 +120,7 @@ export default {
           });
         }
       });
+      this.$store.commit('showSerBar',true)
     },
     showText(e) {
       if (e.target.id == "user") {

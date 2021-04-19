@@ -37,22 +37,21 @@
     <!-- 右侧icon图标 -->
     <div class="utility" v-if="isChage">
       <div class="icon" @click="clickSearch">
-       <a-icon type="search" />
-        <p >SEARCH</p>
+        <a-icon type="search" />
+        <p>SEARCH</p>
       </div>
-       <div class="icon">
-         <a-icon type="user" />
-        <p >MY</p>
+      <div class="icon">
+        <a-icon type="user" />
+        <p @click="goMypage">MY</p>
       </div>
       <div class="icon">
         <a-icon type="shopping-cart" />
-        <p>0</p>
+        <p @click="goShopCart">0</p>
       </div>
-      
     </div>
     <!-- 搜索 -->
     <!--  -->
-    <div class="nav_search"  v-if="$store.state.SearchShow">
+    <div class="nav_search" v-if="$store.state.SearchShow">
       <NavSearch :focusFlag="focusFlag"></NavSearch>
     </div>
   </a-affix>
@@ -60,19 +59,19 @@
 
 <script>
 import NavEng from "./NavEng.vue";
-import NavSearch from './NavSearch.vue';
+import NavSearch from "./NavSearch.vue";
 export default {
   name: "NavBottom",
-  components: { NavEng,NavSearch },
+  components: { NavEng, NavSearch },
   data() {
     return {
       top: 0,
       navRight: ["独家的", "WDNA", "事件", "最好的"],
-      navRightPath: ["/exclusive", "/wdna",'/event','/best'],
+      navRightPath: ["/exclusive", "/wdna", "/event", "/best"],
       navIndex: 0,
       isChage: false,
       // Search_Show:false,
-      focusFlag:false
+      focusFlag: false,
     };
   },
   props: {
@@ -104,14 +103,37 @@ export default {
     // icon的显示隐藏
     affixChange() {
       this.isChage = !this.isChage;
-      this.Search_Show = false
+      this.Search_Show = false;
     },
     // 搜索点击
-    clickSearch(){
-      this.focusFlag = true
+    clickSearch() {
+      this.focusFlag = true;
       this.$store.dispatch("commitSearchShow", true);
-     
-    }
+    },
+    goMypage() {
+      if (sessionStorage.getItem("token")) {
+        this.$router.push("/mypage");
+      } else {
+        this.$message.destroy(); //解决多次点击显示多个弹窗
+        this.$message.warning({
+          content: "请先登录！",
+          duration: 1,
+        });
+        this.$router.push("/login");
+      }
+    },
+    goShopCart() {
+      if (sessionStorage.getItem("token")) {
+        this.$router.push("/shopcart");
+      } else {
+        this.$message.destroy(); //解决多次点击显示多个弹窗
+        this.$message.warning({
+          content: "请先登录！",
+          duration: 1,
+        });
+        this.$router.push("/login");
+      }
+    },
   },
   mounted() {
     setTimeout(() => {
@@ -167,41 +189,40 @@ export default {
   right: 5%;
   display: flex;
   padding-top: 3px;
-  .icon{
+  .icon {
     cursor: pointer;
     padding-top: 10px;
     text-align: center;
     flex: 1;
-     color: #fff;
-    i{
-     
+    color: #fff;
+    i {
       font-size: 20px;
     }
   }
 }
 
-.nav_search{
+.nav_search {
   position: absolute;
-  top:0px;
+  top: 0px;
   right: 5%;
   height: 65px;
   // width: 15%;
   padding-top: 12px;
   animation: navs_search 0.5s linear;
   animation-fill-mode: forwards;
-  .ipt{
+  .ipt {
     width: 100%;
   }
-  /deep/.ant-input{
+  /deep/.ant-input {
     width: 100%;
     height: 40px;
   }
 }
 @keyframes navs_search {
-  0%{
+  0% {
     width: 0;
   }
-  100%{
+  100% {
     width: 15%;
   }
 }

@@ -33,6 +33,7 @@ module.exports = {
   },
   // 配置代理
   devServer: {
+    open: true,
     proxy: {
       '/dev-api': {
         target: 'http://192.168.1.116:3000',
@@ -45,7 +46,6 @@ module.exports = {
         }
       },
     },
-    open: true
   },
   // 第三方插件配置
   pluginOptions: {

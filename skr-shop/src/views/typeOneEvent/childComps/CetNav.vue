@@ -11,7 +11,7 @@
             로그인 하시면 MY&#10084;에 등록한 BRAND의 최근 EVENT를 확인할 수
             있습니다.
           </p>
-          <a href="">로그인</a>
+          <a href="http://localhost:8080/login">로그인</a>
         </div>
       </div>
       <div class="benefit">
@@ -42,6 +42,7 @@ export default {
       ],
     };
   },
+  
 };
 </script>
 

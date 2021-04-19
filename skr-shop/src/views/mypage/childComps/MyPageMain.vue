@@ -66,7 +66,9 @@
         </ul>
       </div>
     </div>
-
+    <div class="address">
+      <button @click="btnDelAddress">删除地址</button>
+    </div>
     <!-- <div style="height:372px;padding:50px 0">
       <div style="height:100%;background-color:#848484">
         <h1>底部占位</h1>
@@ -76,6 +78,7 @@
 </template>
 
 <script>
+import { delAddress } from "@/network/userAddress";
 const theadTitle = [
   "订单日期",
   "订单号",
@@ -95,6 +98,11 @@ export default {
   methods: {
     goHome() {
       this.$router.push("/home");
+    },
+    btnDelAddress() {
+      delAddress({ id: 1 }).then((res) => {
+        console.log(res);
+      });
     },
   },
 };
