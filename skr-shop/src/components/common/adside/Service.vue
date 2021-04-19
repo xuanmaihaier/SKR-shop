@@ -7,7 +7,14 @@
     </div>
     <div class="ser_text">
       <div v-if="$store.state.isShowSer">
-        <h3>hello</h3>
+        <ul>
+          <li>
+           hello!
+          </li>
+        </ul>
+        <div class="client_">
+          <input type="text" id="clientInput"><label for="clientInput" class="send">发送</label>
+        </div>
       </div>
       <div class="ser_mask" v-if="!$store.state.isShowSer">
         <a-button class="ser_btn" @click="returnLogin">请登录</a-button>
@@ -25,6 +32,8 @@ export default {
   data() {
     return {
       close: true,
+      ser_img: require("assets/img/following/service.jpeg"),
+      cli_img:require("assets/img/following/client.jpeg"),
     };
   },
   created() {
@@ -79,6 +88,47 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
+
+  ul {
+    width: 100%;
+    height: 100%;
+    padding: 10px 0;
+    li {
+      width: 90%;
+      line-height: 30px;
+      background-color: skyblue;
+      padding: 10px;
+      border-radius: 15px;
+      margin: 5px auto;
+      text-indent: 5px;
+    }
+  }
+  .client_{
+    position: absolute;
+    top: 82%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    margin: 0 auto;
+    input{
+      width: 80%;
+      outline: none;
+      height: 30px;
+      text-indent: 5px;
+    }
+    .send{
+      display: inline-block;
+      width: 50px;
+      height: 28px;
+      text-align: center;
+      line-height: 28px;
+      border: 1px solid #333;
+      box-shadow: 1px 2px 5px 1px #333;
+      border-radius: 5px;
+      margin-left: 2px;
+      cursor: pointer;
+    }
+  }
 }
 .ser_mask {
   position: relative;
