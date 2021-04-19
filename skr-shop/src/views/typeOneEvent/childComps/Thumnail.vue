@@ -3,7 +3,7 @@
     <div class="issue_lst">
       <ul>
         <li v-for="(item, index) in 10">
-          <a href=""
+          <a href="javascript: void(0);"
             ><img
               src="//image.wconcept.co.kr/images/disp_issue/T210414112317_48S.jpg"
               alt=""
