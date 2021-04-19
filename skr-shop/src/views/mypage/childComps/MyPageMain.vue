@@ -111,7 +111,6 @@
 </template>
 
 <script>
-import { delAddress } from "@/network/userAddress";
 import AddressAdd from "@/components/common/address/AddressAdd.vue";
 const theadTitle = [
   "订单日期",
@@ -138,10 +137,7 @@ export default {
       this.$router.push("/home");
     },
     delAddressBtn(id) {
-      console.log(id);
-      this.addresses = this.addresses.filter(item => {
-        return item.id != id;
-      });
+      this.$store.dispatch('del',id)
     }
   },
   computed: {
@@ -155,6 +151,7 @@ export default {
   },
   watch: {
     addressData() {
+      // console.log(this.$store.state.addAddress.addressList);
       this.addresses = this.$store.state.addAddress.addressList;
       this.addresses.forEach(item => {
         let address = JSON.parse(item.address);

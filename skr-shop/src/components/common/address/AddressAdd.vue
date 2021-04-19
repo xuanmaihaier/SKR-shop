@@ -103,7 +103,7 @@
                 areaCode: '请选择',
                 detailAddress: '',
                 flag: false,
-                prime:'',
+                prime:false,
             }
         },
         methods: {
@@ -134,7 +134,6 @@
                 if (this.username && this.userPhone && this.flag && this.detailAddress){
                     this.$store.dispatch('add', this.getName())
                 }
-                this.$store.dispatch('get')
             }
         },
     }
