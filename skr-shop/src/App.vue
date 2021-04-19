@@ -2,7 +2,7 @@
   <div id="app">
     <NavBar />
     <keep-alive exclude="Login">
-      <router-view/>
+      <router-view :key="$route.fullPath"/>
     </keep-alive>
     <FooterNav />
     <Adside/>
