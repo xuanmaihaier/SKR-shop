@@ -44,7 +44,7 @@ export default {
     };
   },
   created() {
-       this.tim.on(this.TIM.EVENT.MESSAGE_RECEIVED, this.getMessage);
+    this.tim.on(this.TIM.EVENT.MESSAGE_RECEIVED, this.getMessage);
     this.login_init();
     this.tim.on(this.TIM.EVENT.MESSAGE_RECEIVED, this.getMessage);
   },
@@ -57,10 +57,12 @@ export default {
     returnLogin() {
       this.close = false;
       this.$emit("isCloseBar", this.close);
-      this.$store.state.loadingStatus = true;
-      setTimeout(() => {
-        this.$router.push("/login");
-      }, 1000);
+      if (this.$route.path !== "/login") {
+        this.$store.state.loadingStatus = true;
+        setTimeout(() => {
+          this.$router.push("/login");
+        }, 1000);
+      }
     },
     login_init() {
       this.im_login();
@@ -144,7 +146,7 @@ export default {
     getMessage(event) {
       this.getNews();
       this.gettext = event.data[0].payload.text;
-          
+
       let contents = document.querySelector(".contents");
       // 创建div盒子
 
@@ -163,9 +165,7 @@ export default {
       store_pic.src = this.storePicUrl;
       store_bar.appendChild(store_pic);
       store_bar.appendChild(store);
-      // console.log(store_bar);
       contents.appendChild(store_bar);
- 
     },
     sendMessage_init() {
       this.sedmessage();

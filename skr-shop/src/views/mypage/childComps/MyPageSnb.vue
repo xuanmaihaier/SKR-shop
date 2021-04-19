@@ -17,7 +17,6 @@
           </ul>
         </div>
       </div>
-
       <div class="showHide">
         <button @click="divShowHide" v-show="btnShow">▲</button>
         <button @click="divShowHide" v-show="!btnShow">▼</button>
