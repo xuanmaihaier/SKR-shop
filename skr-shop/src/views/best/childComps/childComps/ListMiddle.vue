@@ -2,12 +2,12 @@
     <div class="topseller_list">
         <div class="lst_middle">
             <ul>
-                <li v-for="(item, index) in imgArrMiddle.imgs" :key="index">
+                <li v-for="(item, index) in imgMiddleList" :key="index" @click="toDetail(item.id)">
                     <span class="icon_best">
-                        <strong>{{ imgArrMiddle.num + index }}</strong>
+                        <strong>{{ imgMiddleList.length + index }}</strong>
                         <p>BEST</p>
                     </span>
-                        <img :src="item" alt="" />
+                        <img :src="item.img" alt="" />
                     <div class="textMax">
                         <div class="text_wrap">
                             <div class="brand">vunque</div>
@@ -38,12 +38,53 @@
 </template>
 
 <script>
+import { getImg } from "network/getImg.js";
 export default {
+    data(){
+        return {
+            imgMiddleList:[],
+            middleListAll:[]
+        }
+    },
     props:{
-        imgArrMiddle:{
-            type:Object,
-            defalut:function(){
-                return {};
+        listMiddle:{
+            type:String,
+            defalut:""
+        }
+    },
+    methods:{
+        async getImg_(parent_name,start,end){
+            const res = await getImg({parent_name,start,end});
+            if(this.listMiddle == "All"){
+                this.middleListAll = res;
+                this.imgMiddleList = res;
+            }else{
+                this.imgMiddleList = res;
+            }
+            
+            
+        },
+        toDetail(id){
+            this.$router.push(`/details/${id}`)
+        }
+    },
+    created(){
+        if(this.listMiddle == "All"){
+            let arr = ["配件"];
+            arr.forEach(item => {
+                this.getImg_(item,4,7,'price')
+            });
+        }else{
+            this.getImg_(this.listMiddle,4,7)
+        }
+        
+    },
+    watch:{
+        listMiddle(){
+            if(this.listMiddle == "All"){
+                this.imgMiddleList = this.middleListAll
+            }else{
+                this.getImg_(this.listMiddle,4,7)
             }
         }
     }

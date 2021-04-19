@@ -12,9 +12,9 @@
       <div class="conent">
         <ul class="left">
           <li
-            v-for="(item, index) in typeOne"
+            v-for="(item, index) in typeOne.slice(0,4)"
             :key="index"
-            @mouseover="engraft(index)"
+            @mouseover="engraft(index,item)"
             @mouseout="exgraft"
             @click="handleClicka(item)"
           >
@@ -32,7 +32,7 @@
         </ul>
       </div>
       <!-- Nav 显示隐藏的list表 -->
-      <nav-eng v-show="$store.state.isShow" :navIndex="navIndex"></nav-eng>
+      <nav-eng v-show="$store.state.isShow" :navIndex="navIndex" :navTypeOne="navTypeOne"></nav-eng>
     </div>
     <!-- 右侧icon图标 -->
     <div class="utility" v-if="isChage">
@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import {getImg} from 'network/getImg.js'
 import NavEng from "./NavEng.vue";
 import NavSearch from './NavSearch.vue';
 export default {
@@ -67,25 +68,38 @@ export default {
   data() {
     return {
       top: 0,
-      navRight: ["独家的", "WDNA", "事件", "最好的"],
+      navRight: ["EXCLUSIVE", "POP", "EVENT", "BEST"],
       navRightPath: ["/exclusive", "/wdna",'/event','/best'],
       navIndex: 0,
+      navTypeOne:[],
       isChage: false,
-      // Search_Show:false,
-      focusFlag:false
+      focusFlag:false,
     };
   },
+
   props: {
     typeOne: {
       type: Array,
       default: () => [],
     },
   },
+  created() {
+    this.getImg_( {parent_name:'鞋类',start:5,end:8})
+    this.getImg_( {parent_name:'服饰',start:5,end:8})
+    this.getImg_( {parent_name:'配件',start:16,end:18})
+    this.getImg_( {parent_name:'儿童专区',start:7,end:10})
+    // console.log(this.navTypeOne);
+  },
   methods: {
+    //截取4张小图片
+    async getImg_(item){
+        const res=await getImg(item)
+        this.navTypeOne.push(res)
+    },
     //移入
-    engraft(index) {
+    engraft(index,item) {
       this.navIndex = index;
-      // console.log(this.navIndex,'----');
+      // this.getImg_(item)
       this.$store.dispatch("commitShow", true);
     },
     //移出
@@ -144,6 +158,7 @@ export default {
   ul {
     width: 100%;
     display: flex;
+    margin: 0 15px;
     li {
       flex: 1;
       text-align: center;
@@ -196,6 +211,11 @@ export default {
     width: 100%;
     height: 40px;
   }
+}
+
+.right li{
+  font-weight: 700;
+  font-size: 14px;
 }
 @keyframes navs_search {
   0%{

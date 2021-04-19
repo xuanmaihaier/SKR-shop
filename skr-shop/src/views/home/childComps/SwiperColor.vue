@@ -1,9 +1,11 @@
 <template>
   <div class="SwiperColor">
     <swiper ref="SwiperColor" :options="SwiperColor">
-      <swiper-slide v-for="(item, index) in 8" :key="index">
-        <img src="//image.wconcept.co.kr/images/builder/1/4/15/282/PM_exclusive_01_20210408145004.jpg?RS=900" />
-        <div class="mask" ref="mask" :style="{'backgroundColor':colorarr[index]}"></div>
+      <swiper-slide v-for="(item, index) in list_list.slice(23,32)" :key="index">
+        <img :src="item.img"/>
+        <div class="mask" ref="mask" @click="swiperClick(item.id)" :style="{'backgroundColor':colorarr[index]}">
+          <p>{{item.title}}</p>
+        </div>
       </swiper-slide>
       <div class="swiper-button-prev" slot="button-prev"></div>
       　　
@@ -17,7 +19,7 @@
     name: "SwiperColor",
     data() {
       return {
-        colorarr: ['red', 'yellow', 'blue', 'green', 'purple', 'pink', 'white', 'black'],
+        colorarr: ['red', 'orange', 'blue', 'green', 'purple', 'pink', 'red', 'orange','blue'],
         SwiperColor: {
           direction: "horizontal", //滑动方向，可设置水平(horizontal)或垂直(vertical)。
           slidesPerView: "auto", // 设置slider容器能够同时显示的slides数量(carousel模式)。类型：number or auto
@@ -33,10 +35,21 @@
         },
       };
     },
+    props:{
+      list_list:{
+        type:Array,
+        default:()=>[]
+      }
+    },
     computed: {
       swiper() {
         return this.$refs.SwiperColor.$swiper;
       },
+    },
+    methods: {
+      swiperClick(id){
+      this.$router.push(`/details/${id}`)
+    }
     },
     mounted() {
       this.swiper.slideTo(3, 1000, false);
@@ -48,6 +61,7 @@
   .SwiperColor {
     width: 100%;
     padding: 0 10px;
+    cursor:grab;
   }
 
   .swiper-container {
@@ -56,10 +70,11 @@
   }
 
   .swiper-container .swiper-wrapper .swiper-slide {
-    width: 60% !important;
+    width: 46% !important;
     overflow: hidden;
     display: flex;
     align-items: center;
+    border: 1px solid #ddd;
   }
 
   .swiper-container .swiper-wrapper .swiper-slide img {
@@ -91,7 +106,7 @@
 
   .swiper-button-prev,
   .swiper-button-next {
-    --swiper-theme-color: #ffffff;
+    --swiper-theme-color: #black;
     /* 设置Swiper风格 */
   }
 
@@ -101,6 +116,19 @@
     position: absolute;
     z-index: 1;
     opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p{
+      padding: 0 20px;
+      opacity: 1 ;
+      font-size: 40px;
+      color: rgb(252, 252, 252);
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   .mask:hover {

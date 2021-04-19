@@ -1,16 +1,21 @@
 <template>
     <div id="tab_item">
         <div class="card-container">
-            <a-tabs type="card"  @tabClick="onTabs" >
+            <a-tabs type="card" @tabClick="onTabs">
                 <a-tab-pane
                     v-for="(item, index) in tab"
                     :key="index"
                     :tab="item"
-                   
                 >
-                    <ul class="sort" >
-                        <li v-for="(items, indexs) in sort[item]" :key="indexs">
-                            <span :class="{onspan:active==indexs ?true : false}" @click="onChange(indexs)">{{ items }}</span>
+                    <ul class="sort">
+                        <li v-for="(items, indexs) in sort.MEN" :key="indexs">
+                            <span
+                                :class="{
+                                    onspan: active == indexs ? true : false,
+                                }"
+                                @click="onChange(indexs)"
+                                >{{ items }}</span
+                            >
                         </li>
                     </ul>
                 </a-tab-pane>
@@ -22,7 +27,7 @@
 export default {
     data() {
         return {
-            tab: ["All", "WOMEN", "MEN", "LIFE", "BEAUTY"],
+            tab: ["All", "鞋类", "服饰", "配件", "儿童专区"],
             sort: {
                 All: [],
                 WOMEN: ["ALL WOMEN", "APPAREL", "BAG", "SHOES", "ACC"],
@@ -45,21 +50,19 @@ export default {
                     "for MEN",
                 ],
             },
-            active:0,
-
+            active: 0,
         };
     },
-    methods:{
-        onChange(indexs){
-            this.active = indexs
+    methods: {
+        onChange(indexs) {
+            this.active = indexs;
         },
-        onTabs(){
-            this.active  = 0
-        }
+        onTabs(index) {
+            this.active = 0;
+            this.$emit('tabItem',this.tab[index])
+        },
     },
-    created() {
-        
-    },
+    created() {},
 };
 </script>
 <style lang="less" scoped>
@@ -120,29 +123,27 @@ export default {
     text-align: center;
     line-height: 32px;
     position: relative;
-    li::before{
+    li::before {
         display: block;
-        content: '';
+        content: "";
         width: 1px;
         height: 10px;
         background: #ccc;
         position: absolute;
         top: 12px;
     }
-    li:first-child::before{
+    li:first-child::before {
         background: #fff;
     }
-    li{
+    li {
         width: 100%;
-        .onspan{
+        .onspan {
             border-bottom: 2px solid #000;
         }
-        span:hover{
+        span:hover {
             cursor: pointer;
             border-bottom: 2px solid #000;
         }
     }
-    
-    
 }
 </style>

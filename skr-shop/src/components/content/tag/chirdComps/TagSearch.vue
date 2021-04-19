@@ -4,11 +4,13 @@
       placeholder="标签搜寻"
       @search="onSearch"
       :style="inputStyle"
+      v-model="val"
     />
   </div>
 </template>
 
 <script>
+import {setLocalStorage} from "utils/storage"
 export default {
   name: "TagSearch",
   data() {
@@ -18,10 +20,15 @@ export default {
         border: "0",
         "border-bottom": `2px solid`,
       },
+      val: "",
     };
   },
   methods: {
-    onSearch() {},
+    onSearch() {
+      if(this.val=="") return
+      setLocalStorage("word", this.val);
+      this.$router.push({ name: "Search", params: { word: this.val } });
+    },
   },
 };
 </script>

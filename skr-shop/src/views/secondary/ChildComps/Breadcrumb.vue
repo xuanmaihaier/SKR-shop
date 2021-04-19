@@ -23,11 +23,11 @@ export default {
       routes: [
         {
           path: 'home',
-          breadcrumbName: 'home',
+          breadcrumbName: 'Home',
         },
         {
           path: 'secondary',
-          breadcrumbName: 'secondary',
+          breadcrumbName: 'Secondary',
         },
       ],
     };

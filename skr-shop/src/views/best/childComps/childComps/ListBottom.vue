@@ -2,11 +2,11 @@
     <div class="topseller_list">
         <div class="lst_bottom">
             <ul>
-                <li v-for="(item, index) in imgArrBottom.imgs" :key="index">
+                <li v-for="(item, index) in imgBottomList" :key="index" @click="toDetail(item.id)">
                     <span class="icon_best">
-                        <strong>{{ imgArrBottom.num + index }}</strong>
+                        <strong>{{ 8 + index }}</strong>
                     </span>
-                    <img :src="item" alt="" />
+                    <img :src="item.img" alt="" />
                     <div class="textMax">
                         <div class="text_wrap">
                             <div class="brand">Dunst for WOMEN</div>
@@ -36,15 +36,56 @@
 </template>
 
 <script>
+import { getImg } from "network/getImg.js";
 export default {
+    data(){
+        return {
+            imgBottomList:[],
+            bottomListAll:[]
+        }
+    },
     props: {
-        imgArrBottom: {
-            type: Object,
-            defalut: function () {
-                return {};
-            },
+        listBottom: {
+            type: String,
+            defalut: ""
         },
     },
+    methods:{
+        async getImg_(parent_name,start,end){
+            const res = await getImg({parent_name,start,end});
+            if(this.listBottom == "All"){
+                this.bottomListAll = res;
+                this.imgBottomList = res;
+            }else{
+                this.imgBottomList = res;
+            }
+            
+        },
+        toDetail(id){
+            this.$router.push(`/details/${id}`)
+        }
+    },
+    created(){
+        if(this.listBottom == "All"){
+            let arr = ["鞋类"];
+            arr.forEach(item => {
+                this.getImg_(item,8,98,'price')
+            });
+        }else{
+            this.getImg_(this.listBottom,8,98)
+        }
+        
+    },
+    watch:{
+        listBottom(){
+            if(this.listBottom == "All"){
+                this.bottomListAll = this.imgBottomList
+            }else{
+                this.getImg_(this.listBottom,8,98)
+            }
+            
+        }
+    }
 };
 </script>
 
@@ -87,6 +128,7 @@ export default {
             }
             img {
                 width: 100%;
+
             }
             .textMax {
                 width: 100%;

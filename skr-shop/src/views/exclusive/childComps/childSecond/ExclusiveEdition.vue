@@ -4,7 +4,7 @@
       <p>EDITION</p>
     </Title>
     <ul class="slick_slider">
-      <a-card hoverable  v-for="(item ,index) in 3" :key="item"  @mouseover="engraft(index)"
+      <a-card hoverable  v-for="(item ,index) in $store.state.getImgs.getImgList.slice(0,3)" :key="item.id"  @mouseover="engraft(index)"
             @mouseout="exgraft" :bordered="false">
              
        <div :style="{width:`100%`,position:'relative'}">
@@ -13,13 +13,13 @@
         style="width:100%"
           slot="cover"
           alt="example"
-          src="//image.wconcept.co.kr/images/builder/1/4/56/255/PE3_520x704_0_20210331161441.jpg"
+          :src="item.img"
         />
        </div>
-        <a-card-meta title="MOHAN 21SPRING">
-          <template slot="description"> 절제된 아름다움, 모한의 21 SPRING </template>
-          <template slot="description"> <span class="sub_txt">EXCLUSIVE</span> </template>
-          <template slot="description"> <span class="main_txt">MOHAN 21SPRING</span> </template>
+        <a-card-meta :title="item.title">
+          <template slot="description">www.stride.fun</template>
+          <template slot="description"> <span class="sub_txt">stride.fun</span> </template>
+          <template slot="description"> <span class="main_txt"></span> </template>
 
         </a-card-meta>
         
@@ -40,6 +40,7 @@ export default {
       }
   },
   methods: {
+
       //鼠标移入
       engraft(index){
             this.index_page = index

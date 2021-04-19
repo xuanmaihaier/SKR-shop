@@ -10,7 +10,7 @@
             placeholder="请输入您的用户名"
             @focus="showText"
             @blur="hideText"
-            v-model="userName"
+            v-model.trim="userName"
           />
         </p>
         <p class="mt20">
@@ -29,7 +29,7 @@
             src="@/assets/img/login/forget.png"
             alt=""
             width="32px"
-            v-show.trim="imgShow"
+            v-show="imgShow"
           />
           <img
             src="@/assets/img/login/rember.png"
@@ -67,14 +67,12 @@ export default {
     return {
       imgShow: true,
       userName: this.getCookie('username'),
-      userPassWord: this.getCookie('username'),
+      userPassWord: this.getCookie('userPwd'),
       nameShow: false,
       passWordShow: false,
     }
   },
   created() {
-    // console.log(xxx);
-    // console.log(this.getCookie('username'));
     this.imgShow=this.getCookie('username')?false:true;
   },
   methods: {
@@ -112,9 +110,9 @@ export default {
             this.$router.go(-1);
           }
           this.$store.dispatch('initShopCart')
-          console.log('初始化页面购物车');
-          this.$store.dispatch('initLocalShopTo')
-          console.log('初始化本地购物商品数据到数据库了');
+          // console.log('初始化页面购物车');
+          // this.$store.dispatch('initLocalShopTo')
+          // console.log('初始化本地购物商品数据到数据库了');
         } else {
           this.$message.error({
             content: "用户名或密码错误，请重新输入！",
@@ -122,6 +120,7 @@ export default {
           });
         }
       });
+      this.$store.commit('showSerBar',true)
     },
     showText(e) {
       if (e.target.id == "user") {

@@ -2,7 +2,7 @@
   <div class="ipt">
       <!-- 只有搜索二級分類 -->
     <a-input-search
-      placeholder="input search text"
+      placeholder="潮流，从搜索开始"
       :style="inputStyle"
       ref="input"
       @search="onSearch"

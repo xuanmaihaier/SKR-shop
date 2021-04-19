@@ -1,11 +1,18 @@
+<!--
+ * @Description: 
+ * @Author: He Xiantao
+ * @Date: 2021-04-12 17:42:12
+ * @LastEditTime: 2021-04-17 12:20:09
+ * @LastEditors: He Xiantao
+-->
 <template>
   <div id="app">
     <NavBar />
-    <keep-alive exclude="Login">
-      <router-view :key="$route.fullPath" />
+    <keep-alive exclude="Login,Details">
+      <router-view/>
     </keep-alive>
     <FooterNav />
-    <Adside />
+    <Adside/>
     <Loading />
   </div>
 </template>
@@ -13,7 +20,7 @@
 import NavBar from "components/content/navbar/NavBar.vue";
 import FooterNav from "components/common/footer/FooterNav";
 import Adside from "components/common/adside/Adside";
-import Loading from "./components/common/loading/Loading.vue";
+import Loading from "components/common/loading/Loading.vue";
 export default {
   name: "App",
   components: {
