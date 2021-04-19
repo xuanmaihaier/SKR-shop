@@ -8,14 +8,16 @@
     <div class="ser_text">
       <div v-if="$store.state.isShowSer">
         <div class="contents">
+          <!-- <p class="store_init">a</p>
+          <p class="user_init"><span>pp</span> wwwwww</p> -->
         </div>
         <a-textarea
           ref="textarea"
           class="textarea"
           placeholder="客服将尽快回复您"
-          :rows="2"
           v-model="message"
           @keyup.enter="sendMessage_init"
+          :auto-size="{ minRows: 1, maxRows: 5 }"
         />
         <a-button class="send" @click="sendMessage_init">发送</a-button>
       </div>
@@ -38,17 +40,15 @@ export default {
       login_: false,
       message: "",
       sendtext: "",
+      storePicUrl:require('assets/img/following/skr.png'),
+      userPicUrl:require('assets/img/following/client.jpeg'),
     };
   },
   created() {
     this.login_init();
      this.tim.on(this.TIM.EVENT.MESSAGE_RECEIVED,this.getMessage);
-    
-   
   },
-  mounted() {
 
-  },
   methods: {
     handle() {
       this.close = false;
@@ -107,16 +107,29 @@ export default {
         });
         // 2. 发送消息
         let promise = this.tim.sendMessage(message);
+        // console.log(this.userPicUrl);
+        let userPicUrl = this.userPicUrl
+        let storePicUrl = this.storePicUrl
         promise
           .then(function (imResponse) {
             // 发送成功
             that.sendtext = imResponse.data.message.payload.text;
             that.message = "";
             let contents = document.querySelector(".contents");
+            // 创建div盒子
+            let user_bar = document.createElement("div");
+            user_bar.className = "user_bar";
+
             let user = document.createElement("p");
             user.className = "user_init";
             user.innerHTML = that.sendtext;
-            contents.appendChild(user);
+            user_bar.appendChild(user);
+            // 创建头像
+            let user_pic = document.createElement("img");
+            user_pic.className = "user_pic";
+            user_pic.src=userPicUrl;
+            user_bar.appendChild(user_pic);
+            contents.appendChild(user_bar);
             console.log(contents);
           })
           .catch(function (imError) {
@@ -125,14 +138,23 @@ export default {
           });
       }
     },
-    getMessage (event) {
+    getMessage(event) {
       this.gettext = event.data[0].payload.text;
       let contents = document.querySelector(".contents");
-            let store = document.createElement("p");
-            store.className = "store_init";
-            store.innerHTML = this.gettext;
-            contents.appendChild(store);
-      
+      // 创建div盒子
+      let store_bar = document.createElement("div");
+      store_bar.className = "store_bar";
+
+      let store = document.createElement("p");
+      store.className = "store_init";
+      store.innerHTML = this.gettext;
+
+      let store_pic = document.createElement("img");
+      store_pic.className = "store_pic";
+      store_pic.src = storePicUrl;
+      store_bar.appendChild(store_pic);
+      store_bar.appendChild(store);
+      contents.appendChild(store_bar);
     },
     sendMessage_init() {
       this.sedmessage();
@@ -168,48 +190,10 @@ export default {
 .ser_text {
   position: relative;
   width: 100%;
-  height: 100%;
-
-  ul {
-    width: 100%;
-    height: 100%;
-    padding: 10px 0;
-    li {
-      width: 90%;
-      line-height: 30px;
-      background-color: skyblue;
-      padding: 10px;
-      border-radius: 15px;
-      margin: 5px auto;
-      text-indent: 5px;
-    }
-  }
-  .client_{
-    position: absolute;
-    top: 82%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    margin: 0 auto;
-    input{
-      width: 80%;
-      outline: none;
-      height: 30px;
-      text-indent: 5px;
-    }
-    .send{
-      display: inline-block;
-      width: 50px;
-      height: 28px;
-      text-align: center;
-      line-height: 28px;
-      border: 1px solid #333;
-      box-shadow: 1px 2px 5px 1px #333;
-      border-radius: 5px;
-      margin-left: 2px;
-      cursor: pointer;
-    }
-  }
+  height: 430px;
+  padding: 5px;
+  overflow: auto;
+  background-color: #ddd;
 }
 .ser_mask {
   position: relative;
@@ -234,25 +218,54 @@ export default {
   }
 }
 .textarea {
-  position: absolute;
-  bottom: 95px;
+  position: fixed;
+  width: 230px;
+  bottom: 5px;
 }
 .send {
-  position: absolute;
+  position: fixed;
   right: 0;
-  bottom: 60px;
+  bottom: 5px;
 }
 /deep/ .contents {
   padding: 20px;
   height: 340px;
-  overflow-y: scroll;
+  // overflow-y: scroll;
+  overflow: auto;
 }
-/deep/ .user_init {
+/deep/.store_bar,
+/deep/.user_bar {
   display: flex;
+  width: 90%;
+  margin: 5px auto;
+  .store_pic,
+  .user_pic {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin: 0 5px;
+    background-color: sandybrown;
+    vertical-align: middle;
+  }
+}
+
+/deep/.user_bar {
   justify-content: flex-end;
+  // background-color: aquamarine;
 }
-/deep/ .store_init {
-  display: flex;
-  justify-content: flex-start;
+// 客户
+/deep/ .store_init,
+/deep/ .user_init {
+  display: inline-block;
+  width: 160px;
+  min-height: 30px;
+  max-height: 210px;
+  border: 1px solid #fff;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 5px;
+  text-indent: 10px;
+  overflow: auto;
+  vertical-align: middle;
 }
 </style>
