@@ -10,12 +10,10 @@
             :style="{ color: '#fff' }"
             @click="showService(1)"
           />
-          <span class="number">0</span>
         </div>
         <!-- 客服窗口 -->
         <div class="quick_history">
           <a-icon type="history" :rotate="180" @click="showHistory(2)" />
-          <span class="number">8</span>
         </div>
       </div>
       <div class="arrow_bar">
@@ -35,11 +33,11 @@
         />
       </div>
     </div>
-    <!-- 拓展页面 -->
+    <!-- 拓展页面 -->a
     <div class="expand" ref="expand">
       <!-- <router-view /> -->
       <shopCar v-if="isShowService" @isCloseBar="isClose"></shopCar>
-      <service v-if="isShowHistory" @isCloseBar="isClose"></service>
+      <service v-if="isShowHistory" @isCloseBar="isClose" ></service>
     </div>
   </div>
 </template>
@@ -47,6 +45,7 @@
 <script>
 import shopCar from "./ShopCar";
 import service from "./Service";
+
 export default {
   components: {
     shopCar,

@@ -66,7 +66,7 @@
             <div class="choose">
               <label for="size">尺码</label>
               <select name="size" id="size" v-model="styleSize">
-                <option :value="item" v-for="(item,index) in size"> {{item}} </option>
+                <option :value="item" v-for="(item,index) in size" :key="index"> {{item}} </option>
               </select>
               <label for="count">数量: </label>
               <input id="count" type="number" max="10" min="1" v-model="shopNum">
