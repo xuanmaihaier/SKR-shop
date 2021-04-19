@@ -11,9 +11,10 @@
         {{arr[index]}}
       </li>
     </ul>
-    <swiper ref="mySwiper" :options="SwiperTab"  @click="swiperClick(swiper)">
+    <swiper ref="mySwiper" :options="SwiperTab">
       <swiper-slide v-for="(item, index) in SwiperTab_list.slice(8,12)" :key="index">
         <img
+          @click="swiperClick(item.id)"
           :src="item.img"
         />
       </swiper-slide>
@@ -65,9 +66,8 @@ export default {
       this.swiper.slideTo(index, 1000, false);
       this.page = index;
     },
-      swiperClick(swiper){
-          let data = this.SwiperTab_list[swiper.realIndex+8].id
-      this.$router.push(`/details/${data}`)
+      swiperClick(id){
+      this.$router.push(`/details/${id}`)
     }
   },
   computed: {

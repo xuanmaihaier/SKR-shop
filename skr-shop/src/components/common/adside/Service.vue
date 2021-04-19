@@ -15,6 +15,7 @@
           placeholder="客服将尽快回复您"
           :rows="2"
           v-model="message"
+          @keyup.enter="sendMessage_init"
         />
         <a-button class="send" @click="sendMessage_init">发送</a-button>
       </div>
@@ -41,7 +42,12 @@ export default {
   },
   created() {
     this.login_init();
-    this.tim.on(this.TIM.EVENT.MESSAGE_RECEIVED,this.getMessage);
+     this.tim.on(this.TIM.EVENT.MESSAGE_RECEIVED,this.getMessage);
+    
+   
+  },
+  mounted() {
+
   },
   methods: {
     handle() {
@@ -236,7 +242,7 @@ export default {
   right: 0;
   bottom: 60px;
 }
-.content {
+/deep/ .contents {
   padding: 20px;
   height: 340px;
   overflow-y: scroll;

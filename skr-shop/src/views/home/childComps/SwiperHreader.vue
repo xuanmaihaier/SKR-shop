@@ -1,8 +1,9 @@
 <template>
   <div class="SwiperHreader">
-    <swiper ref="SwiperHreader" :options="SwiperHreader" @click="swiperClick(swiper)">
+    <swiper ref="SwiperHreader" :options="SwiperHreader">
       <swiper-slide v-for="(item, index) in TopSwiper" :key="index" >
         <img
+         @click="swiperClick(index)"
           alt="example"
           :src="item.swiperImg"
         />
@@ -48,15 +49,13 @@ export default {
     }
   },
   methods: {
-    swiperClick(swiper){
-      let data = JSON.parse(this.TopSwiper[swiper.realIndex].params)
-      console.log(data);
+    swiperClick(index){
+      let data = JSON.parse(this.TopSwiper[index].params)
       if(data.id!=undefined){
         this.$router.push(`/details/${data.id}`)
       }else{
         this.$router.push(`/secondary/${data.name}_${data.series}`)
       }
-     
     }
   },
   computed: {
@@ -81,12 +80,14 @@ export default {
 }
 .swiper-button-prev {
   left: 30px;
+   z-index: 999;
 }
 .swiper-button-next {
   right: 30px;
 }
 .swiper-button-prev,
 .swiper-button-next {
+ 
   --swiper-theme-color: #ccc; /* 设置Swiper风格 */
 }
 </style>
