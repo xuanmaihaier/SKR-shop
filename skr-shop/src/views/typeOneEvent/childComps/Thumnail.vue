@@ -20,6 +20,7 @@
         <a-pagination size="small" :total="100" />
       </div>
     </div>
+    <h1>{{list}}</h1>
   </div>
 </template>
 
