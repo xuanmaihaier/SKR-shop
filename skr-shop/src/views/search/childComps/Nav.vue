@@ -31,10 +31,14 @@ export default {
     getProductNumber() {
       setTimeout(() => {
         this.productNumber = this.$store.state.SearchData.length;
-      }, 500);
+      }, 1000);
     },
   },
-  watch: {},
+  watch: {
+      $route: function () {
+          this.getProductNumber();
+      }
+  },
 };
 </script>
 
