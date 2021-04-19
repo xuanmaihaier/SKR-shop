@@ -259,13 +259,11 @@ export default {
   display: inline-block;
   width: 160px;
   min-height: 30px;
-  max-height: 210px;
   border: 1px solid #fff;
   background-color: #fff;
   border-radius: 10px;
   padding: 5px;
   text-indent: 10px;
-  overflow: auto;
   vertical-align: middle;
 }
 </style>
