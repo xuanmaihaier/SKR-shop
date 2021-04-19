@@ -4,19 +4,21 @@
       <ul>
         <li v-for="(item, index) in shopList" @click="onDetail(item.id)">
           <a href="javascript: void(0);"
-            ><img
-              :src="item.img"
-              alt=""
-            />
-            
-            <p class="multiline">{{item.title}}</p>
+            ><img :src="item.img" alt="" />
+
+            <p class="multiline">{{ item.title }}</p>
           </a>
         </li>
       </ul>
     </div>
     <div class="pagination">
-      <div id="components-pagination-demo-mini" >
-        <a-pagination size="small" :total="100" @change="onChange" />
+      <div id="components-pagination-demo-mini">
+        <a-pagination
+          size="small"
+          :total="100"
+          @change="onChange"
+          :current="pages"
+        />
       </div>
     </div>
   </div>
@@ -35,51 +37,54 @@ export default {
   data() {
     return {
       shopList: [],
-      listAll:[],
+      listAll: [],
+      pages: 1,
     };
   },
   created() {
     if (this.list == "All") {
-      this.getImg_('鞋类',5, 7 );
-      this.getImg_('服饰',5,7);
-      this.getImg_('配件',5, 6 );
-      this.getImg_('儿童专区',5, 6 );
-    }else{
-      this.getImg_(this.list,1,10)
+      this.getImg_("鞋类", 5, 7);
+      this.getImg_("服饰", 5, 7);
+      this.getImg_("配件", 5, 6);
+      this.getImg_("儿童专区", 5, 6);
+    } else {
+      this.getImg_(this.list, 1, 10);
     }
-    
   },
   methods: {
-    async getImg_(parent_name,start,end) {
+    async getImg_(parent_name, start, end) {
       const res = await getImg({ parent_name, start, end });
-      if(this.list == 'All'){
-        this.shopList=this.shopList.concat(res);
-        this.listAll = this.shopList
-      }else{
-        this.shopList = [],
-        this.shopList=this.shopList.concat(res);
+      if (this.list == "All") {
+        this.shopList = this.shopList.concat(res);
+        this.listAll = this.shopList;
+      } else {
+        (this.shopList = []), (this.shopList = this.shopList.concat(res));
       }
       // console.log(this.shopList);
       // console.log(this.listAll);
     },
-    onChange(page){
-      let starts = (page-1)*10+1;
-      let ends = starts+10-1;
-      this.getImg_(this.list,starts, ends );
+    onChange(page) {
+      this.pages = page;
+      if (this.list != "All") {
+        let starts = (page - 1) * 10 + 1;
+        let ends = starts + 10 - 1;
+        this.getImg_(this.list, starts, ends);
+      }
       // console.log(this.shopList);
     },
-    onDetail(Id){
-      this.$router.push(`/details/${Id}`)
-    }
+    onDetail(Id) {
+      this.$router.push(`/details/${Id}`);
+    },
   },
   watch: {
-    list(){
-      if(this.list=='All'){
-        this.shopList = this.listAll
-      }else{
-        this.getImg_(this.list,1,10);
+    list() {
+      this.pages = 1;
+      if (this.list == "All") {
+        this.shopList = this.listAll;
+      } else {
+        this.getImg_(this.list, 1, 10);
       }
-    }
+    },
   },
 };
 </script>
