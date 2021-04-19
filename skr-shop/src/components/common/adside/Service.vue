@@ -228,15 +228,15 @@ export default {
   bottom: 5px;
 }
 /deep/ .contents {
-  padding: 20px;
-  height: 340px;
+  padding: 20px 0;
+  height: 380px;
   // overflow-y: scroll;
   overflow: auto;
 }
 /deep/.store_bar,
 /deep/.user_bar {
   display: flex;
-  width: 90%;
+  width: 95%;
   margin: 5px auto;
   .store_pic,
   .user_pic {
@@ -259,13 +259,11 @@ export default {
   display: inline-block;
   width: 160px;
   min-height: 30px;
-  max-height: 210px;
   border: 1px solid #fff;
   background-color: #fff;
   border-radius: 10px;
   padding: 5px;
   text-indent: 10px;
-  overflow: auto;
   vertical-align: middle;
 }
 </style>
