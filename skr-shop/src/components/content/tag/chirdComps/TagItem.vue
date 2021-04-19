@@ -7,17 +7,56 @@
       <a-button
         shape="round"
         size="large"
-        v-for="(item, index) in 6"
+        v-for="(item, index) in list"
         :key="index"
-        ># item</a-button
+        @click="tagclick(item)"
+        ># {{item}}</a-button
       >
     </div>
   </div>
 </template>
 
 <script>
+import { getTypeTwo } from "network/getNav";
+import {setLocalStorage} from "utils/storage"
 export default {
   name: "TagItem",
+  data() {
+    return {
+      list:[]
+    }
+  },
+  methods: {
+    tagclick(item) {
+      setLocalStorage("word", item);
+        this.$router.push({ name: "Search", params: { word: item } });
+    },
+    RndNum(n, data) {
+      let rnd = "";
+      let arr = [];
+      for (var i = 0; i < n; i++) {
+        rnd = Math.floor(Math.random() * data.length);
+        arr.push(data[rnd]);
+        data.splice(rnd, 1);
+      }
+      return arr;
+    },
+    getTypeTwo_init() {
+      getTypeTwo(this.$route.params.id).then((res) => {
+        let arr = this.RndNum(5, res.data);
+        this.list = arr
+      });
+    },
+  },
+  created() {
+    this.getTypeTwo_init();
+  },
+  watch: {
+    $route(to, from) {
+      if(to.path!==from.path)
+      this.getTypeTwo_init()
+    },
+  },
 };
 </script>
 
