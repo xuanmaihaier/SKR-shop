@@ -133,7 +133,7 @@ export default {
     .hotkeyword-cont {
       h3 {
         width: 295px;
-        height: 100%;
+        height: 255px;
       }
     }
   }

@@ -93,11 +93,6 @@
             <a-empty />
           </td>
         </tr>
-        <tr>
-          <td>123123</td>
-          <td>123123</td>
-          <td>123123</td>
-        </tr>
       </tbody>
     </table>
   </div>

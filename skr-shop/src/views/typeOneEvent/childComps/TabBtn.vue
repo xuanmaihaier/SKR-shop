@@ -40,7 +40,7 @@
 export default {
   data() {
     return {
-      btn: ["All", "WOMEN", "MEN", "LIFE", "BEAUTY&"],
+      btn: ["All", "鞋类", "服饰", "配件", "儿童专区"],
       sort: ["全部", "收藏", "趋势", "社论", "销售", "事件"],
       avtiveIndex: "0",
     };

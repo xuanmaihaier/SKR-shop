@@ -12,9 +12,9 @@
       <div class="conent">
         <ul class="left">
           <li
-            v-for="(item, index) in typeOne.slice(0,4)"
+            v-for="(item, index) in typeOne.slice(0, 4)"
             :key="index"
-            @mouseover="engraft(index,item)"
+            @mouseover="engraft(index, item)"
             @mouseout="exgraft"
             @click="handleClicka(item)"
           >
@@ -32,7 +32,11 @@
         </ul>
       </div>
       <!-- Nav 显示隐藏的list表 -->
-      <nav-eng v-show="$store.state.isShow" :navIndex="navIndex" :navTypeOne="navTypeOne"></nav-eng>
+      <nav-eng
+        v-show="$store.state.isShow"
+        :navIndex="navIndex"
+        :navTypeOne="navTypeOne"
+      ></nav-eng>
     </div>
     <!-- 右侧icon图标 -->
     <div class="utility" v-if="isChage">
@@ -58,7 +62,7 @@
 </template>
 
 <script>
-import {getImg} from 'network/getImg.js'
+import { getImg } from "network/getImg.js";
 import NavEng from "./NavEng.vue";
 import NavSearch from "./NavSearch.vue";
 export default {
@@ -67,12 +71,12 @@ export default {
   data() {
     return {
       top: 0,
-      navRight: ["EXCLUSIVE", "POP", "EVENT", "BEST"],
-      navRightPath: ["/exclusive", "/wdna",'/event','/best'],
+      navRight: ["POP", "EXCLUSIVE", "EVENT", "BEST"],
+      navRightPath: ["/wdna","/exclusive",  "/event", "/best"],
       navIndex: 0,
-      navTypeOne:[],
+      navTypeOne: [],
       isChage: false,
-      focusFlag:false,
+      focusFlag: false,
     };
   },
 
@@ -87,16 +91,16 @@ export default {
     this.getImg_( {parent_name:'服饰',start:5,end:8})
     this.getImg_( {parent_name:'配件',start:16,end:18})
     this.getImg_( {parent_name:'儿童专区',start:7,end:10})
-    console.log(this.navTypeOne);
+    // console.log(this.navTypeOne);
   },
   methods: {
     //截取4张小图片
-    async getImg_(item){
-        const res=await getImg(item)
-        this.navTypeOne.push(res)
+    async getImg_(item) {
+      const res = await getImg(item);
+      this.navTypeOne.push(res);
     },
     //移入
-    engraft(index,item) {
+    engraft(index, item) {
       this.navIndex = index;
       // this.getImg_(item)
       this.$store.dispatch("commitShow", true);
@@ -234,7 +238,7 @@ export default {
   }
 }
 
-.right li{
+.right li {
   font-weight: 700;
   font-size: 14px;
 }
