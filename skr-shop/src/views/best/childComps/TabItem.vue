@@ -8,7 +8,7 @@
                     :tab="item"
                 >
                     <ul class="sort">
-                        <li v-for="(items, indexs) in sort.MEN" :key="indexs">
+                        <li v-for="(items, indexs) in sort[item]" :key="indexs">
                             <span
                                 :class="{
                                     onspan: active == indexs ? true : false,
@@ -30,9 +30,9 @@ export default {
             tab: ["All", "鞋类", "服饰", "配件", "儿童专区"],
             sort: {
                 All: [],
-                WOMEN: ["ALL WOMEN", "APPAREL", "BAG", "SHOES", "ACC"],
-                MEN: ["ALL MEN", "APPAREL", "BAG", "SHOES", "ACC"],
-                LIFE: [
+                鞋类: ["ALL WOMEN", "APPAREL", "BAG", "SHOES", "ACC"],
+                服饰: ["ALL MEN", "APPAREL", "BAG", "SHOES", "ACC"],
+                配件: [
                     "ALL LIFE",
                     "LIFEWEAR",
                     "HOME",
@@ -41,7 +41,7 @@ export default {
                     "PET",
                     "GOODS",
                 ],
-                BEAUTY: [
+                儿童专区: [
                     "ALL BEAUTY",
                     "FACIAL BEAUTY",
                     "SALON BEAUTY",
