@@ -7,3 +7,11 @@ export async function delAddress(options){
     data:options
   })
 }
+
+export async function addAddress(options){
+  return await axios({
+    method:'post',
+    url:'/user/addAddress',
+    data:options
+  })
+}
