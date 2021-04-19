@@ -44,6 +44,7 @@ export default {
     width: 82%;
     margin: 20px auto;
     height: 60px;
+    margin-top: 60px;
 }
 .pagination{
     width: 82%;

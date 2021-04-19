@@ -1,18 +1,66 @@
 <template>
     <div id="tab_item">
         <div class="card-container">
-            <a-tabs type="card">
-                <a-tab-pane key="1" tab="All"></a-tab-pane>
-                <a-tab-pane key="2" tab="WOMEN"></a-tab-pane>
-                <a-tab-pane key="3" tab="MEN"></a-tab-pane>
-                <a-tab-pane key="4" tab="LIFE"></a-tab-pane>
-                <a-tab-pane key="5" tab="BEAUTY"></a-tab-pane>
+            <a-tabs type="card"  @tabClick="onTabs" >
+                <a-tab-pane
+                    v-for="(item, index) in tab"
+                    :key="index"
+                    :tab="item"
+                   
+                >
+                    <ul class="sort" >
+                        <li v-for="(items, indexs) in sort[item]" :key="indexs">
+                            <span :class="{onspan:active==indexs ?true : false}" @click="onChange(indexs)">{{ items }}</span>
+                        </li>
+                    </ul>
+                </a-tab-pane>
             </a-tabs>
         </div>
     </div>
 </template>
 <script>
-export default {};
+export default {
+    data() {
+        return {
+            tab: ["All", "WOMEN", "MEN", "LIFE", "BEAUTY"],
+            sort: {
+                All: [],
+                WOMEN: ["ALL WOMEN", "APPAREL", "BAG", "SHOES", "ACC"],
+                MEN: ["ALL MEN", "APPAREL", "BAG", "SHOES", "ACC"],
+                LIFE: [
+                    "ALL LIFE",
+                    "LIFEWEAR",
+                    "HOME",
+                    "TRAVEL",
+                    "DIGITAL",
+                    "PET",
+                    "GOODS",
+                ],
+                BEAUTY: [
+                    "ALL BEAUTY",
+                    "FACIAL BEAUTY",
+                    "SALON BEAUTY",
+                    "SCENT BEAUTY",
+                    "INNER BEAUTY",
+                    "for MEN",
+                ],
+            },
+            active:0,
+
+        };
+    },
+    methods:{
+        onChange(indexs){
+            this.active = indexs
+        },
+        onTabs(){
+            this.active  = 0
+        }
+    },
+    created() {
+        
+    },
+};
 </script>
 <style lang="less" scoped>
 #tab_item {
@@ -62,5 +110,39 @@ export default {};
     /deep/.ant-tabs-nav .ant-tabs-tab:hover {
         color: black;
     }
+}
+.sort {
+    width: 70%;
+    height: 32px;
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    line-height: 32px;
+    position: relative;
+    li::before{
+        display: block;
+        content: '';
+        width: 1px;
+        height: 10px;
+        background: #ccc;
+        position: absolute;
+        top: 12px;
+    }
+    li:first-child::before{
+        background: #fff;
+    }
+    li{
+        width: 100%;
+        .onspan{
+            border-bottom: 2px solid #000;
+        }
+        span:hover{
+            cursor: pointer;
+            border-bottom: 2px solid #000;
+        }
+    }
+    
+    
 }
 </style>
