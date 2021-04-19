@@ -10,7 +10,7 @@
             placeholder="请输入您的用户名"
             @focus="showText"
             @blur="hideText"
-            v-model="userName"
+            v-model.trim="userName"
           />
         </p>
         <p class="mt20">
@@ -73,8 +73,6 @@ export default {
     }
   },
   created() {
-    // console.log(xxx);
-    // console.log(this.getCookie('username'));
     this.imgShow=this.getCookie('username')?false:true;
   },
   methods: {
