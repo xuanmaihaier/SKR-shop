@@ -12,7 +12,7 @@ let store= new Vuex.Store({
   state: {
     // NavBarTop 的显示隐藏
     NavbarShow:true,
-    isShow: false,
+    isShow: true,
     loadingStatus: false, //loading全局开关。
     SearchShow:false,  //Navbottom 的Search 的显示隐藏
     isShowSer:false, //侧边栏开关
