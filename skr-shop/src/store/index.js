@@ -16,6 +16,7 @@ let store= new Vuex.Store({
     loadingStatus: false, //loading全局开关。
     SearchShow:false,  //Navbottom 的Search 的显示隐藏
     isShowSer:false, //侧边栏开关
+    SearchData: [], // 搜索结果
   },
   mutations: {
     changeShow(state, value) {
@@ -32,6 +33,9 @@ let store= new Vuex.Store({
     },
     showSerBar(state,val){
       state.isShowSer = val;
+    },
+    changeSearchData(state,val){
+      state.SearchData = val;
     }
   },
   actions: {
@@ -50,6 +54,10 @@ let store= new Vuex.Store({
     // 更改SearchShow
     commitSearchShow(store,val){
       store.commit('changeSearchShow',val)
+    },
+    // 更改搜索到数据SearchData
+    commitSearchData(store,val){
+      store.commit('changeSearchData',val)
     },
   },
   modules: {

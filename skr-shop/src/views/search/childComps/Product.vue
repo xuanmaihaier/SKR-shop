@@ -1,28 +1,34 @@
 <template>
   <div class="product">
     <ul>
-      <li v-for="i in 120" :key="i">
+      <li v-for="item in data" :key="item.id">
         <a-card hoverable style="width: 240px">
-          <img
-            slot="cover"
-            alt="example"
-            src="http://image.wconcept.co.kr/productimg/image/img1/55/301194655.jpg?RS=300"
-          />
-          <a-card-meta title="jsny">
+          <img slot="cover" alt="example" :src="item.img" />
+          <a-card-meta :title="item.title">
             <template slot="description">
-              <p class="activity">[선착순20%쿠폰][스프링세일]</p>
-              <p class="dec">Classic Cropped Jacket [IVORY] JYJA1B903WT</p>
+              <p class="activity">目前没有活动</p>
               <div class="price">
                 <p>
-                  <span class="original">191,200</span
-                  ><span class="discount">239,000</span>
+                  <span class="original">￥{{ item.special_price }}</span
+                  ><span class="discount">￥{{ item.price }}</span>
                 </p>
-                <span class="percentage">20%</span>
+                <span class="percentage"
+                  >{{
+                    Math.abs(
+                      (
+                        ((item.special_price - item.price) / item.price) *
+                        100
+                      ).toFixed(2)
+                    )
+                  }}%</span
+                >
               </div>
             </template>
           </a-card-meta>
         </a-card>
       </li>
+      <!-- 透明盒子解决弹性布局最后一行问题 -->
+      <aside v-for="i in 6" :key="i"></aside>
     </ul>
     <a-pagination :default-current="1" :total="6000" :pageSize="120" />
   </div>
@@ -31,6 +37,27 @@
 <script>
 export default {
   name: "Product",
+  data: function () {
+    return {
+      data: [],
+    };
+  },
+  created() {
+      this.getData();
+  },
+  methods: {
+    getData() {
+      setTimeout(() => {
+        this.data = this.$store.state.SearchData;
+      }, 500);
+    },
+  },
+  // watch: {
+  //   $route: function () {
+  //     console.log(this.$route)
+  //     this.getData();
+  //   },
+  // },
 };
 </script>
 
@@ -46,8 +73,12 @@ export default {
     align-items: center;
     margin: 5vh 0;
     margin-top: 7vh;
-    li{
-      margin-bottom: 4vh;
+    li {
+      margin-bottom: 3vh;
+    }
+    aside {
+      width: 12vw;
+      height: 0;
     }
   }
 }
@@ -58,17 +89,15 @@ export default {
   .ant-card-body {
     padding: 0;
     margin: 1vh 0;
+    padding-left: 0.3vw;
     .activity {
-      color: #000000d9;
-    }
-    .dec {
-      padding: 1vh 0;
-      padding-bottom: 1.5vh;
+      color: #ccc;
     }
     .price {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      margin-top: 1vh;
       p {
         display: flex;
         align-items: center;
