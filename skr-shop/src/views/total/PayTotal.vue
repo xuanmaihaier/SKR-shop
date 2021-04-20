@@ -35,7 +35,6 @@
         display: flex;
         justify-content: space-between;
         width: 75vw;
-        background-color: aqua;
         margin: 0 auto;
     }
 </style>

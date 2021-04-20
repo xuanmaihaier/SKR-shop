@@ -169,7 +169,26 @@ import {mapState} from "vuex";
         
       },
       // 付款
+<<<<<<< HEAD
       async pay(){
+=======
+       pay(){
+        // const buyShopList = this.shopCart.filter(shop=>{
+        //   const index = this.arr.indexOf(shop.id)
+        //   if (index !== -1) {
+        //     return shop.id
+        //   }
+        // })
+        // const skus = buyShopList.map(item=>{
+        //   return item.id
+        // })
+        // const options = {
+        //   customer_id: window.sessionStorage.userId,
+        //   money: this.totalPrice,
+        //   store_id: buyShopList[0].store_id,
+        //   skus: JSON.stringify(skus)
+        // }
+>>>>>>> 820521eb1854901da2e54a952590bff9e215a1b3
         this.$router.push('/payTotal')
         const buyShopList1 = this.shopCart.filter(shop=>{
           const index = this.arr.indexOf(shop.id)
@@ -177,7 +196,12 @@ import {mapState} from "vuex";
             return shop
           }
         })
+<<<<<<< HEAD
         window.localStorage.buyShopList1 = JSON.stringify(buyShopList1)
+=======
+        localStorage.setItem('buyShopList1',JSON.stringify(buyShopList1))
+        // const result = await addOrder(options)
+>>>>>>> 820521eb1854901da2e54a952590bff9e215a1b3
       },
       deleteShop(shop){
         if (confirm(`确定删除${shop.title}吗`)) {

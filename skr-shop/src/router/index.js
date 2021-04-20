@@ -136,6 +136,11 @@ const routes = [
       },
     ]
   },
+  {
+    path: '/order', // 订单结算
+    name:"Order",
+    component: () => import("views/order/Order.vue")
+  },
   // 底部路由跳转 
   {
     path: '/about', // 关于我们
@@ -165,11 +170,6 @@ const routes = [
     path: '/offers', // 招聘信息
     component: () => import("components/common/Following/Offers.vue")
   },
-  {
-    path: '/global', // 全部
-    component: () => import("components/common/Following/Global.vue")
-  },
-
 ]
 
 const router = new VueRouter({
