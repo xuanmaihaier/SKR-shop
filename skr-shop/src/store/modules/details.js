@@ -2,7 +2,7 @@
  * @Description: 详情页面模块数据管理
  * @Author: He Xiantao
  * @Date: 2021-04-15 09:56:31
- * @LastEditTime: 2021-04-20 20:01:18
+ * @LastEditTime: 2021-04-20 20:59:17
  * @LastEditors: He Xiantao
  */
 
@@ -39,7 +39,8 @@ export default {
       state.shop2 = []
     },
     [UPDATE_SHOP_NUM] (state,num){
-      Vue.set(state.shop1[0],'num',parseInt(num))
+      state.shop1[0].num = parseInt(num)
+      // Vue.set(state.shop1[0],'num',parseInt(num))
       // state.shop1[0].num = parseInt(num)
       // state.shop1[0].special_price = state.shop2.special_price
       // if (state.shop1[0].num) {
@@ -49,7 +50,8 @@ export default {
       // }
     },
     [UPDATE_SHOP_PARAMS] (state,params){
-      Vue.set(state.shop1[0],'params',params)
+      state.shop1[0].params = params
+      // Vue.set(state.shop1[0],'params',params)
       // state.shop1[0].params = params
       // if (state.shop1[0].params) {
       //   state.shop1[0].params = params

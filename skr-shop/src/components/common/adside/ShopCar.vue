@@ -42,13 +42,13 @@ export default {
     };
   },
   created(){
-    console.log(this.$store.state);
+    // console.log(this.$store.state);
     this.$store.commit('clear_shop_cart')
     this.$store.dispatch('initShopCart')
   },
   methods: {
     callback(key) {
-      console.log(key);
+      // console.log(key);
     },
     handle() {
       this.close = false;

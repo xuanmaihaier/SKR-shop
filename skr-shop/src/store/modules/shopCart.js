@@ -1,8 +1,15 @@
 /*
+ * @Description: 
+ * @Author: He Xiantao
+ * @Date: 2021-04-16 19:06:52
+ * @LastEditTime: 2021-04-20 23:08:10
+ * @LastEditors: He Xiantao
+ */
+/*
  * @Description: shopCart
  * @Author: He Xiantao
  * @Date: 2021-04-15 12:09:19
- * @LastEditTime: 2021-04-20 20:18:30
+ * @LastEditTime: 2021-04-20 22:07:14
  * @LastEditors: He Xiantao
  */
 
@@ -35,7 +42,6 @@ export default {
   mutations: {
     [ADD_SHOP_TO_SHOP_CART](state, shopInfo) {
       let a = JSON.parse(JSON.stringify(shopInfo))
-      // console.log(a,'++++++++++++++++++++++++=');
       Vue.set(a,'num',a.num)
       Vue.set(a,'params',a.params)
       Vue.set(a,'special_price',a.special_price)
@@ -49,12 +55,23 @@ export default {
       window.sessionStorage.shopCart = JSON.stringify(state.sessionStorageShopCart)
     },
     change_shop_num(state,{isAddNum,shop}){
-      shop.num += isAddNum ? 1 : -1
+      
+      // console.log(shop);
+      // console.log(shop.num++);
+      let num = isAddNum ? 1 : -1
+      // console.log(num,'加一还是减一');
+      // console.log(num);
+      // Vue.set(shop,'num',num)
+      // console.log(shop);
+      shop.num += num
+      // console.log(shop.num,'当前商品数量');
+      // console.log(shop);
       const a = {
         sku_id: shop.id,
         num: shop.num,
         params: shop.params
       }
+      console.log(a,'当前需要存储session的数据');
       state.sessionStorageShopCart.splice(state.sessionStorageShopCart.indexOf(a),1,a)
       window.sessionStorage.shopCart = JSON.stringify(state.sessionStorageShopCart)
     },
@@ -102,7 +119,7 @@ export default {
       // 保证此时的shopInfo都是商品对象
       shopInfo = shopInfo[0] ? shopInfo[0] : shopInfo
       if (state.shopCart.length < 1) { // 第一次添加
-        console.log(1);
+        // console.log(1);
         commit(ADD_SHOP_TO_SHOP_CART,shopInfo)
       }else{ 
         let countIsSame = false
@@ -117,11 +134,11 @@ export default {
         })
         if (countIsSame) {
           // 商品样式和id都一样,只是增加了数量
-          console.log('商品样式和id都一样,只是增加了数量');
+          // console.log('商品样式和id都一样,只是增加了数量');
           commit(ADD_SHOP_NUM,{index:sameShopIndex,num:shopInfo.num})
         }else{
           // 商品id或品种不一样
-          console.log(2);
+          // console.log(2);
           commit(ADD_SHOP_TO_SHOP_CART,shopInfo)
         }
       }
@@ -139,7 +156,7 @@ export default {
     // 添加商品到数据库
     async ToShopCart({commit},{shopInfo,b}){
       // console.log(shopInfo);
-      console.log('添加商品到数据库');
+      // console.log('添加商品到数据库');
       shopInfo = shopInfo[0] || shopInfo
       // console.log(shopInfo);
       // console.log(b && shopInfo.id ? shopInfo.sku_id : shopInfo.id);
@@ -153,7 +170,7 @@ export default {
     },
     // 拉去数据库数据到本地shopCart,并且添加值sessionStorage
     async initShopCart ({commit,dispatch}){
-      console.log('拉去数据库数据到本地');
+      // console.log('拉去数据库数据到本地');
       const newResult = await reqShopCart({customer_id:window.sessionStorage.userId})
       // console.log(newResult);
       if (newResult.data) { // 购物车有数据
@@ -162,7 +179,7 @@ export default {
           item.params = JSON.parse(item.params)
           return item
         })
-        console.log(b);
+        // console.log(b);
         b.forEach(item=>{
           // 收集数据库的购物车,重复的商品(数量不一样,其它都一样的商品)
           // console.log(item);
@@ -177,7 +194,7 @@ export default {
     // 删除购物车中的某一个商品
     async deleteSqlShop({state},{id}){
       const result = await deleteSC({id})
-      // console.log(result);
+      console.log(result);
     }
   },
   getters: {}

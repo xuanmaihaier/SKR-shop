@@ -9,7 +9,7 @@ export default {
         get(state, params) {
             if (params) {
                 state.addressList = params
-                console.log(state.addressList);
+                // console.log(state.addressList);
             } else {
                 state.addressList = []
             }

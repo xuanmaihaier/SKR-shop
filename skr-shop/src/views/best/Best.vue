@@ -38,7 +38,7 @@ export default {
         }
     },
     created(){
-        console.log(this.msg);
+        // console.log(this.msg);
     }
 };
 </script>

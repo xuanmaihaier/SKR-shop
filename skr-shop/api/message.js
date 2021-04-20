@@ -40,7 +40,7 @@ const params = {
 };
 client.SendSms(params).then(
   (data) => {
-    console.log(data);
+    // console.log(data);
   },
   (err) => {
     console.error("error", err);

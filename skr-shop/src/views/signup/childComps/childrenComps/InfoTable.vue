@@ -154,7 +154,7 @@ export default {
         return;
       } 
       this.phoneShow = false;
-      console.log(this.phone);
+      // console.log(this.phone);
       if (this.flag) {
         this.flag = false;
         let timer = 60;
@@ -170,7 +170,7 @@ export default {
       }
       let phone_init="+86"+this.phone
       getMessage({phoneNum:phone_init}).then(res=>{
-        console.log(res);
+        // console.log(res);
         this.phoneCode = res.data.Code
       })
     },
@@ -195,7 +195,7 @@ export default {
         email: this.email,
         VerificationCode:this.phoneCode
       }).then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.code == 501) {
           this.$message.error({
             content: "用户名已被注册，请重新输入！",

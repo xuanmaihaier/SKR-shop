@@ -2,7 +2,7 @@
  * @Description: shopcart
  * @Author: He Xiantao
  * @Date: 2021-04-14 23:35:14
- * @LastEditTime: 2021-04-20 20:35:00
+ * @LastEditTime: 2021-04-20 23:09:50
  * @LastEditors: He Xiantao
 -->
 <template>
@@ -54,9 +54,9 @@
             <div class="info-bom">
               <p class="fl">
                 <span>数量 :</span>
-                <a href="javascript:;" class="num-minus num" @click="isAddNum(false,shop,shop.num)">-</a>
+                <a href="javascript:;" class="num-minus num" @click="isAddNum(false,shop)">-</a>
                 <input type="text" :value="shop.num" disabled>
-                <a href="javascript:;" class="num-plus num" @click="isAddNum(true,shop,shop.num)">+</a>
+                <a href="javascript:;" class="num-plus num" @click="isAddNum(true,shop)">+</a>
               </p>
               <p class="fr">
                 <a href="javascript:;" class="delete-one" @click="deleteShop(shop)">删除</a>
@@ -90,7 +90,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { addOrder } from "../../network/reqAddOrder";
+import { reqShopCart } from "../../network/reqShopCart";
 import {mapState} from "vuex";
   export default {
     data(){
@@ -122,20 +122,50 @@ import {mapState} from "vuex";
       // window.location.reload();
     },
     methods:{
-      isAddNum(isAddNum,shop,num){
-        if (!isAddNum && num == 1) return
+      async isAddNum(isAddNum,shop){
+        if (!isAddNum && shop.num == 1) return
+        // console.log(num,'-------');
+        // 修改本地session中的数据
         this.$store.commit('change_shop_num',{isAddNum,shop})
         // console.log(shop);
-        // 删除数据库对应的商品
-        this.repeatSqlShopId[shop.sku_id].forEach(item=>{
-          this.$store.dispatch('deleteSqlShop',{id:item})
-        })
-        // 添加新的商品信息到数据库
-        this.$store.dispatch('ToShopCart',{shopInfo:shop,b:'1'})
+        
+        const newResult = await reqShopCart({customer_id:window.sessionStorage.userId})
+        // console.log(newResult);
+        if (newResult.data) { // 购物车有数据
+          // 得到所有购物车信息
+          let b = newResult.data.map(item=>{
+            item.params = JSON.parse(item.params)
+            return item
+          })
+          // console.log(b);
+          b.forEach(item=>{
+            // 收集数据库的购物车,重复的商品(数量不一样,其它都一样的商品)
+            // console.log(item);
+            this.$store.commit('collect',item)
+            // this.$store.dispatch('updateShopCart',item)
+            // this.$store.dispatch('addToSession')
+          })
+          // 删除数据库对应的商品
+          this.repeatSqlShopId[shop.sku_id].forEach(item=>{
+            // console.log(item);
+            this.$store.dispatch('deleteSqlShop',{id:item})
+          })
+          // 添加新的商品信息到数据库
+          this.$store.dispatch('ToShopCart',{shopInfo:shop,b:'1'})
+          // b.forEach(item=>{
+          //   // 收集数据库的购物车,重复的商品(数量不一样,其它都一样的商品)
+          //   this.$store.dispatch('updateShopCart',item)
+          //   this.$store.commit('clear_shop_cart')
+          //   this.$store.dispatch('initShopCart')
+          // })
+        }
+
+
+        
         //
-        this.$store.commit('clear_shop_cart')
-        this.$store.dispatch('initShopCart')
-        window.location.reload();
+        // this.$store.commit('clear_shop_cart')
+        // this.$store.dispatch('initShopCart')
+        // window.location.reload();
         
       },
       // 付款
@@ -153,11 +183,12 @@ import {mapState} from "vuex";
         if (confirm(`确定删除${shop.title}吗`)) {
           // 删除本地存储
           // this.$store.commit('delete_shop',shop)
-          // 删除数据库
-          this.repeatSqlShopId[shop.sku_id].forEach(item=>{
-            this.$store.dispatch('deleteSqlShop',{id:item})
-          })
           this.$store.commit('clear_shop_cart')
+          // 删除数据库
+          // this.repeatSqlShopId[shop.sku_id].forEach(item=>{
+          //   console.log(item);
+          this.$store.dispatch('deleteSqlShop',{id:shop.id})
+          // })
           this.$store.dispatch('initShopCart')
           window.location.reload();
           // this.$store.dispatch('deleteSqlShop',{id:shop.id})
