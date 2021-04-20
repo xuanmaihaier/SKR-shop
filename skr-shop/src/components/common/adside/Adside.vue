@@ -36,8 +36,8 @@
     <!-- 拓展页面 -->a
     <div class="expand" ref="expand">
       <!-- <router-view /> -->
-      <shopCar v-if="isShowService" @isCloseBar="isClose"></shopCar>
-      <service v-if="isShowHistory" @isCloseBar="isClose" ></service>
+      <shopCar v-show="isShowService" @isCloseBar="isClose"></shopCar>
+      <service v-show="isShowHistory" @isCloseBar="isClose" ></service>
     </div>
   </div>
 </template>
