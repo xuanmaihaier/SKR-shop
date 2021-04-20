@@ -49,7 +49,6 @@
 
         .orderList {
             width: 100%;
-            height: 160px;
             padding: 20px;
             border: 1px solid #cccccc;
 

@@ -120,10 +120,13 @@
         },
         methods: {
             provinceChange(value) {
-                this.cities = this.provinces[value].child
+                this.cities = this.provinces[value].child;
+                this.cityCode='请选择';
+                this.areaCode='请选择'
             },
             cityChange(value) {
-                this.areas = this.cities[value].child
+                this.areas = this.cities[value].child;
+                this.areaCode='请选择';
             },
             areaChange() {
                 this.flag = true;

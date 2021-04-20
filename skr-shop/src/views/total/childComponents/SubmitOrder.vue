@@ -11,7 +11,7 @@
                     <div class="payPrice">￥ {{discounts}}</div>
                 </div>
                 <div>
-                    <a-button type="danger">提交订单</a-button>
+                    <a-button type="danger" @click="submitOrder">提交订单</a-button>
                 </div>
             </li>
         </ul>
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+    import {payOrder} from "network/payOrder";
+
     export default {
         name: "",
         data() {
@@ -36,6 +38,18 @@
                     result+=item[str]-0;
                 })
                 return result
+            },
+            async submitOrder(){
+                const res =await payOrder({
+                    outTradeNo:this.getCookie('username')+Date.now()+sessionStorage,
+                    totalAmount:this.discounts,
+                    subject:this.getCookie('username')+"'s shopping order",
+                    body:this.getCookie('username')+`is paying for ${this.orderDetail[0].title} ...`  ,
+                })
+                if(res.code==200){
+                    this.$message.success('jumping to alipay page');
+                    setTimeout(()=>location.href=res.data)
+                }
             }
         },
         computed:{
