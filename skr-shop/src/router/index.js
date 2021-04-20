@@ -129,6 +129,11 @@ const routes = [
       },
     ]
   },
+  {
+    path: '/order', // 订单结算
+    name:"Order",
+    component: () => import("views/order/Order.vue")
+  },
   // 底部路由跳转 
   {
     path: '/about', // 关于我们
