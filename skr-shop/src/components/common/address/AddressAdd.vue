@@ -1,7 +1,7 @@
 <template>
     <div id="address_detail" v-show="isShow">
         <div class="title">
-            <h2>新增收货地址</h2>
+            <h2>收货地址</h2>
             <div class="cancel" @click="$emit('closeAdd')">
                 <a-icon type="close-circle"/>
             </div>
@@ -85,10 +85,14 @@
 
 <script>
     import {addressData} from "@/plugins/addressData/data";
+    import Vue from "vue";
 
     export default {
         props: {
-            isShow: Boolean
+            isShow: Boolean,
+            editor: Object,
+            addOrEditor: Boolean,
+            id:Number,
         },
         name: "addressAdd",
         data() {
@@ -103,7 +107,15 @@
                 areaCode: '请选择',
                 detailAddress: '',
                 flag: false,
-                prime:'',
+                prime: false,
+            }
+        },
+        created() {
+            if (this.editor) {
+                this.flag = true;
+                this.username = this.editor.name;
+                this.userPhone = this.editor.tel;
+                this.prime = this.editor.prime;
             }
         },
         methods: {
@@ -116,25 +128,33 @@
             areaChange() {
                 this.flag = true;
             },
-            getName() {
+            getName(id) {
+                let addressObj = {
+                    province: addressData[this.provinceCode].name,
+                    city: addressData[this.provinceCode].child[this.cityCode].name,
+                    area: addressData[this.provinceCode].child[this.cityCode].child[this.areaCode],
+                    detailAddress: this.detailAddress
+                }
+                let address='';
+                console.log(addressObj)
+                Object.keys(addressObj).forEach(item => {
+                    address+=addressObj[item]+'-'
+                })
+                address=address.substr(0,address.length-1);
                 return {
+                    id,
                     customer_id: sessionStorage.getItem('userId'),
                     name: this.username,
                     tel: this.userPhone,
-                    address: JSON.stringify({
-                        province: addressData[this.provinceCode].name,
-                        city: addressData[this.provinceCode].child[this.cityCode].name,
-                        area: addressData[this.provinceCode].child[this.cityCode].child[this.areaCode],
-                        detailAddress: this.detailAddress
-                    }),
-                    prime:this.prime
+                    address,
+                    prime: this.prime
                 }
             },
             saveAddress() {
-                if (this.username && this.userPhone && this.flag && this.detailAddress){
-                    this.$store.dispatch('add', this.getName())
+                if (this.username && this.userPhone && this.flag && this.detailAddress) {
+                    console.log(this.addOrEditor)
+                    this.addOrEditor ? this.$store.dispatch('update',this.getName(this.id)): this.$store.dispatch('add',this.getName())
                 }
-                this.$store.dispatch('get')
             }
         },
     }
