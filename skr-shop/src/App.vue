@@ -31,4 +31,6 @@ export default {
   },
 };
 </script>
-
+<style>
+@import url("./assets/css/params.less");
+</style>
