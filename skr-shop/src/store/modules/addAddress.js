@@ -1,24 +1,21 @@
-import { addAddress } from 'network/addAddress'
-import { getAddress } from 'network/getAddress'
+import {addAddress} from 'network/addAddress'
+import {getAddress} from 'network/getAddress'
+import {updateAddress} from 'network/updateAddress'
 import { delAddress } from "network/delAddress";
+import Vue from 'vue'
+
 export default {
-    state: () => ({
+    state: {
         addressList: [] // 存储单个商品的原价和促销价
-    }),
+    },
     mutations: {
         get(state, params) {
-            if (params) {
-                state.addressList = params
-                console.log(state.addressList);
-            } else {
-                state.addressList = []
-            }
+            state.addressList =params?params:[]
         }
     },
     actions: {
-        async get({ commit }) {
-            const res = await getAddress({ customer_id: sessionStorage.getItem('userId') });
-            // console.log(res);
+        async get({commit}) {
+            const res = await getAddress({customer_id: sessionStorage.getItem('userId')})
             commit('get', res.data)
         },
         async add({ dispatch }, params) {
@@ -29,11 +26,21 @@ export default {
         },
         async del({ state, dispatch }, id) {
             const res = await delAddress({ id })
-            // console.log(state);
             if (res.code == 200) {
-
                 dispatch('get')
-
+                new Vue().$message.success('添加地址成功')
+                dispatch('get')
+            } else {
+                new Vue().$message.error('添加地址失败')
+            }
+        },
+        async update({dispatch},params){
+            const res = await updateAddress(params)
+            if(res.code==200){
+                new Vue().$message.success('更新地址成功')
+                dispatch('get')
+            }else{
+                new Vue().$message.error('更新失败')
             }
         }
     }

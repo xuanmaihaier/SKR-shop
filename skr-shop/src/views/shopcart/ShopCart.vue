@@ -139,26 +139,31 @@ import {mapState} from "vuex";
         
       },
       // 付款
-      async pay(){
-        const buyShopList = this.shopCart.filter(shop=>{
+       pay(){
+        // const buyShopList = this.shopCart.filter(shop=>{
+        //   const index = this.arr.indexOf(shop.id)
+        //   if (index !== -1) {
+        //     return shop.id
+        //   }
+        // })
+        // const skus = buyShopList.map(item=>{
+        //   return item.id
+        // })
+        // const options = {
+        //   customer_id: window.sessionStorage.userId,
+        //   money: this.totalPrice,
+        //   store_id: buyShopList[0].store_id,
+        //   skus: JSON.stringify(skus)
+        // }
+        this.$router.push('/payTotal')
+        const buyShopList1 = this.shopCart.filter(shop=>{
           const index = this.arr.indexOf(shop.id)
           if (index !== -1) {
             return shop.id
           }
         })
-        const skus = buyShopList.map(item=>{
-          return item.id
-        })
-        const options = {
-          customer_id: window.sessionStorage.userId,
-          money: this.totalPrice,
-          store_id: buyShopList[0].store_id,
-          skus: JSON.stringify(skus)
-        }
-        const result = await addOrder(options)
-        // console.log(result);
-        // alert('跳转至支付界面')
-        this.$router.push('')
+        localStorage.setItem('buyShopList1',JSON.stringify(buyShopList1))
+        // const result = await addOrder(options)
       },
       deleteShop(shop){
         if (confirm(`确定删除${shop.title}吗`)) {
