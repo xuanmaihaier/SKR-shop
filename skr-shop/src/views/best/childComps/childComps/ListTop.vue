@@ -2,12 +2,12 @@
     <div class="topseller_list">
         <div class="lst_top">
             <ul>
-                <li v-for="(item, index) in imgArrTop.imgs" :key="index">
+                <li v-for="(item, index) in imgTopList" :key="index" @click="toDetail(item.id)">
                     <span class="icon_best">
                         <strong>{{ ++index }}</strong>
                         <p>BEST</p>
                     </span>
-                    <img :src="item" alt="" />
+                    <img :src="item.img" alt="" />
                     <div class="textMax">
                         <div class="text_wrap">
                             <div class="brand">LOEUVRE</div>
@@ -39,15 +39,54 @@
 </template>
 
 <script>
+import {getImg} from "network/getImg"
 export default {
+    data(){
+        return {
+            imgTopList:[],
+            topListAll:[]
+        }
+    },
     props: {
-        imgArrTop: {
-            type: Object,
-            defalut: function () {
-                return {};
-            },
+        listTop: {
+            type: String,
+            defalut: ""
         },
     },
+    methods:{
+        async getImg_(parent_name,start,end,sort_){
+            const res = await getImg({parent_name,start,end,sort_});
+            if(this.listTop == "All"){
+                this.topListAll = res
+                this.imgTopList = res
+            }else{
+                this.imgTopList = res
+            }
+        },
+        toDetail(id){
+            this.$router.push(`/details/${id}`)
+        }
+    },
+    created(){
+        if(this.listTop == "All"){
+            let arr = ["服饰",];
+            arr.forEach(item => {
+                this.getImg_(item,1,3,'price')
+            });
+        }else{
+            this.getImg_(this.listTop,1,3)
+        }
+    },
+    watch:{
+        listTop(){
+            if(this.listTop == "All"){
+                this.imgTopList = this.topListAll
+            }else{
+                this.getImg_(this.listTop,1,3)
+            }
+            
+        }
+    }
 };
 </script>
 
@@ -91,6 +130,7 @@ export default {
                     font-family: "ProximaNova-Regular";
                 }
             }
+            
             img {
                 width: 100%;
             }

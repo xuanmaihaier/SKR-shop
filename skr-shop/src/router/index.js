@@ -42,7 +42,14 @@ const routes = [
   {
     path: '/shopcart',
     name: 'ShopCart',
+    props: true,
     component: () => import("views/shopcart/ShopCart")
+  },
+  //结算
+  {
+    path: '/payTotal',
+    name:'payTotal',
+    component:()=>import("views/total/PayTotal")
   },
   // 登录
   {

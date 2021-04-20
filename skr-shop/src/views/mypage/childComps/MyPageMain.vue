@@ -3,7 +3,7 @@
     <div class="activityImg" @click="goHome">
       <img
         src="https://image.wconcept.co.kr/images/builder/1/4/138/315/PC_mypage_1240x100_1_20210226162046.jpg"
-        alt=""
+        alt
       />
     </div>
     <div class="tableTitle">
@@ -27,7 +27,9 @@
       </thead>
       <tbody>
         <tr>
-          <td colspan="7" class="noData">您还没有订单。</td>
+          <td colspan="7" class="noData">
+            <a-empty />
+          </td>
         </tr>
       </tbody>
     </table>
@@ -66,16 +68,50 @@
         </ul>
       </div>
     </div>
-
-    <!-- <div style="height:372px;padding:50px 0">
-      <div style="height:100%;background-color:#848484">
-        <h1>底部占位</h1>
+    <div class="myAddress tableTitle">
+      <h3>我的地址</h3>
+      <div class="addAddress">
+        <button @click="addressShow=true">+</button>
+        <small>新增地址</small>
       </div>
-    </div> -->
+    </div>
+    <table class="cols">
+      <colgroup>
+        <col style="width: 135px" />
+        <col />
+        <col style="width: 130px" />
+        <col style="width: 130px" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>收货人姓名</th>
+          <th>收货人地址</th>
+          <th>收货人电话</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-show="addresses.length == 0">
+          <td colspan="4" class="noData">
+            <a-empty />
+          </td>
+        </tr>
+        <tr v-for="(item,index) in addresses" :key="index">
+          <td>{{item.name}}</td>
+          <td>{{detailAddress[index]}}</td>
+          <td>{{item.tel}}</td>
+          <td>
+            <div class="delAddress" @click="delAddressBtn(item.id)">删除</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <AddressAdd :isShow="addressShow" @closeAdd="addressShow=false" />
   </div>
 </template>
 
 <script>
+import AddressAdd from "@/components/common/address/AddressAdd.vue";
 const theadTitle = [
   "订单日期",
   "订单号",
@@ -83,23 +119,53 @@ const theadTitle = [
   "数量",
   "商品价格",
   "进度",
-  "评论",
+  "评论"
 ];
 export default {
   name: "MyPageMain",
+  components: { AddressAdd },
   data() {
     return {
       theadTitle,
+      addresses: [],
+      addressShow: false,
+      detailAddress: []
     };
   },
   methods: {
     goHome() {
       this.$router.push("/home");
     },
+    delAddressBtn(id) {
+      this.$store.dispatch('del',id)
+    }
   },
+  computed: {
+    addressData() {
+      return this.$store.state.addAddress.addressList;
+    }
+  },
+  created() {
+    // this.addresses = this.$store.state.addAddress.addressList
+    // console.log(this.$store.state.addAddress.addressList);
+  },
+  watch: {
+    addressData() {
+      // console.log(this.$store.state.addAddress.addressList);
+      this.addresses = this.$store.state.addAddress.addressList;
+      this.addresses.forEach(item => {
+        let address = JSON.parse(item.address);
+        let str =
+          address.province +
+          address.city +
+          address.area +
+          address.detailAddress;
+        this.detailAddress.push(str);
+      });
+    }
+  }
 };
 </script>
-
 <style lang="less" scoped>
 .myPageMain {
   margin: 0 auto;
@@ -134,6 +200,29 @@ export default {
       font-weight: 300;
     }
   }
+  .myAddress {
+    .addAddress {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      button {
+        width: 30px;
+        height: 30px;
+        border-radius: 19px;
+        color: #fff;
+        background-color: #000;
+        border: none;
+        outline: none;
+        font-size: 18px;
+        cursor: pointer;
+      }
+      small {
+        font-size: 24px;
+      }
+    }
+  }
   table {
     width: 100%;
     border-collapse: collapse;
@@ -149,7 +238,7 @@ export default {
           font-size: 14px;
           padding: 0 14px;
           color: #000;
-          text-align: center;
+          // text-align: center;
           vertical-align: middle;
           border-bottom: 1px solid #b5b5b5;
         }
@@ -159,19 +248,30 @@ export default {
       tr {
         td {
           font-family: "ProximaNova-Light", "yg740";
-          text-align: center;
+          // text-align: center;
           vertical-align: middle;
-          padding: 14px 0;
+          padding: 14px;
           &.noData {
             height: 150px;
             color: #333;
             font-size: 14px;
+          }
+          .delAddress {
+            width: 50px;
+            height: 30px;
+            color: #000;
+            background-color: #fff;
+            border: 1px solid #000;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
           }
         }
       }
     }
   }
   .myHeart {
+    margin-bottom: 60px;
     .tableTitle {
       border-bottom: 2px solid #000;
       padding-bottom: 10px;

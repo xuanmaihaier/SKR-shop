@@ -46,11 +46,11 @@
       </div>
       <div class="icon">
         <a-icon type="user" />
-        <p>MY</p>
+        <p @click="goMypage">MY</p>
       </div>
       <div class="icon">
         <a-icon type="shopping-cart" />
-        <p>0</p>
+        <p @click="goShopCart">0</p>
       </div>
     </div>
     <!-- 搜索 -->
@@ -127,6 +127,30 @@ export default {
     clickSearch() {
       this.focusFlag = true;
       this.$store.dispatch("commitSearchShow", true);
+    },
+    goMypage() {
+      if (sessionStorage.getItem("token")) {
+        this.$router.push("/mypage");
+      } else {
+        this.$message.destroy(); //解决多次点击显示多个弹窗
+        this.$message.warning({
+          content: "请先登录！",
+          duration: 1,
+        });
+        this.$router.push("/login");
+      }
+    },
+    goShopCart() {
+      if (sessionStorage.getItem("token")) {
+        this.$router.push("/shopcart");
+      } else {
+        this.$message.destroy(); //解决多次点击显示多个弹窗
+        this.$message.warning({
+          content: "请先登录！",
+          duration: 1,
+        });
+        this.$router.push("/login");
+      }
     },
   },
   mounted() {

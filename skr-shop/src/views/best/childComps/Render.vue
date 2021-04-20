@@ -1,9 +1,14 @@
 <template>
-  <div>
-    <list-top :imgArrTop="imgArrTop"></list-top>
-    <list-middle :imgArrMiddle="imgArrMiddle"></list-middle>
-    <list-bottom :imgArrBottom="imgArrBottom"></list-bottom>
-  </div>
+    <div>
+        <list-top :listTop="getmsg"></list-top>
+        <list-middle :listMiddle="getmsg"></list-middle>
+        <list-bottom :listBottom="getmsg"></list-bottom>
+        <div class="pagination">
+            <div id="components-pagination-demo-mini">
+                <a-pagination size="small" :total="20" />
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -11,62 +16,35 @@ import ListTop from "./childComps/ListTop";
 import ListMiddle from "./childComps/ListMiddle";
 import ListBottom from "./childComps/ListBottom";
 export default {
-  name: "Render",
-  components: {
-    ListTop,
-    ListMiddle,
-    ListBottom,
-  },
-  data() {
-    return {
-      imgArrTop: {
-        num: 0,
-        imgs: [
-          "//image.wconcept.co.kr/productimg/image/img1/44/300844144.jpg",
-          "//image.wconcept.co.kr/productimg/image/img1/65/300904165.jpg",
-          "//image.wconcept.co.kr/productimg/image/img1/15/301178515.jpg",
-        ],
-      },
-
-      imgArrMiddle: {
-        num: 0,
-        imgs: [
-          "//image.wconcept.co.kr/productimg/image/img1/64/301022664.jpg?RS=384",
-          "//image.wconcept.co.kr/productimg/image/img1/74/301079774.jpg?RS=384",
-          "//image.wconcept.co.kr/productimg/image/img1/11/301230111.jpg?RS=384",
-          "//image.wconcept.co.kr/productimg/image/img1/03/300979603.jpg?RS=384",
-        ],
-      },
-      imgArrBottom: {
-        num: 0,
-        imgs: [
-          "//image.wconcept.co.kr/productimg/image/img1/57/301252257.jpg?RS=300",
-          "//image.wconcept.co.kr/productimg/image/img1/04/301193004.jpg?RS=300",
-          "//image.wconcept.co.kr/productimg/image/img1/57/301252257.jpg?RS=300",
-          "//image.wconcept.co.kr/productimg/image/img1/04/301193004.jpg?RS=300",
-          "//image.wconcept.co.kr/productimg/image/img1/57/301252257.jpg?RS=300",
-          "//image.wconcept.co.kr/productimg/image/img1/04/301193004.jpg?RS=300",
-          "//image.wconcept.co.kr/productimg/image/img1/57/301252257.jpg?RS=300",
-          "//image.wconcept.co.kr/productimg/image/img1/04/301193004.jpg?RS=300",
-          "//image.wconcept.co.kr/productimg/image/img1/57/301252257.jpg?RS=300",
-          "//image.wconcept.co.kr/productimg/image/img1/04/301193004.jpg?RS=300",
-          "//image.wconcept.co.kr/productimg/image/img1/57/301252257.jpg?RS=300",
-          "//image.wconcept.co.kr/productimg/image/img1/04/301193004.jpg?RS=300",
-          "//image.wconcept.co.kr/productimg/image/img1/57/301252257.jpg?RS=300",
-          "//image.wconcept.co.kr/productimg/image/img1/04/301193004.jpg?RS=300",
-          "//image.wconcept.co.kr/productimg/image/img1/57/301252257.jpg?RS=300",
-          "//image.wconcept.co.kr/productimg/image/img1/04/301193004.jpg?RS=300",
-        ],
-      },
-    };
-  },
-  created() {
-    (this.imgArrMiddle.num = this.imgArrTop.imgs.length + 1),
-      (this.imgArrBottom.num =
-        this.imgArrMiddle.num + this.imgArrMiddle.imgs.length);
-  },
+    name: "Render",
+    components: {
+        ListTop,
+        ListMiddle,
+        ListBottom,
+    },
+    props: {
+        getmsg: {
+            type: String,
+            default: "",
+        },
+    },
+    data() {
+        return {};
+    },
 };
 </script>
 
-<style>
+<style lang="less" scoped>
+.pagination {
+    width: 82%;
+    margin: 10px auto;
+    margin-bottom: 40px;
+    text-align: center;
+}
+#components-pagination-demo-mini .ant-pagination:not(:last-child) {
+  margin-bottom: 24px;
+}
+.ant-pagination-prev{
+    display: none !important;
+}
 </style>

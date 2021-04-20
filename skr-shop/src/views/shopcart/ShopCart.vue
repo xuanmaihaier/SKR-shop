@@ -59,7 +59,7 @@
                 <a href="javascript:;" class="num-plus num" @click="isAddNum(true,shop,shop.num)">+</a>
               </p>
               <p class="fr">
-                <a href="javascript:;" class="delete-one"@click="deleteShop(shop)">删除</a>
+                <a href="javascript:;" class="delete-one" @click="deleteShop(shop)">删除</a>
               </p>
             </div>
           </div>
