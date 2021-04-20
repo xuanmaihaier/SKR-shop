@@ -2,7 +2,7 @@
  * @Description: shopCart
  * @Author: He Xiantao
  * @Date: 2021-04-15 12:09:19
- * @LastEditTime: 2021-04-19 17:30:08
+ * @LastEditTime: 2021-04-20 20:18:30
  * @LastEditors: He Xiantao
  */
 
@@ -18,8 +18,15 @@ import Vue from "vue";
 import { addToShopCart } from "../../network/addToShopCart";
 import { reqShopCart } from "../../network/reqShopCart";
 import { deleteSC } from "../../network/deleteShop";
+// import vuexLocal from "../vuexPersistence.js";
+import VuexPersistence from 'vuex-persist'
+
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage
+})
 
 export default {
+  plugins: [vuexLocal.plugin],
   state: () => ({
     shopCart: [], //当前购物车中所有的good数组
     sessionStorageShopCart: [], // 需要存储到sessionStorage里面的简写
@@ -31,6 +38,7 @@ export default {
       // console.log(a,'++++++++++++++++++++++++=');
       Vue.set(a,'num',a.num)
       Vue.set(a,'params',a.params)
+      Vue.set(a,'special_price',a.special_price)
       state.shopCart.push(a)
     },
     [ADD_SHOP_NUM](state, { index, num }) {
@@ -145,45 +153,6 @@ export default {
     },
     // 拉去数据库数据到本地shopCart,并且添加值sessionStorage
     async initShopCart ({commit,dispatch}){
-      // const shopCart = window.sessionStorage.shopCart
-      // let allShopCart = [] // 存储数据库的购物车商品
-      // if (shopCart) { // 
-        
-      //   let idList = [] // 过滤本地存储的商品id
-      //   // 过滤session里面商品的id
-      //   JSON.parse(shopCart).forEach((item)=>{
-      //     if (!idList.includes( item.sku_id )) {
-      //       idList.push(item.sku_id)
-      //     }
-      //   })
-        
-      //   // 遍历商品id,发送请求
-      //   idList.forEach(async item=>{
-      //     const result = await getShopById({id:item})
-      //     // console.log(result);
-      //     // 更具请求, 添加相应的信息.到本地
-      //     JSON.parse(shopCart).forEach((item1)=>{
-      //       // console.log(item1);
-      //       if (item1.sku_id == item) {
-      //         result.data[0].customer_id = window.sessionStorage.userId
-      //         result.data[0].num = item1.num
-      //         result.data[0].params = item1.params
-      //         console.log(3);
-      //         commit(ADD_SHOP_TO_SHOP_CART,result.data[0])
-      //       }
-      //     })
-      //     if (window.sessionStorage.token) {
-      //       const newResult = await reqShopCart({customer_id:window.sessionStorage.userId})
-      //       allShopCart.concat(newResult)
-      //       allShopCart.forEach(item=>{
-      //         dispatch('updateShopCart',item)
-      //       })
-      //     }
-      //   })
-      // }else{ // 用户登录, 数据库购物车---->本地
-      // console.log(window.sessionStorage.token);
-      // if (window.sessionStorage.token) {
-        // console.log(1324565432431);
       console.log('拉去数据库数据到本地');
       const newResult = await reqShopCart({customer_id:window.sessionStorage.userId})
       // console.log(newResult);
@@ -210,26 +179,6 @@ export default {
       const result = await deleteSC({id})
       // console.log(result);
     }
-    // 初始化用户未登录时, 本地添加的商品--->数据库
-    // initLocalShopTo (){
-    //   // console.log(2);
-    //   if (window.sessionStorage.token) { 
-    //     if (window.sessionStorage.shopCart) {
-    //       const localShop = JSON.parse(window.sessionStorage.shopCart)
-    //       // console.log(localShop);
-    //       localShop.forEach(async item=>{
-    //         // console.log('aaaa');
-    //         await addToShopCart({
-    //           customer_id: window.sessionStorage.userId,
-    //           sku_id: item.sku_id || shopInfo.id,
-    //           num: item.num,
-    //           params: item.params,
-    //         })
-    //       })
-    //     }
-    //   }
-    // },
-    // 获取所有购物车商品
   },
   getters: {}
 }

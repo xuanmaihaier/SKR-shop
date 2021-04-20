@@ -10,17 +10,27 @@
       <a-tab-pane key="2" tab="购买记录"> </a-tab-pane>
     </a-tabs> -->
     <p class="shopCar">
-      <span>共 0 件宝贝</span>
-      <button>管理</button>
+      <span>共 {{shopCart.length}} 件宝贝</span>
+      <button @click="$router.push('/shopcart')">管理</button>
     </p>
     <div class="leary">
-        <img :src="shopCarPic" alt="">
+        <ul>
+          <li v-for="(shop,index) in shopCart" :key="index">
+            <img :src="shop.img">
+            <div>
+              <h4> {{shop.title}} </h4>
+              <span>数量: {{shop.num}} </span>
+              <p> ￥ {{shop.price}} <span>￥{{shop.special_price}} </span> </p>
+            </div>
+          </li>
+        </ul>
     </div>
   </div>
 </template>
 
 <script>
 import fork from "./Fork";
+import { mapState } from "vuex";
 export default {
   components: {
     fork,
@@ -33,6 +43,8 @@ export default {
   },
   created(){
     console.log(this.$store.state);
+    this.$store.commit('clear_shop_cart')
+    this.$store.dispatch('initShopCart')
   },
   methods: {
     callback(key) {
@@ -43,6 +55,11 @@ export default {
       this.$emit("isCloseBar", this.close);
     },
   },
+  computed:{
+    ...mapState({
+      shopCart: state => state.shopCart.shopCart
+    })
+  }
 };
 </script>
 
@@ -54,13 +71,44 @@ export default {
   background-color: #fff;
   border: 2px solid #333;
   box-shadow: 10px 10px 10px 5px #333;
+  overflow-y: scroll;
   .leary{
     width: 90%;
-    margin: 100px auto;
+    margin: 20px auto;
     text-align: center;
-    img{
-      width: 90%;
+    
+    ul{
+      height: 100%;
+      width: 100%;
+      li{
+        height: 100px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        img{
+          width: 60px;
+          height: 60px;
+        }
+        div{
+          margin-left: 10px;
+          flex: 1;
+          text-align: left;
+          font-size: 12px;
+          h4{
+            line-height: 25px;
+            height: 25px;
+          }
+          p{
+            color: #000;
+            span{
+              color: #BDB6B3;
+              text-decoration-line: line-through;
+            }
+          }
+        }
+      }
     }
+      
   }
 }
 header > h3 {

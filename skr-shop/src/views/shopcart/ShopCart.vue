@@ -2,7 +2,7 @@
  * @Description: shopcart
  * @Author: He Xiantao
  * @Date: 2021-04-14 23:35:14
- * @LastEditTime: 2021-04-19 17:23:20
+ * @LastEditTime: 2021-04-20 20:35:00
  * @LastEditors: He Xiantao
 -->
 <template>
@@ -48,7 +48,7 @@
               </div>
               <div class="fr">
                 <div class="info-price">￥ {{shop.price}} </div>
-                <!-- <div class="under-info-price">￥111.00</div> -->
+                <div class="under-info-price">￥ {{shop.special_price}} </div>
               </div>
             </div>
             <div class="info-bom">
@@ -140,25 +140,14 @@ import {mapState} from "vuex";
       },
       // 付款
       async pay(){
-        const buyShopList = this.shopCart.filter(shop=>{
+        this.$router.push('/payTotal')
+        const buyShopList1 = this.shopCart.filter(shop=>{
           const index = this.arr.indexOf(shop.id)
           if (index !== -1) {
-            return shop.id
+            return shop
           }
         })
-        const skus = buyShopList.map(item=>{
-          return item.id
-        })
-        const options = {
-          customer_id: window.sessionStorage.userId,
-          money: this.totalPrice,
-          store_id: buyShopList[0].store_id,
-          skus: JSON.stringify(skus)
-        }
-        const result = await addOrder(options)
-        // console.log(result);
-        // alert('跳转至支付界面')
-        this.$router.push('')
+        window.localStorage.buyShopList1 = JSON.stringify(buyShopList1)
       },
       deleteShop(shop){
         if (confirm(`确定删除${shop.title}吗`)) {

@@ -218,13 +218,30 @@ import { mapState } from "vuex";
       // 立即购买
       toPay(){
         if (window.sessionStorage.token) {
-          const options = {
-            customer_id: window.sessionStorage.userId,
-            sku_id: shop1.id,
-            num: this.shopNum,
-            params: [this.currentStyle,this.styleSize]
+          // 判断是否选择款式
+          if (!this.currentStyle) {
+            this.$message.config({
+              top: '450px',
+            })
+            this.$message.info("未选择颜色");
+          }else{
+            const buyShop = [
+              {
+                customer_id: window.sessionStorage.userId,
+                name: '龙虾小店',
+                num: this.shopNum,
+                params: [this.currentStyle,this.styleSize],
+                store_id: 1,
+                img: this.shop2[0].img,
+                price: this.shop2[0].price,
+                sku_id: this.shop1[0].id,
+                special_price: this.shop2[0].special_price,
+                title: this.shop2[0].title
+              }
+            ]
+            window.localStorage.buyShopList1 = JSON.stringify(buyShop)
+            this.$router.push('/payTotal')
           }
-          alert('跳转至支付界面')
         }else{
           this.visible = true;
         }
@@ -232,7 +249,8 @@ import { mapState } from "vuex";
       // 确认登录,页面跳转
       handleOk(e) {
         // console.log(e);
-        alert('跳转至登陆界面');
+        // alert('跳转至登陆界面');
+        this.$router.push('/login')
         this.visible = false;
       },
     },

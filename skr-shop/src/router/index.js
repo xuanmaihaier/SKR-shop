@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @Author: He Xiantao
+ * @Date: 2021-04-12 17:42:12
+ * @LastEditTime: 2021-04-20 17:31:45
+ * @LastEditors: He Xiantao
+ */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store/index.js'
