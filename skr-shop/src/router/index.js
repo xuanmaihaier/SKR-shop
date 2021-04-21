@@ -25,7 +25,9 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: () => import("views/home/Home.vue"),
-
+    meta: {
+      title: 's.kr'
+    },
     children: [{
       path: '/service',
       component: () => import("components/common/adside/Service")
@@ -43,27 +45,39 @@ const routes = [
     path: '/shopcart',
     name: 'ShopCart',
     props: true,
-    component: () => import("views/shopcart/ShopCart")
+    component: () => import("views/shopcart/ShopCart"),
+    meta: {
+      title: '购物车-skr'
+    }
   },
   //结算
   {
     path: '/payTotal',
-    name:'payTotal',
-    component:()=>import("views/total/PayTotal")
+    name: 'payTotal',
+    component: () => import("views/total/PayTotal"),
+    meta: {
+      title: '结算-skr'
+    }
   },
   // 登录
   {
     path: '/login',
     name: 'Login',
-    component: () => import("views/login/Login.vue")
+    component: () => import("views/login/Login.vue"),
+    meta: {
+      title: '登录-skr'
+    }
   },
+  // 注册
   {
 
     path: '/signup',
     name: 'Signup',
-    component: () => import("views/signup/Signup.vue")
+    component: () => import("views/signup/Signup.vue"),
+    meta: {
+      title: '注册-skr'
+    }
   },
-  // 注册
   {
     // 一级分类界面
     path: '/primary/:id',
@@ -74,31 +88,47 @@ const routes = [
   {
     path: '/exclusive',
     name: 'Exclusive',
-    component: () => import("views/exclusive/Exclusive.vue")
+    component: () => import("views/exclusive/Exclusive.vue"),
+    meta: {
+      title: 'EXCLUSIVE-skr'
+    }
+
   },
   //WDNA
   {
     path: '/wdna',
     name: 'Wdna',
-    component: () => import("views/wdna/Wdna.vue")
+    component: () => import("views/wdna/Wdna.vue"),
+    meta: {
+      title: 'WDNA-skr'
+    }
   },
   // Event
   {
     path: '/event',
     name: "Event",
-    component: () => import('views/typeOneEvent/Event.vue')
+    component: () => import('views/typeOneEvent/Event.vue'),
+    meta: {
+      title: 'EVENT-skr'
+    }
   },
   // Best
   {
     path: '/best',
     name: "Best",
-    component: () => import("../views/best/Best.vue")
+    component: () => import("../views/best/Best.vue"),
+    meta: {
+      title: 'BEST-skr'
+    }
   },
   // 个人中心
   {
     path: '/mypage',
     name: 'MyPage',
-    component: () => import("views/mypage/MyPage.vue")
+    component: () => import("views/mypage/MyPage.vue"),
+    meta: {
+      title: '个人中心-skr'
+    }
   },
   // 二级数据
   {
@@ -131,37 +161,61 @@ const routes = [
   },
   {
     path: '/order', // 订单结算
-    name:"Order",
-    component: () => import("views/order/Order.vue")
+    name: "Order",
+    component: () => import("views/order/Order.vue"),
+    meta: {
+      title: '订单结算-skr'
+    }
   },
   // 底部路由跳转 
   {
     path: '/about', // 关于我们
-    component: () => import("components/common/Following/About.vue")
+    component: () => import("components/common/Following/About.vue"),
+    meta: {
+      title: '关于我们-skr'
+    }
   },
   {
     path: '/advisory', // 咨询服务
-    component: () => import("components/common/Following/Advisory.vue")
+    component: () => import("components/common/Following/Advisory.vue"),
+    meta: {
+      title: '咨询服务-skr'
+    }
   },
   {
     path: '/partner', // 合作伙伴查询
-    component: () => import("components/common/Following/Partner.vue")
+    component: () => import("components/common/Following/Partner.vue"),
+    meta: {
+      title: '合作伙伴查询-skr'
+    }
   },
   {
     path: '/terms', // 服务条款
-    component: () => import("components/common/Following/Terms.vue")
+    component: () => import("components/common/Following/Terms.vue"),
+    meta: {
+      title: '服务条款-skr'
+    }
   },
   {
     path: '/privacy', // 隐私政策
-    component: () => import("components/common/Following/Privacy.vue")
+    component: () => import("components/common/Following/Privacy.vue"),
+    meta: {
+      title: '隐私政策-skr'
+    }
   },
   {
     path: '/serviceCenter', // 服务中心
-    component: () => import("components/common/Following/ServiceCenter.vue")
+    component: () => import("components/common/Following/ServiceCenter.vue"),
+    meta: {
+      title: '服务中心-skr'
+    }
   },
   {
     path: '/offers', // 招聘信息
-    component: () => import("components/common/Following/Offers.vue")
+    component: () => import("components/common/Following/Offers.vue"),
+    meta: {
+      title: '招聘信息-skr'
+    }
   },
 ]
 
@@ -169,10 +223,10 @@ const router = new VueRouter({
   mode: 'history',
   routes,
   scrollBehavior(to, from, savedPosition) { // 解决vue页面跳转只有页面不是在顶部的问题
-  
+
     // savedPosition 会在你使用浏览器前进或后退按钮时候生效
     if (savedPosition) {
-      return  {
+      return {
         // behavior: 'smooth', //平滑滚动效果
         selector: savedPosition
       }
@@ -187,13 +241,28 @@ const router = new VueRouter({
 //挂载路由导航守卫
 router.beforeEach((to, from, next) => {
   NProgress.start(); //进度条开始加载
+  // 设置页面标题
+  if (JSON.stringify(to.params) !== "{}") {
+    if (to.path.indexOf('detail') != -1) {
+      document.title = '商品详情-skr'
+    } else {
+      document.title = to.params.id + '-skr'
+    }
+  } else {
+    if (to.path.indexOf('search') != -1) {
+      document.title = '搜索-skr'
+    } else {
+      document.title = to.matched[0].meta.title
+    }
+  }
+  
   if (to.path == '/login' && from.path == '/signup') { // 判断是否由注册页跳转到登录页
     sessionStorage.setItem('fristLogin', 1)
   } else {
     sessionStorage.removeItem('fristLogin')
   }
   // ...
-  const auth = [ '/shopcart','/mypage']
+  const auth = ['/shopcart', '/mypage']
   const tokenStr = window.sessionStorage.getItem('token')
   // console.log(tokenStr);
   if (!tokenStr) {
@@ -204,7 +273,6 @@ router.beforeEach((to, from, next) => {
     return next()
   } else {
     store.dispatch('commitNavbarShow', false)
-
     next()
   }
 })
