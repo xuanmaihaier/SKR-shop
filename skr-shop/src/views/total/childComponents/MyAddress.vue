@@ -46,7 +46,7 @@
                 </div>
                 <div class="right">
                     <div @click="isEditor=true,num=index,addOrEditor=true">编辑</div>
-                    <div v-if="!item.prime">设为默认地址</div>
+                    <div v-if="!item.prime" @click="setDefault(index)">设为默认地址</div>
                 </div>
                 <AddressAdd :editor="item"
                             :id="item.id"
@@ -106,6 +106,13 @@
                 this.nowAddress = this.addressData[this.selectAddress]
                 this.$message.success('修改成功!');
                 setTimeout(() => this.showMore = false, 1000)
+            },
+            setDefault(index){
+                this.$store.dispatch('setDefault',{
+                    id:this.addressData[index].id,
+                    prime:1,
+                    customer_id:this.addressData[index].customer_id
+                })
             }
         },
         created() {
@@ -283,6 +290,9 @@
             .right {
                 height: 100px;
                 padding-top: 30px;
+                div{
+                    cursor: pointer;
+                }
             }
         }
 
@@ -307,9 +317,6 @@
             .sure {
                 background-color: #4c4c4c;
                 color: #ffffff;
-            }
-
-            .add {
             }
         }
     }

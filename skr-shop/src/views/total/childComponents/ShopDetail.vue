@@ -1,6 +1,6 @@
 <template>
     <div class="shopDetail">
-        <div class="title">商品明细 (共{{}}件)</div>
+        <div class="title">商品明细 (共{{shopNum}}件)</div>
         <ul class="orderList">
             <li v-for="item in shopDetail" :key="item.id">
                 <div class="image"><img :src="item.img"></div>
@@ -27,7 +27,16 @@
             }
         },
         created() {
-            this.shopDetail=JSON.parse(localStorage.buyShopList1)
+            if(localStorage.buyShopList1) this.shopDetail=JSON.parse(localStorage.buyShopList1)
+        },
+        computed:{
+            shopNum(){
+                let num = 0
+                this.shopDetail.forEach(element => {
+                    num+=element.num-0
+                });
+                return num
+            }
         }
     }
 </script>

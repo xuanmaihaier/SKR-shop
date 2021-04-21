@@ -69,6 +69,15 @@ const routes = [
       title: '结算-skr'
     }
   },
+  //支付成功
+  {
+    path: '/paySuccess',
+    name:'paySuccess',
+    component:()=>import("views/paySuccess/PaySuccess"),
+    meta: {
+      title: '支付成功'
+    }
+  },
   // 登录
   {
     path: '/login',
@@ -169,14 +178,7 @@ const routes = [
       },
     ]
   },
-  {
-    path: '/order', // 订单结算
-    name: "Order",
-    component: () => import("views/order/Order.vue"),
-    meta: {
-      title: '订单结算-skr'
-    }
-  },
+
   // 底部路由跳转 
   {
     path: '/about', // 关于我们
@@ -280,7 +282,6 @@ router.beforeEach((to, from, next) => {
   const tokenStr = window.sessionStorage.getItem('token')
   // console.log(tokenStr);
   if (!tokenStr) {
-    // console.log(123);
     if (auth.includes(to.fullPath)) {
       return next('/login')
     }

@@ -26,14 +26,14 @@ import { addToShopCart } from "../../network/addToShopCart";
 import { reqShopCart } from "../../network/reqShopCart";
 import { deleteSC } from "../../network/deleteShop";
 // import vuexLocal from "../vuexPersistence.js";
-import VuexPersistence from 'vuex-persist'
+// import VuexPersistence from 'vuex-persist'
 
-const vuexLocal = new VuexPersistence({
-  storage: window.localStorage
-})
+// const vuexLocal = new VuexPersistence({
+//   storage: window.localStorage
+// })
 
 export default {
-  plugins: [vuexLocal.plugin],
+  // plugins: [vuexLocal.plugin],
   state: () => ({
     shopCart: [], //当前购物车中所有的good数组
     sessionStorageShopCart: [], // 需要存储到sessionStorage里面的简写
