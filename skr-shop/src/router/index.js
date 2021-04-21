@@ -48,8 +48,14 @@ const routes = [
   //结算
   {
     path: '/payTotal',
-    name:'payTotal',
-    component:()=>import("views/total/PayTotal")
+    name: 'payTotal',
+    component: () => import("views/total/PayTotal"),
+  },
+  //支付成功
+  {
+    path: '/paySuccess',
+    name:'paySuccess',
+    component:()=>import("views/paySuccess/PaySuccess")
   },
   // 登录
   {
@@ -129,11 +135,7 @@ const routes = [
       },
     ]
   },
-  {
-    path: '/order', // 订单结算
-    name:"Order",
-    component: () => import("views/order/Order.vue")
-  },
+
   // 底部路由跳转 
   {
     path: '/about', // 关于我们
@@ -169,10 +171,10 @@ const router = new VueRouter({
   mode: 'history',
   routes,
   scrollBehavior(to, from, savedPosition) { // 解决vue页面跳转只有页面不是在顶部的问题
-  
+
     // savedPosition 会在你使用浏览器前进或后退按钮时候生效
     if (savedPosition) {
-      return  {
+      return {
         // behavior: 'smooth', //平滑滚动效果
         selector: savedPosition
       }
@@ -193,11 +195,10 @@ router.beforeEach((to, from, next) => {
     sessionStorage.removeItem('fristLogin')
   }
   // ...
-  const auth = [ '/shopcart','/mypage']
+  const auth = ['/shopcart', '/mypage']
   const tokenStr = window.sessionStorage.getItem('token')
   // console.log(tokenStr);
   if (!tokenStr) {
-    // console.log(123);
     if (auth.includes(to.fullPath)) {
       return next('/login')
     }

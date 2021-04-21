@@ -2,6 +2,7 @@ import {addAddress} from 'network/addAddress'
 import {getAddress} from 'network/getAddress'
 import {updateAddress} from 'network/updateAddress'
 import { delAddress } from "network/delAddress";
+import {setDefaultAddress} from "network/defaultAddress"
 import Vue from 'vue'
 
 export default {
@@ -28,10 +29,10 @@ export default {
             const res = await delAddress({ id })
             if (res.code == 200) {
                 dispatch('get')
-                new Vue().$message.success('添加地址成功')
+                new Vue().$message.success('删除地址成功')
                 dispatch('get')
             } else {
-                new Vue().$message.error('添加地址失败')
+                new Vue().$message.error('删除地址失败')
             }
         },
         async update({dispatch},params){
@@ -41,6 +42,15 @@ export default {
                 dispatch('get')
             }else{
                 new Vue().$message.error('更新失败')
+            }
+        },
+        async setDefault({dispatch},params){
+            const res = await setDefaultAddress(params);
+            if(res.code==200){
+                new Vue().$message.success('设置默认地址成功')
+                dispatch('get')
+            }else{
+                new Vue().$message.error('设置默认地址失败')
             }
         }
     }
