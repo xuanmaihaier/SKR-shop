@@ -49,7 +49,7 @@ export default {
     getImg_(){
       this.$store.dispatch('initGetImg',{parent_name:'服饰',start:10,end:15})
        this.$store.dispatch('initGetImga',{parent_name:'服饰',start:6,end:9})
-      console.log(this.$store.state.getImgs.getImgLista);
+      // console.log(this.$store.state.getImgs.getImgLista);
     },
     handliClickb(id){
         this.$router.push(`/details/${id}`)

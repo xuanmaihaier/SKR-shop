@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Author: He Xiantao
+ * @Date: 2021-04-14 08:54:35
+ * @LastEditTime: 2021-04-20 22:17:49
+ * @LastEditors: He Xiantao
+-->
 <template>
   <div class="historyPage">
     <!-- 侧边栏客服 -->
@@ -83,7 +90,7 @@ export default {
       promised
         .then(function (imResponse) {
           that.login_ = true;
-          console.log("登录成功"); // 登录成功
+          // console.log("登录成功"); // 登录成功
         })
         .catch(function (imError) {
           console.warn("login error:", imError); // 登录失败的相关信息
@@ -141,7 +148,7 @@ export default {
     },
     getNews() {
       this.store_news++;
-      console.log(this.store_news);
+      // console.log(this.store_news);
     },
     getMessage(event) {
       this.getNews();

@@ -91,7 +91,7 @@ export default {
         username: this.userName,
         password: this.userPassWord,
       }).then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.code == 200) {
           if (this.imgShow) {
             this.delCookie('username')

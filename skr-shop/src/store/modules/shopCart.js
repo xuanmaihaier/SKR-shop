@@ -1,8 +1,15 @@
 /*
+ * @Description: 
+ * @Author: He Xiantao
+ * @Date: 2021-04-16 19:06:52
+ * @LastEditTime: 2021-04-20 23:08:10
+ * @LastEditors: He Xiantao
+ */
+/*
  * @Description: shopCart
  * @Author: He Xiantao
  * @Date: 2021-04-15 12:09:19
- * @LastEditTime: 2021-04-19 17:30:08
+ * @LastEditTime: 2021-04-20 22:07:14
  * @LastEditors: He Xiantao
  */
 
@@ -18,8 +25,15 @@ import Vue from "vue";
 import { addToShopCart } from "../../network/addToShopCart";
 import { reqShopCart } from "../../network/reqShopCart";
 import { deleteSC } from "../../network/deleteShop";
+// import vuexLocal from "../vuexPersistence.js";
+import VuexPersistence from 'vuex-persist'
+
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage
+})
 
 export default {
+  plugins: [vuexLocal.plugin],
   state: () => ({
     shopCart: [], //当前购物车中所有的good数组
     sessionStorageShopCart: [], // 需要存储到sessionStorage里面的简写
@@ -28,9 +42,9 @@ export default {
   mutations: {
     [ADD_SHOP_TO_SHOP_CART](state, shopInfo) {
       let a = JSON.parse(JSON.stringify(shopInfo))
-      // console.log(a,'++++++++++++++++++++++++=');
       Vue.set(a,'num',a.num)
       Vue.set(a,'params',a.params)
+      Vue.set(a,'special_price',a.special_price)
       state.shopCart.push(a)
     },
     [ADD_SHOP_NUM](state, { index, num }) {
@@ -41,12 +55,23 @@ export default {
       window.sessionStorage.shopCart = JSON.stringify(state.sessionStorageShopCart)
     },
     change_shop_num(state,{isAddNum,shop}){
-      shop.num += isAddNum ? 1 : -1
+      
+      // console.log(shop);
+      // console.log(shop.num++);
+      let num = isAddNum ? 1 : -1
+      // console.log(num,'加一还是减一');
+      // console.log(num);
+      // Vue.set(shop,'num',num)
+      // console.log(shop);
+      shop.num += num
+      // console.log(shop.num,'当前商品数量');
+      // console.log(shop);
       const a = {
         sku_id: shop.id,
         num: shop.num,
         params: shop.params
       }
+      console.log(a,'当前需要存储session的数据');
       state.sessionStorageShopCart.splice(state.sessionStorageShopCart.indexOf(a),1,a)
       window.sessionStorage.shopCart = JSON.stringify(state.sessionStorageShopCart)
     },
@@ -94,7 +119,7 @@ export default {
       // 保证此时的shopInfo都是商品对象
       shopInfo = shopInfo[0] ? shopInfo[0] : shopInfo
       if (state.shopCart.length < 1) { // 第一次添加
-        console.log(1);
+        // console.log(1);
         commit(ADD_SHOP_TO_SHOP_CART,shopInfo)
       }else{ 
         let countIsSame = false
@@ -109,11 +134,11 @@ export default {
         })
         if (countIsSame) {
           // 商品样式和id都一样,只是增加了数量
-          console.log('商品样式和id都一样,只是增加了数量');
+          // console.log('商品样式和id都一样,只是增加了数量');
           commit(ADD_SHOP_NUM,{index:sameShopIndex,num:shopInfo.num})
         }else{
           // 商品id或品种不一样
-          console.log(2);
+          // console.log(2);
           commit(ADD_SHOP_TO_SHOP_CART,shopInfo)
         }
       }
@@ -131,7 +156,7 @@ export default {
     // 添加商品到数据库
     async ToShopCart({commit},{shopInfo,b}){
       // console.log(shopInfo);
-      console.log('添加商品到数据库');
+      // console.log('添加商品到数据库');
       shopInfo = shopInfo[0] || shopInfo
       // console.log(shopInfo);
       // console.log(b && shopInfo.id ? shopInfo.sku_id : shopInfo.id);
@@ -145,46 +170,7 @@ export default {
     },
     // 拉去数据库数据到本地shopCart,并且添加值sessionStorage
     async initShopCart ({commit,dispatch}){
-      // const shopCart = window.sessionStorage.shopCart
-      // let allShopCart = [] // 存储数据库的购物车商品
-      // if (shopCart) { // 
-        
-      //   let idList = [] // 过滤本地存储的商品id
-      //   // 过滤session里面商品的id
-      //   JSON.parse(shopCart).forEach((item)=>{
-      //     if (!idList.includes( item.sku_id )) {
-      //       idList.push(item.sku_id)
-      //     }
-      //   })
-        
-      //   // 遍历商品id,发送请求
-      //   idList.forEach(async item=>{
-      //     const result = await getShopById({id:item})
-      //     // console.log(result);
-      //     // 更具请求, 添加相应的信息.到本地
-      //     JSON.parse(shopCart).forEach((item1)=>{
-      //       // console.log(item1);
-      //       if (item1.sku_id == item) {
-      //         result.data[0].customer_id = window.sessionStorage.userId
-      //         result.data[0].num = item1.num
-      //         result.data[0].params = item1.params
-      //         console.log(3);
-      //         commit(ADD_SHOP_TO_SHOP_CART,result.data[0])
-      //       }
-      //     })
-      //     if (window.sessionStorage.token) {
-      //       const newResult = await reqShopCart({customer_id:window.sessionStorage.userId})
-      //       allShopCart.concat(newResult)
-      //       allShopCart.forEach(item=>{
-      //         dispatch('updateShopCart',item)
-      //       })
-      //     }
-      //   })
-      // }else{ // 用户登录, 数据库购物车---->本地
-      // console.log(window.sessionStorage.token);
-      // if (window.sessionStorage.token) {
-        // console.log(1324565432431);
-      console.log('拉去数据库数据到本地');
+      // console.log('拉去数据库数据到本地');
       const newResult = await reqShopCart({customer_id:window.sessionStorage.userId})
       // console.log(newResult);
       if (newResult.data) { // 购物车有数据
@@ -193,7 +179,7 @@ export default {
           item.params = JSON.parse(item.params)
           return item
         })
-        console.log(b);
+        // console.log(b);
         b.forEach(item=>{
           // 收集数据库的购物车,重复的商品(数量不一样,其它都一样的商品)
           // console.log(item);
@@ -208,28 +194,8 @@ export default {
     // 删除购物车中的某一个商品
     async deleteSqlShop({state},{id}){
       const result = await deleteSC({id})
-      // console.log(result);
+      console.log(result);
     }
-    // 初始化用户未登录时, 本地添加的商品--->数据库
-    // initLocalShopTo (){
-    //   // console.log(2);
-    //   if (window.sessionStorage.token) { 
-    //     if (window.sessionStorage.shopCart) {
-    //       const localShop = JSON.parse(window.sessionStorage.shopCart)
-    //       // console.log(localShop);
-    //       localShop.forEach(async item=>{
-    //         // console.log('aaaa');
-    //         await addToShopCart({
-    //           customer_id: window.sessionStorage.userId,
-    //           sku_id: item.sku_id || shopInfo.id,
-    //           num: item.num,
-    //           params: item.params,
-    //         })
-    //       })
-    //     }
-    //   }
-    // },
-    // 获取所有购物车商品
   },
   getters: {}
 }

@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Author: He Xiantao
+ * @Date: 2021-04-12 17:42:12
+ * @LastEditTime: 2021-04-20 22:19:45
+ * @LastEditors: He Xiantao
+-->
 <template>
   <div class="ShopListTab">
     <ul class="tab">
@@ -33,7 +40,7 @@
     methods: {
       liclick(index) {
         this.page = index
-        console.log(index);
+        // console.log(index);
       },
       cardclick(id) {
         this.$router.push(`/details/${id}`)

@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @Author: He Xiantao
+ * @Date: 2021-04-12 17:42:12
+ * @LastEditTime: 2021-04-20 17:31:45
+ * @LastEditors: He Xiantao
+ */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store/index.js'
@@ -15,7 +22,10 @@ VueRouter.prototype.push = function push(location) {
 const routes = [
   {
     path: '*',
-    component: () => import('@/components/common/404/Error.vue')
+    component: () => import('@/components/common/404/Error.vue'),
+    meta: {
+      title: '404-s.kr'
+    },
   },
   {
     path: "/",
@@ -242,10 +252,14 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   NProgress.start(); //进度条开始加载
   // 设置页面标题
+  // console.log(to);
   if (JSON.stringify(to.params) !== "{}") {
     if (to.path.indexOf('detail') != -1) {
       document.title = '商品详情-skr'
-    } else {
+    } else if (to.params.hasOwnProperty('pathMatch')) {
+      document.title = '404-skr'
+    }
+    else {
       document.title = to.params.id + '-skr'
     }
   } else {
@@ -255,7 +269,7 @@ router.beforeEach((to, from, next) => {
       document.title = to.matched[0].meta.title
     }
   }
-  
+
   if (to.path == '/login' && from.path == '/signup') { // 判断是否由注册页跳转到登录页
     sessionStorage.setItem('fristLogin', 1)
   } else {

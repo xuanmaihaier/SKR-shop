@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     onipt() {
-      console.log(this.txt);
+      // console.log(this.txt);
     },
   },
 };
