@@ -44,9 +44,8 @@
                 orderDetail: []
             }
         },
-        created() {
-            console.log(localStorage.buyShopList1);
-            if(localStorage.buyShopList1)this.orderDetail = JSON.parse(localStorage.buyShopList1);
+        mounted() {
+            if (localStorage.buyShopList1) this.orderDetail = JSON.parse(localStorage.buyShopList1);
         },
         methods: {
             getOrderTotal(str) {
@@ -75,22 +74,28 @@
                             type.money += item.special_price - 0
                             obj.sku_id = item.sku_id;
                             obj.price = item.price;
-                            obj.actual_price = item.price;
+                            obj.actual_price = item.special_price;
                             obj.num = item.num
                             type.skus.push(obj)
                         }
                     })
                     order.push(type)
                 })
+                let idLocal = [];
                 order.forEach((item, index) => {
                     //设置code订单编号(不能重复)
-                    let code = this.getCookie('username') + index + sessionStorage.userId + Date.now()
+                    let code = this.getCookie('username') + index + sessionStorage.userId + Date.now();
                     addOrder({
                         code,
                         store_id: item.store_id,
                         customer_id: sessionStorage.userId,
                         money: this.total,
                         skus: JSON.stringify(item.skus)
+                    }).then(res => {
+                        if (res.code == 200) {
+                            idLocal.push(res.orderId)
+                            localStorage.setItem('idLocal', JSON.stringify(idLocal))
+                        }
                     })
                 })
                 payOrder({
@@ -102,7 +107,7 @@
                     if (res.code == 200) {
                         this.$message.success('jumping to alipay page');
                         localStorage.removeItem('buyShopList1')
-                        setTimeout(() => location.replace = res.data,1000)
+                        setTimeout(() => location.replace(res.data), 1000)
                     }
                 })
             }

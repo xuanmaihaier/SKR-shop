@@ -28,9 +28,7 @@ import { deleteSC } from "../../network/deleteShop";
 // import vuexLocal from "../vuexPersistence.js";
 // import VuexPersistence from 'vuex-persist'
 
-// const vuexLocal = new VuexPersistence({
-//   storage: window.localStorage
-// })
+//  
 
 export default {
   // plugins: [vuexLocal.plugin],

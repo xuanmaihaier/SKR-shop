@@ -33,7 +33,7 @@
         />
       </div>
     </div>
-    <!-- 拓展页面 -->a
+    <!-- 拓展页面 -->
     <div class="expand" ref="expand">
       <!-- <router-view /> -->
       <shopCar v-show="isShowService" @isCloseBar="isClose"></shopCar>

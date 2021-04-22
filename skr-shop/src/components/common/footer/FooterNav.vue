@@ -34,7 +34,6 @@
           <p>
 
 		 		<a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=32011402010859" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src="~assets/img/beian/beian.png" style="float:left;"/><p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">苏公网安备 32011402010859号</p></a>
-	
           </p>
         </a-col>
         <!-- 底部右侧 -->

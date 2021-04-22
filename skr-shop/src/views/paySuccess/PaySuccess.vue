@@ -15,6 +15,7 @@
     </div>
 </template>
 <script>
+import {updateOrder} from 'network/updateOrder'
     export default {
         data() {
             return {
@@ -23,7 +24,15 @@
         },
         created() {
             this.backIndex();
-
+            let orderIds =JSON.parse(localStorage.getItem('idLocal'));
+            orderIds.forEach(element => {
+                console.log(element);
+                updateOrder({id:element,status:1}).then(res=>{
+                    console.log(res);
+                    if(res.code==200)localStorage.removeItem('id')
+                })
+            });
+            
         },
         methods: {
             backIndex() {

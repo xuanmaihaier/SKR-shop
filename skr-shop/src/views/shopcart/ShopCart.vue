@@ -124,26 +124,24 @@ import {mapState} from "vuex";
     methods:{
       async isAddNum(isAddNum,shop){
         if (!isAddNum && shop.num == 1) return
-        // console.log(num,'-------');
         // 修改本地session中的数据
         this.$store.commit('change_shop_num',{isAddNum,shop})
-        // console.log(shop);
+
         
         const newResult = await reqShopCart({customer_id:window.sessionStorage.userId})
-        // console.log(newResult);
+
         if (newResult.data) { // 购物车有数据
           // 得到所有购物车信息
           let b = newResult.data.map(item=>{
             item.params = JSON.parse(item.params)
             return item
           })
-          // console.log(b);
+
           b.forEach(item=>{
             // 收集数据库的购物车,重复的商品(数量不一样,其它都一样的商品)
-            // console.log(item);
+
             this.$store.commit('collect',item)
-            // this.$store.dispatch('updateShopCart',item)
-            // this.$store.dispatch('addToSession')
+
           })
           // 删除数据库对应的商品
           this.repeatSqlShopId[shop.sku_id].forEach(item=>{
@@ -152,40 +150,13 @@ import {mapState} from "vuex";
           })
           // 添加新的商品信息到数据库
           this.$store.dispatch('ToShopCart',{shopInfo:shop,b:'1'})
-          // b.forEach(item=>{
-          //   // 收集数据库的购物车,重复的商品(数量不一样,其它都一样的商品)
-          //   this.$store.dispatch('updateShopCart',item)
-          //   this.$store.commit('clear_shop_cart')
-          //   this.$store.dispatch('initShopCart')
-          // })
+
         }
 
-
-        
-        //
-        // this.$store.commit('clear_shop_cart')
-        // this.$store.dispatch('initShopCart')
-        // window.location.reload();
-        
       },
       // 付款
        pay(){
-        // const buyShopList = this.shopCart.filter(shop=>{
-        //   const index = this.arr.indexOf(shop.id)
-        //   if (index !== -1) {
-        //     return shop.id
-        //   }
-        // })
-        // const skus = buyShopList.map(item=>{
-        //   return item.id
-        // })
-        // const options = {
-        //   customer_id: window.sessionStorage.userId,
-        //   money: this.totalPrice,
-        //   store_id: buyShopList[0].store_id,
-        //   skus: JSON.stringify(skus)
-        // }
-        this.$router.push('/payTotal')
+
         const buyShopList1 = this.shopCart.filter(shop=>{
           const index = this.arr.indexOf(shop.id)
           if (index !== -1) {
@@ -193,7 +164,7 @@ import {mapState} from "vuex";
           }
         })
         localStorage.setItem('buyShopList1',JSON.stringify(buyShopList1))
-        // const result = await addOrder(options)
+        this.$router.push('/payTotal')
       },
       deleteShop(shop){
         if (confirm(`确定删除${shop.title}吗`)) {

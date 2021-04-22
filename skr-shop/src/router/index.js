@@ -1,10 +1,3 @@
-/*
- * @Description: 
- * @Author: He Xiantao
- * @Date: 2021-04-12 17:42:12
- * @LastEditTime: 2021-04-20 17:31:45
- * @LastEditors: He Xiantao
- */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '../store/index.js'
@@ -69,13 +62,23 @@ const routes = [
       title: '结算-skr'
     }
   },
+  //订单详情
+  {
+    path: '/orderDetail/:order_id/:status',
+    name: 'orderDetail',
+    props:true,
+    component: () => import("views/orderDetail/OrderDetail"),
+    meta: {
+      title: '订单详情-skr'
+    }
+  },
   //支付成功
   {
     path: '/paySuccess',
     name:'paySuccess',
     component:()=>import("views/paySuccess/PaySuccess"),
     meta: {
-      title: '支付成功'
+      title: '支付成功-skr'
     }
   },
   // 登录
@@ -254,8 +257,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   NProgress.start(); //进度条开始加载
   // 设置页面标题
-  // console.log(to);
-  if (JSON.stringify(to.params) !== "{}") {
+  if (JSON.stringify(to.params) !== "{}"&&JSON.stringify(to.params.id)) {
     if (to.path.indexOf('detail') != -1) {
       document.title = '商品详情-skr'
     } else if (to.params.hasOwnProperty('pathMatch')) {

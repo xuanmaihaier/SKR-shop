@@ -11,9 +11,8 @@
       <colgroup>
         <col style="width: 135px" />
         <col style="width: 155px" />
-        <col />
         <col style="width: 150px" />
-        <col style="width: 125px" />
+        <col style="width: 50px" />
         <col style="width: 145px" />
         <col style="width: 130px" />
       </colgroup>
@@ -23,48 +22,23 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td colspan="7" class="noData">
+        <tr @click="1">
+          <td colspan="7" class="noData" v-if="!orderList.length">
             <a-empty />
           </td>
         </tr>
+        <tr v-for="(order,index) in orderList" 
+            :key="index" 
+            @click="$router.push({name:'orderDetail',params:{order_id:order.id,status:order.status}})">
+          <td> {{order.order_create_time}} </td>
+          <td> {{order.code}} </td>
+          <td class="order_title"> {{order.skus[0].title}} </td>
+          <td> {{order.skus[0].num}} </td>
+          <td> {{order.money}} </td>
+          <td> {{statusArr[order.status]}} </td>
+        </tr>
       </tbody>
     </table>
-    <!-- <div class="myHeart">
-      <div class="tableTitle">
-        <h3>我的♡</h3>
-        <span>more+</span>
-      </div>
-      <div class="mypageMyheart">
-        <ul>
-          <li class="noThing">
-            <p>
-              <span>把喜欢的商品设定成我的♡最爱吧</span>
-              <br />
-              <span>可以收到打折、入库等通知。</span>
-            </p>
-            <button>转到最热销的产品 ＞</button>
-          </li>
-          <li class="btnWrap">
-            <div>
-              <span>我的♡</span>
-              <em>商品</em>
-              <p>0</p>
-            </div>
-            <div>
-              <span>我的♡</span>
-              <em>品牌</em>
-              <p>0</p>
-            </div>
-            <div>
-              <span>我的♡</span>
-              <em>风格</em>
-              <p>0</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div> -->
     <div class="myAddress tableTitle">
       <h3>我的地址</h3>
       <div class="addAddress">
@@ -117,6 +91,10 @@
 
 <script>
   import AddressAdd from "@/components/common/address/AddressAdd.vue";
+  import {
+    getUserOrder
+  } from 'network/getUserOrder';
+  import formDate from 'utils/formDate'
   const theadTitle = [
     "订单日期",
     "订单号",
@@ -124,7 +102,6 @@
     "数量",
     "商品价格",
     "进度",
-    "评论"
   ];
   export default {
     name: "MyPageMain",
@@ -138,6 +115,8 @@
         isEditor: false,
         num: 0,
         addOrEditor: false,
+        orderList: [],
+        statusArr: ['待支付', '待发货', '正在派送', '已完成']
       };
     },
     methods: {
@@ -163,6 +142,19 @@
           prime: 1,
           customer_id: this.addresses[index].customer_id
         })
+      },
+      async getOrder() {
+        const res = await getUserOrder({
+          customer_id: sessionStorage.userId
+        });
+        if (res.code == 200) {
+          this.orderList = res.data.map(item => {
+            item.order_create_time = formDate(item.order_create_time);
+            item.update_time = formDate(item.update_time);
+            return item
+          })
+          sessionStorage.removeItem('idLocal')
+        }
       }
     },
     computed: {
@@ -172,9 +164,9 @@
       }
     },
     created() {
-      this.$store.dispatch('get')
+      this.$store.dispatch('get');
+      this.getOrder()
     },
-
   };
 </script>
 <style lang="less" scoped>
@@ -250,6 +242,7 @@
       table-layout: fixed;
       margin-bottom: 60px;
 
+
       thead {
         tr {
           th {
@@ -258,7 +251,6 @@
             font-size: 14px;
             padding: 0 14px;
             color: #000;
-            // text-align: center;
             vertical-align: middle;
             border-bottom: 1px solid #b5b5b5;
           }
@@ -272,6 +264,7 @@
             // text-align: center;
             vertical-align: middle;
             padding: 14px;
+            cursor: pointer;
 
             &.noData {
               height: 150px;
@@ -311,97 +304,5 @@
         }
       }
     }
-
-    // .myHeart {
-    //   margin-bottom: 60px;
-
-    //   .tableTitle {
-    //     border-bottom: 2px solid #000;
-    //     padding-bottom: 10px;
-    //     margin-bottom: 15px;
-    //   }
-
-    //   .mypageMyheart {
-    //     ul {
-    //       display: flex;
-
-    //       li {
-    //         margin-right: 20px;
-
-    //         &.noThing {
-    //           width: 1030px;
-    //           text-align: center;
-    //           padding-top: 79px;
-
-    //           p {
-    //             font-size: 14px;
-    //             line-height: 20px;
-    //             vertical-align: bottom;
-    //             margin-bottom: 16px;
-    //             color: #000;
-    //           }
-
-    //           button {
-    //             display: inline-block;
-    //             padding: 0 20px;
-    //             min-width: 180px;
-    //             height: 40px;
-    //             line-height: 40px;
-    //             color: #fff;
-    //             text-align: center;
-    //             font-size: 12px;
-    //             border: 1px solid #333;
-    //             background-color: #333;
-    //             outline: none;
-    //             cursor: pointer;
-    //           }
-    //         }
-
-    //         &.btnWrap {
-    //           width: 190px;
-    //           margin-right: 20px;
-
-    //           div {
-    //             position: relative;
-    //             padding: 25px 0 0 26px;
-    //             height: 87px;
-    //             width: 100%;
-    //             border-bottom: 1px solid #e2e2e2;
-
-    //             span {
-    //               display: block;
-    //               font-size: 14px;
-    //               color: #666;
-    //               line-height: 1em;
-    //             }
-
-    //             em {
-    //               font-size: 20px;
-    //               color: #000;
-    //               line-height: 1em;
-    //               font-style: normal;
-    //             }
-
-    //             p {
-    //               width: 48px;
-    //               height: 48px;
-    //               position: absolute;
-    //               top: 19px;
-    //               right: 26px;
-    //               background-color: #333;
-    //               color: #fff;
-    //               -webkit-border-radius: 24px;
-    //               -moz-border-radius: 24px;
-    //               border-radius: 24px;
-    //               font-size: 20px;
-    //               line-height: 48px;
-    //               text-align: center;
-    //             }
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
   }
 </style>
