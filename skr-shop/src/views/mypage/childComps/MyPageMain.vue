@@ -9,12 +9,12 @@
     </div>
     <table class="cols">
       <colgroup>
-        <col style="width: 135px" />
-        <col style="width: 155px" />
-        <col style="width: 150px" />
-        <col style="width: 50px" />
-        <col style="width: 145px" />
-        <col style="width: 130px" />
+        <col style="width: 20%" />
+        <col style="width: 20%" />
+        <col style="width: 30%" />
+        <col style="width: 10%" />
+        <col style="width: 10%" />
+        <col style="width: 10%" />
       </colgroup>
       <thead>
         <tr>
@@ -27,13 +27,12 @@
             <a-empty />
           </td>
         </tr>
-        <tr v-for="(order,index) in orderList" 
-            :key="index" 
-            @click="$router.push({name:'orderDetail',params:{order_id:order.id,status:order.status}})">
+        <tr v-for="(order,index) in orderList" :key="index"
+          @click="$router.push({name:'orderDetail',params:{order_id:order.id,status:order.status}})">
           <td> {{order.order_create_time}} </td>
           <td> {{order.code}} </td>
-          <td class="order_title"> {{order.skus[0].title}} </td>
-          <td> {{order.skus[0].num}} </td>
+          <td class="order_title"> {{order.skus[0].title}}{{order.skus.length==1?'':"等"+order.skus.length+'件商品'}} </td>
+          <td> {{order.skus.length}} </td>
           <td> {{order.money}} </td>
           <td> {{statusArr[order.status]}} </td>
         </tr>
@@ -95,6 +94,9 @@
     getUserOrder
   } from 'network/getUserOrder';
   import formDate from 'utils/formDate'
+  import {
+    Result
+  } from 'ant-design-vue';
   const theadTitle = [
     "订单日期",
     "订单号",
@@ -118,6 +120,12 @@
         orderList: [],
         statusArr: ['待支付', '待发货', '正在派送', '已完成']
       };
+    },
+    mounted() {
+      this.$store.dispatch('get');
+      console.log('执行');
+      this.orderList = []
+      this.getOrder()
     },
     methods: {
       goHome() {
@@ -148,12 +156,12 @@
           customer_id: sessionStorage.userId
         });
         if (res.code == 200) {
-          this.orderList = res.data.map(item => {
+          let result = res.data.map(item => {
             item.order_create_time = formDate(item.order_create_time);
             item.update_time = formDate(item.update_time);
             return item
           })
-          sessionStorage.removeItem('idLocal')
+          this.orderList = result
         }
       }
     },
@@ -163,10 +171,11 @@
         if (list.length) return list
       }
     },
-    created() {
-      this.$store.dispatch('get');
-      this.getOrder()
-    },
+    watch: {
+      $route(to, from) {
+        this.getOrder()
+      }
+    }
   };
 </script>
 <style lang="less" scoped>

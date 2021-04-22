@@ -98,6 +98,7 @@
                         }
                     })
                 })
+                // 跳转支付宝
                 payOrder({
                     outTradeNo: this.getCookie('username') + sessionStorage.userId + Date.now(),
                     totalAmount: this.discounts,
@@ -106,9 +107,12 @@
                 }).then(res => {
                     if (res.code == 200) {
                         this.$message.success('jumping to alipay page');
-                        localStorage.removeItem('buyShopList1')
                         setTimeout(() => location.replace(res.data), 1000)
                     }
+                })
+                //删除购物车
+                this.orderDetail.forEach(item => {
+                    this.$store.dispatch('deleteSqlShop',{id:item.id})
                 })
             }
         },

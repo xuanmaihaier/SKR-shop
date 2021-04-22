@@ -2,29 +2,40 @@
     <div class="orderDetail">
         <div class="orderNow">
 
-            <div class="title">订单号：{{orderDetail.code}} {{createDate}} </div>
-            <div class="orderList">
-                <a-steps>
-                    <a-step status="finish" :title="statusArr[0]">
-                        <a-icon slot="icon" type="pay-circle" />
-                    </a-step>
-                    <a-step status="process" :title="statusArr[1]">
-                        <a-icon slot="icon" type="shop" />
-                    </a-step>
-                    <a-step status="wait" :title="statusArr[2]">
-                        <a-icon slot="icon" type="rocket" />
-                    </a-step>
-                    <a-step status="wait" :title="statusArr[3]">
-                        <a-icon slot="icon" type="smile-o" />
-                    </a-step>
-                </a-steps>
+            <div class="title">订单号：{{orderDetail.code}} <span>{{createDate}}</span> </div>
+            <div class="orderList orderList_">
+                <div class="step">
+                    <a-steps>
+                        <a-step :status="step[0]" :title="statusArr[0]">
+                            <a-icon slot="icon" type="pay-circle" />
+                        </a-step>
+                        <a-step :status="step[1]" :title="statusArr[1]">
+                            <a-icon slot="icon" type="shop" />
+                        </a-step>
+                        <a-step :status="step[2]" :title="statusArr[2]">
+                            <a-icon slot="icon" type="rocket" />
+                        </a-step>
+                        <a-step :status="step[3]" :title="statusArr[3]">
+                            <a-icon slot="icon" type="smile-o" />
+                        </a-step>
+                    </a-steps>
+                </div>
+                <div class="orderOp">
+                    <div>
+                        <a-button type=danger v-if="!orderDetail.status" @click="$router.push('/payTotal')">立即付款</a-button>
+
+                    </div>
+                    <div>
+                        <a-button type='link' @click="delOrder">取消订单</a-button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="shopDetail">
             <div class="title">商品清单</div>
             <ul class="orderList">
                 <li v-for="item in orderDetail.skus" :key="item.id">
-                    <div class="image"><img :src="JSON.parse(item.imgs)[0].small"></div>
+                    <div class="image"><img :src="JSON.parse(item.imgs)[JSON.parse(item.imgs).length-1].small"></div>
                     <div class="size">
                         <p class="type" style="color:#000;">{{item.title}}</p>
                         <p class="color">颜色：{{JSON.parse(item.param)[0]}}</p>
@@ -40,9 +51,9 @@
         <div class="address">
             <div>
                 <li class="msg">收货人信息</li>
-                <li> {{orderDetail.name}} </li>
-                <li> {{orderDetail.tel}} </li>
-                <li> {{orderDetail.address}} </li>
+                <li>姓名： {{orderDetail.name}} </li>
+                <li>电话： {{orderDetail.tel}} </li>
+                <li>地址： {{orderDetail.address}} </li>
             </div>
             <div>
                 <li class="msg">配送信息</li>
@@ -52,8 +63,8 @@
             <div>
                 <li class="msg">付款信息</li>
                 <li>商品数量：{{shopNum}} </li>
-                <li>商品总额：{{shopPrice[0]}} </li>
-                <li>应付金额：{{shopPrice[1]}} </li>
+                <li>商品总额：￥{{shopPrice[0]}} </li>
+                <li>应付金额：￥{{shopPrice[1]}} </li>
             </div>
         </div>
     </div>
@@ -62,9 +73,8 @@
 
 <script>
     import formDate from 'utils/formDate'
-    import {
-        getOrderDetail
-    } from "network/getOrderDetail";
+    import {getOrderDetail} from "network/getOrderDetail";
+    import {deleteOrder} from "network/deleteOrder"
     export default {
         props: ['order_id', 'status'],
         data() {
@@ -72,6 +82,7 @@
                 orderDetail: {},
                 statusArr: ['待支付', '待发货', '正在派送', '已完成'],
                 shopNum: 0,
+                step:['','','',''],
                 createDate: '',
                 shopPrice: []
             }
@@ -84,10 +95,23 @@
                 })
                 console.log(res.data);
                 if (res.code == 200) this.orderDetail = res.data
+            },
+            async delOrder(){
+                const res = await deleteOrder({id:this.order_id});
+                if(res.code==200){
+                    console.log(res);
+                    this.$message.success('成功取消订单');
+                    this.getDetail()
+                    setTimeout(()=>this.$router.replace('/mypage'),1500)
+                }
             }
         },
         created() {
-            this.getDetail()
+            this.getDetail();
+            this.step.forEach((item,index)=>{
+                this.step[index]=index<this.status?'finish':'wait'
+            })
+            this.step[this.status]='process';
         },
 
         watch: {
@@ -100,8 +124,8 @@
                     arr[1] += el.actual_price
                     num += el.num - 0
                 })
-                this.shopNum=num;
-                this.shopPrice=arr
+                this.shopNum = num;
+                this.shopPrice = arr
             }
         }
     }
@@ -109,7 +133,7 @@
 <style scoped lang="less">
     .orderDetail {
         width: 60vw;
-        margin: 0 auto;
+        margin: 30px auto;
 
         .shopDetail,
         .orderNow,
@@ -119,11 +143,13 @@
 
             .title {
                 margin-top: 4px;
-                padding-left: 20px;
+                padding: 0 20px;
                 height: 50px;
                 font-size: 16px;
                 line-height: 50px;
                 background-color: #f5f5f5;
+                display: flex;
+                justify-content: space-between;
             }
 
             .orderList {
@@ -192,23 +218,49 @@
             div:nth-child(1) {
                 width: 50%;
             }
+
             div:nth-child(2) {
                 width: 20%;
             }
+
             div:nth-child(3) {
                 width: 30%;
                 padding-left: 150px;
             }
-            li{
+
+            li {
                 color: #999999;
+                margin-bottom: 5px;
             }
-            .msg{
+
+            .msg {
                 font-size: 18px;
                 font-weight: bold;
                 color: #000;
+                margin-bottom: 20px;
             }
-            
+        }
 
+        .orderList_ {
+            display: flex;
+            justify-content: space-between;
+            height: 150px;
+
+            .step {
+                width: 70%;
+                padding-top: 40px;
+            }
+
+            .orderOp {
+                border-left: 1px solid #ccc;
+                width: 20%;
+                padding-top: 40px;
+                text-align: center;
+
+                button {
+                    padding: 0 10px;
+                }
+            }
         }
     }
 </style>

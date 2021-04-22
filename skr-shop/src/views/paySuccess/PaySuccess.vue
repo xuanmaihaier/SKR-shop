@@ -15,7 +15,9 @@
     </div>
 </template>
 <script>
-import {updateOrder} from 'network/updateOrder'
+    import {
+        updateOrder
+    } from 'network/updateOrder'
     export default {
         data() {
             return {
@@ -24,15 +26,20 @@ import {updateOrder} from 'network/updateOrder'
         },
         created() {
             this.backIndex();
-            let orderIds =JSON.parse(localStorage.getItem('idLocal'));
+            let orderIds = JSON.parse(localStorage.getItem('idLocal'));
             orderIds.forEach(element => {
                 console.log(element);
-                updateOrder({id:element,status:1}).then(res=>{
-                    console.log(res);
-                    if(res.code==200)localStorage.removeItem('id')
+                updateOrder({
+                    id: element,
+                    status: 1
+                }).then(res => {
+                    if (res.code == 200) {
+                        localStorage.removeItem('idLocal')
+                        localStorage.removeItem('buyShopList1')
+                    }
                 })
             });
-            
+
         },
         methods: {
             backIndex() {
