@@ -22,7 +22,7 @@
                 </div>
                 <div class="orderOp">
                     <div>
-                        <a-button type=danger v-if="!orderDetail.status" @click="$router.push('/payTotal')">立即付款</a-button>
+                        <a-button type=danger v-if="!orderDetail.status" @click="payForOrder">立即付款</a-button>
 
                     </div>
                     <div>
@@ -93,7 +93,6 @@
                     order_id: this.order_id,
                     status: this.status
                 })
-                console.log(res.data);
                 if (res.code == 200) this.orderDetail = res.data
             },
             async delOrder(){
@@ -104,6 +103,25 @@
                     this.getDetail()
                     setTimeout(()=>this.$router.replace('/mypage'),1500)
                 }
+            },
+            payForOrder(){
+                let buyShopList=[];
+                this.orderDetail.skus.forEach((item,index)=>{
+                    let obj ={};
+                    obj.customer_id=sessionStorage.userId;
+                    obj.id= index+'*';
+                    obj.img=JSON.parse(item.imgs)[JSON.parse(item.imgs).length-1].small;
+                    obj.num=item.num;
+                    obj.params=JSON.parse(item.param).push('x');
+                    obj.price=item.price;
+                    obj.sku_id=item.id;
+                    obj.store_id=1;
+                    obj.special_price=item.actual_price;
+                    obj.title=item.title;
+                    buyShopList.push(obj)
+                })
+                localStorage.buyShopList1=JSON.stringify(buyShopList)
+                this.$router.push('/payTotal')
             }
         },
         created() {
