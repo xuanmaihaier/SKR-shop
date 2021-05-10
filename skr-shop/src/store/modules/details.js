@@ -12,7 +12,7 @@ import { getShopById, getShopById2 } from "../../network/getShopById";
 import axios from "axios";
 import Vue from "vue";
 
-import { 
+import {
   SAVE_SHOP1,
   SAVE_SHOP2,
   DELETE_ALL_SHOP,
@@ -58,11 +58,4 @@ export default {
       commit(UPDATE_SHOP_PARAMS,params)
     },
   },
-
-  getters: {
-    
-  }
-
-
-
 }

@@ -1,7 +1,6 @@
 <template>
     <div class="orderDetail">
         <div class="orderNow">
-
             <div class="title">订单号：{{orderDetail.code}} <span>{{createDate}}</span> </div>
             <div class="orderList orderList_">
                 <div class="step">
@@ -21,12 +20,25 @@
                     </a-steps>
                 </div>
                 <div class="orderOp">
-                    <div>
-                        <a-button type=danger v-if="!orderDetail.status" @click="payForOrder">立即付款</a-button>
+                    <div v-if="!isBack">
+                        <div>
+                            <a-button type=danger v-if="!orderDetail.status" @click="payForOrder">立即付款</a-button>
+                        </div>
+                        <div>
+                            <a-button type='link' v-if="!orderDetail.status" @click="delOrder">取消订单</a-button>
+                        </div>
+                        <div>
+                            <a-button type='link' v-if="orderDetail.status==3">
+                                已完成
+                            </a-button>
+                            <a-button type='danger' v-if="orderDetail.status>=1" @click="visible = true">退货</a-button>
+                            <a-button type='primary' v-if="orderDetail.status==2" @click="takeGoods"
+                                style="margin-left: 10px;">确认收货</a-button>
+                        </div>
 
                     </div>
-                    <div>
-                        <a-button type='link' @click="delOrder">取消订单</a-button>
+                    <div v-if="isBack">
+                        退货中
                     </div>
                 </div>
             </div>
@@ -34,7 +46,7 @@
         <div class="shopDetail">
             <div class="title">商品清单</div>
             <ul class="orderList">
-                <li v-for="item in orderDetail.skus" :key="item.id">
+                <li v-for="item in orderDetail.skus" :key="item.id" @click="toDetail(item.id)">
                     <div class="image"><img :src="JSON.parse(item.imgs)[JSON.parse(item.imgs).length-1].small"></div>
                     <div class="size">
                         <p class="type" style="color:#000;">{{item.title}}</p>
@@ -48,6 +60,31 @@
                 </li>
             </ul>
         </div>
+        <div class="shopDetail" v-if="isBack">
+            <div class="title">退货详情</div>
+            <ul class="reason">
+                <li>订单编号：{{orderDetail.id}}</li>
+                <li>创建时间：{{createDate}}</li>
+                <li>退货原因：{{backStockInfo.reason}}</li>
+            </ul>
+        </div>
+        <div>
+            <a-modal title="填写退款信息" :visible="visible" :confirm-loading="confirmLoading" @ok="handleOk"
+                @cancel="handleCancel">
+                <div>
+                    退款原因：
+                    <a-select default-value="请选择" style="width: 120px" @change="handleChange">
+                        <a-select-option v-for="(item,index) in backStockReason" :key="index" :value='item'>
+                            {{item}}
+                        </a-select-option>
+                    </a-select>
+                </div>
+                <div style="width:70%">
+                    <a-textarea v-show='others' style="height:100px;margin:20px 74px;" v-model="otherReason">
+                    </a-textarea>
+                </div>
+            </a-modal>
+        </div>
         <div class="address">
             <div>
                 <li class="msg">收货人信息</li>
@@ -57,8 +94,9 @@
             </div>
             <div>
                 <li class="msg">配送信息</li>
-                <li> 配送方式：普通快递 </li>
-                <li> 运费： ￥0 </li>
+                <li> 配送方式：{{orderDetail.ecp?orderDetail.ecp:'-------'}} </li>
+                <li> 运单号：{{orderDetail.postid?orderDetail.postid:'-----'}} </li>
+                <li> 运费： ￥{{orderDetail.postage?orderDetail.postage:'--'}} </li>
             </div>
             <div>
                 <li class="msg">付款信息</li>
@@ -73,18 +111,44 @@
 
 <script>
     import formDate from 'utils/formDate'
-    import {getOrderDetail} from "network/getOrderDetail";
-    import {deleteOrder} from "network/deleteOrder"
+    import {
+        getOrderDetail
+    } from "network/getOrderDetail";
+    import {
+        deleteOrder
+    } from "network/deleteOrder";
+    import {
+        getShopById
+    } from 'network/getShopById';
+    import {
+        addBackStock
+    } from 'network/backStock';
+    import {
+        getBackStockDetail
+    } from "network/getBackStockDetail";
+    import {
+        updateOrder
+    } from 'network/updateOrder'
     export default {
         props: ['order_id', 'status'],
         data() {
             return {
                 orderDetail: {},
-                statusArr: ['待支付', '待发货', '正在派送', '已完成'],
+                status_:null,
+                statusArr: ['待支付', '待发货', '等待收货', '已完成'],
                 shopNum: 0,
-                step:['','','',''],
+                step: ['', '', '', ''],
                 createDate: '',
-                shopPrice: []
+                shopPrice: [],
+                postData: {},
+                visible: false,
+                confirmLoading: false,
+                backStockReason: ['多拍/错拍', '不想要了', '尺码/颜色错误', '地址错误', '其他'],
+                reasonVal: '',
+                otherReason: '',
+                others: false,
+                isBack: false,
+                backStockInfo: {}
             }
         },
         methods: {
@@ -93,43 +157,108 @@
                     order_id: this.order_id,
                     status: this.status
                 })
-                if (res.code == 200) this.orderDetail = res.data
+                if (res.code == 200) {
+                    this.orderDetail = res.data;
+                    this.getBack();
+                    this.getStep();
+                }
+                console.log(res.data);
             },
-            async delOrder(){
-                const res = await deleteOrder({id:this.order_id});
-                if(res.code==200){
+            async delOrder() {
+                const res = await deleteOrder({
+                    id: this.order_id
+                });
+                if (res.code == 200) {
                     console.log(res);
                     this.$message.success('成功取消订单');
-                    this.getDetail()
-                    setTimeout(()=>this.$router.replace('/mypage'),1500)
+                    setTimeout(() => this.$router.replace('/mypage'), 1500)
                 }
             },
-            payForOrder(){
-                let buyShopList=[];
-                this.orderDetail.skus.forEach((item,index)=>{
-                    let obj ={};
-                    obj.customer_id=sessionStorage.userId;
-                    obj.id= index+'*';
-                    obj.img=JSON.parse(item.imgs)[JSON.parse(item.imgs).length-1].small;
-                    obj.num=item.num;
-                    obj.params=JSON.parse(item.param).push('x');
-                    obj.price=item.price;
-                    obj.sku_id=item.id;
-                    obj.store_id=1;
-                    obj.special_price=item.actual_price;
-                    obj.title=item.title;
+            async toDetail(sku_id) {
+                const res = await getShopById({
+                    id: sku_id
+                });
+                let id = res.data[0].spu_id;
+                this.$router.push({
+                    name: 'Details',
+                    params: {
+                        id
+                    }
+                })
+            },
+            async getBack() {
+                const result = await getBackStockDetail({
+                    order_id: this.order_id
+                });
+                if (result.data.reason) this.isBack = true;
+                this.backStockInfo = result.data;
+            },
+            async handleOk() {
+                if (!this.reasonVal) {
+                    this.$message.error('请选择退款理由!');
+                } else {
+                    this.confirmLoading = true;
+                    const res = await addBackStock({
+                        order_id: this.orderDetail.id,
+                        reason: this.reasonVal + this.otherReason,
+                        money: this.orderDetail.money,
+                        imgs: JSON.stringify(this.orderDetail.skus[0].imgs)
+                    })
+                    if (res.code == 200) {
+                        this.$message.success('退货发起成功,等待商家处理');
+                        this.getDetail();
+                        this.visible = false;
+                        this.confirmLoading = false;
+                    }
+                }
+            },
+            async takeGoods() {
+                const res = await updateOrder({
+                    id: this.order_id,
+                    status: 3
+                });
+                if (res.code == 200) {
+                    this.$message.success('已经确认收货');
+                    this.getDetail();
+                    this.status_=3
+                }
+            },
+            getStep() {
+                this.step.forEach((item, index) => {
+                    this.step[index] = index < this.status_ ? 'finish' : 'wait'
+                })
+                this.step[this.status_] = 'process';
+            },
+            handleChange(value) {
+                this.others = value == '其他' ? true : false;
+                this.reasonVal = value
+            },
+            handleCancel(e) {
+                this.visible = false;
+            },
+            payForOrder() {
+                let buyShopList = [];
+                this.orderDetail.skus.forEach((item, index) => {
+                    let obj = {};
+                    obj.customer_id = sessionStorage.userId;
+                    obj.id = index + '*';
+                    obj.img = JSON.parse(item.imgs)[JSON.parse(item.imgs).length - 1].small;
+                    obj.num = item.num;
+                    obj.params = JSON.parse(item.param).push('x');
+                    obj.price = item.price;
+                    obj.sku_id = item.id;
+                    obj.store_id = 1;
+                    obj.special_price = item.actual_price;
+                    obj.title = item.title;
                     buyShopList.push(obj)
                 })
-                localStorage.buyShopList1=JSON.stringify(buyShopList)
+                localStorage.buyShopList1 = JSON.stringify(buyShopList)
                 this.$router.push('/payTotal')
             }
         },
         created() {
             this.getDetail();
-            this.step.forEach((item,index)=>{
-                this.step[index]=index<this.status?'finish':'wait'
-            })
-            this.step[this.status]='process';
+            this.status_=this.status
         },
 
         watch: {
@@ -143,7 +272,7 @@
                     num += el.num - 0
                 })
                 this.shopNum = num;
-                this.shopPrice = arr
+                this.shopPrice = arr;
             }
         }
     }
@@ -175,11 +304,23 @@
                 padding: 20px;
                 border: 1px solid #cccccc;
             }
+
         }
 
         .shopDetail {
+            .reason {
+                width: 100%;
+                padding: 20px;
+                border: 1px solid #cccccc;
+
+                li {
+                    margin: 4px 0;
+                }
+            }
+
             .orderList {
                 li {
+                    cursor: pointer;
                     height: 120px;
                     display: flex;
 

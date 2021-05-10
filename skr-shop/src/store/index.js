@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+Vue.use(Vuex)
 import details from "./modules/details";
 import shopCart from "./modules/shopCart";
 import addAddress from "./modules/addAddress";
 import getImgs from "./modules/getImgs";
-Vue.use(Vuex)
+
 // 请按照规范 使用action触发mutations
 let store= new Vuex.Store({
   state: {
@@ -38,7 +38,7 @@ let store= new Vuex.Store({
     }
   },
   actions: {
-    //更改Loadingde 
+    //更改Loadingde
     commitLoading({commit},val){
       commit('changeLoading',val)
     },

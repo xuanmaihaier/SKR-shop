@@ -1,17 +1,3 @@
-/*
- * @Description: 
- * @Author: He Xiantao
- * @Date: 2021-04-16 19:06:52
- * @LastEditTime: 2021-05-10 15:10:57
- * @LastEditors: He XianTao
- */
-/*
- * @Description: shopCart
- * @Author: He Xiantao
- * @Date: 2021-04-15 12:09:19
- * @LastEditTime: 2021-04-20 22:07:14
- * @LastEditors: He Xiantao
- */
 
 import {
   ADD_SHOP_TO_SHOP_CART,
@@ -25,11 +11,10 @@ import { addToShopCart } from "../../network/addToShopCart";
 import { reqShopCart } from "../../network/reqShopCart";
 import { deleteSC } from "../../network/deleteShop";
 
-//  
 
 export default {
   state: () => ({
-    shopCart: [], //当前购物车中所有的good数组
+    shopCart: [], //当前购物车中所有的s商品数组
     sessionStorageShopCart: [], // 需要存储到sessionStorage里面的简写
     repeatSqlShopId: {}, // 收集数据库的购物车中重复的商品(数量不一样,其它都一样)的id,以便删除的时候一起删除
   }),
@@ -49,7 +34,9 @@ export default {
       window.sessionStorage.shopCart = JSON.stringify(state.sessionStorageShopCart)
     },
     change_shop_num(state,{isAddNum,shop}){
+
       // 判断是数量+1还是-1
+
       let num = isAddNum ? 1 : -1
       shop.num += num
       const a = {
@@ -83,6 +70,7 @@ export default {
     },
     collect(state,item){
       // 收集数据库的购物车中相同商品的id值,为合并商品做准备
+
       if (state.repeatSqlShopId[item.sku_id]) {
         state.repeatSqlShopId[item.sku_id].forEach(item1=>{
           if (item1 != item.id) {
@@ -115,7 +103,7 @@ export default {
       if (state.shopCart.length < 1) { // 第一次添加
         // console.log(1);
         commit(ADD_SHOP_TO_SHOP_CART,shopInfo)
-      }else{ 
+      }else{
         let countIsSame = false
         let sameShopIndex = 0
         state.shopCart.forEach((shop, index) => {
@@ -132,9 +120,11 @@ export default {
           commit(ADD_SHOP_TO_SHOP_CART,shopInfo)
         }
       }
+
     },
     // 添加商品到数据库
     async ToShopCart({commit},{shopInfo,b,isBtn = false}){
+
       shopInfo = shopInfo[0] || shopInfo
       const result = await addToShopCart({
         customer_id: window.sessionStorage.userId,
@@ -142,9 +132,11 @@ export default {
         num: shopInfo.num,
         params: shopInfo.params,
       })
+
       if (isBtn) {
         shopInfo.id = result.data.insertId
       }
+
     },
     // 拉去数据库数据到本地shopCart,并且添加值sessionStorage
     async initShopCart ({commit,dispatch}){

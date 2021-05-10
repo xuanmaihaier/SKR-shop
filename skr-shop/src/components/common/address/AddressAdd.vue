@@ -36,7 +36,6 @@
                     中国大陆
                 </a-select-option>
             </a-select>
-
             <a-select v-model="provinceCode" style="width: 120px" @change="provinceChange(provinceCode)">
                 <a-select-option v-for="(province,code) in provinces" :value="code" :key="code">
                     {{province.name}}

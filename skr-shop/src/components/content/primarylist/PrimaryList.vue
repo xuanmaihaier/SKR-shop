@@ -150,7 +150,7 @@ export default {
     .left {
       display: flex;
       width: 99%;
-      align-items: left;
+      align-items: flex-start;
       p {
         line-height: 54px;
         cursor: pointer;
