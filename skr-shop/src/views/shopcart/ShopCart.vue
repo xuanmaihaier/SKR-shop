@@ -2,8 +2,8 @@
  * @Description: shopcart
  * @Author: He Xiantao
  * @Date: 2021-04-14 23:35:14
- * @LastEditTime: 2021-04-20 23:09:50
- * @LastEditors: He Xiantao
+ * @LastEditTime: 2021-05-10 15:01:16
+ * @LastEditors: He XianTao
 -->
 <template>
   <div>
@@ -119,66 +119,58 @@ import {mapState} from "vuex";
     created(){
       this.$store.commit('clear_shop_cart')
       this.$store.dispatch('initShopCart')
-      // window.location.reload();
     },
     methods:{
       async isAddNum(isAddNum,shop){
         if (!isAddNum && shop.num == 1) return
         // 修改本地session中的数据
         this.$store.commit('change_shop_num',{isAddNum,shop})
-
-        
+        // 获取数据库中此用户的购物车
         const newResult = await reqShopCart({customer_id:window.sessionStorage.userId})
-
         if (newResult.data) { // 购物车有数据
           // 得到所有购物车信息
           let b = newResult.data.map(item=>{
             item.params = JSON.parse(item.params)
             return item
           })
-
           b.forEach(item=>{
             // 收集数据库的购物车,重复的商品(数量不一样,其它都一样的商品)
-
             this.$store.commit('collect',item)
-
           })
-          // 删除数据库对应的商品
+          // 删除数据库对应的重复的商品
           this.repeatSqlShopId[shop.sku_id].forEach(item=>{
-            // console.log(item);
             this.$store.dispatch('deleteSqlShop',{id:item})
           })
+          // 即时清除
+          this.$store.commit('clearCollect')
           // 添加新的商品信息到数据库
-          this.$store.dispatch('ToShopCart',{shopInfo:shop,b:'1'})
-
+          this.$store.dispatch('ToShopCart',{shopInfo:shop,b:'1',isBtn:true})
         }
 
       },
       // 付款
        pay(){
-
+        // 重组支付界面需要的数据
         const buyShopList1 = this.shopCart.filter(shop=>{
           const index = this.arr.indexOf(shop.id)
           if (index !== -1) {
             return shop
           }
         })
+        // 将信息存储在本地
         localStorage.setItem('buyShopList1',JSON.stringify(buyShopList1))
+        // 转跳到支付页面
         this.$router.push('/payTotal')
       },
       deleteShop(shop){
         if (confirm(`确定删除${shop.title}吗`)) {
-          // 删除本地存储
-          // this.$store.commit('delete_shop',shop)
+          // 删除vuex中商品信息
           this.$store.commit('clear_shop_cart')
-          // 删除数据库
-          // this.repeatSqlShopId[shop.sku_id].forEach(item=>{
-          //   console.log(item);
+          // 删除数据库中对应的商品详细
           this.$store.dispatch('deleteSqlShop',{id:shop.id})
-          // })
+          // 重新渲染vuex中的数据
           this.$store.dispatch('initShopCart')
           window.location.reload();
-          // this.$store.dispatch('deleteSqlShop',{id:shop.id})
         }
       },
       checkAll(event){

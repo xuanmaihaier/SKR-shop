@@ -43,40 +43,6 @@ export default {
   data() {
     return {
       listOne: [],
-      rightList: [
-        {
-          url:
-            "//image.wconcept.co.kr/productimg/image/img1/11/301230111.jpg?thumbnail=130x173",
-          title: "FROWTROW",
-          particulars: "[스프링 20%쿠폰]",
-          particularsList: "Boucle Crop Cardigan_2color",
-          price: "148,000",
-        },
-        {
-          url:
-            "//image.wconcept.co.kr/productimg/image/img1/11/301230111.jpg?thumbnail=130x173",
-          title: "FROWTROW",
-          particulars: "[스프링 20%쿠폰]",
-          particularsList: "Boucle Crop Cardigan_2color",
-          price: "148,000",
-        },
-        {
-          url:
-            "//image.wconcept.co.kr/productimg/image/img1/11/301230111.jpg?thumbnail=130x173",
-          title: "FROWTROW",
-          particulars: "[스프링 20%쿠폰]",
-          particularsList: "Boucle Crop Cardigan_2color",
-          price: "148,000",
-        },
-        {
-          url:
-            "//image.wconcept.co.kr/productimg/image/img1/11/301230111.jpg?thumbnail=130x173",
-          title: "FROWTROW",
-          particulars: "[스프링 20%쿠폰]",
-          particularsList: "Boucle Crop Cardigan_2color",
-          price: "148,000",
-        },
-      ],
     };
   },
   created() {

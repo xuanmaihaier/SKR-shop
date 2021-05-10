@@ -2,17 +2,22 @@
  * @Description: 
  * @Author: He Xiantao
  * @Date: 2021-04-12 17:42:12
- * @LastEditTime: 2021-04-17 12:20:09
- * @LastEditors: He Xiantao
+ * @LastEditTime: 2021-05-10 09:34:16
+ * @LastEditors: He XianTao
 -->
 <template>
   <div id="app">
+    <!-- 头部公共导航栏 -->
     <NavBar />
+    <!-- 所有主体内容区域显示 -->
     <keep-alive exclude="Login,Details">
       <router-view/>
     </keep-alive>
+    <!-- 公共页脚 -->
     <FooterNav />
+    <!-- 公共侧边栏兼客服小型购物车查看 -->
     <Adside/>
+    <!-- 发送请求，显示加载组件 -->
     <Loading />
   </div>
 </template>

@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @Author: He XianTao
+ * @Date: 2021-05-10 09:25:03
+ * @LastEditTime: 2021-05-10 09:29:10
+ * @LastEditors: He XianTao
+ */
 const path = require('path')
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -29,7 +36,7 @@ module.exports = {
     open: true,
     proxy: {
       '/dev-api': {
-        target: 'http://192.168.1.135:3000/',
+        target: 'http://192.168.1.122:3000/',
         // target: 'http://192.168.1.144:3000/',
         // target:' http://www.stride.fun:3000', 
         changeOrigin: true,

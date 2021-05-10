@@ -2,8 +2,8 @@
  * @Description: 
  * @Author: He Xiantao
  * @Date: 2021-04-16 19:06:52
- * @LastEditTime: 2021-04-20 23:08:10
- * @LastEditors: He Xiantao
+ * @LastEditTime: 2021-05-10 15:10:57
+ * @LastEditors: He XianTao
  */
 /*
  * @Description: shopCart
@@ -21,17 +21,13 @@ import {
 
 import Vue from "vue";
 
-// import { getShopById } from "../../network/getShopById";
 import { addToShopCart } from "../../network/addToShopCart";
 import { reqShopCart } from "../../network/reqShopCart";
 import { deleteSC } from "../../network/deleteShop";
-// import vuexLocal from "../vuexPersistence.js";
-// import VuexPersistence from 'vuex-persist'
 
 //  
 
 export default {
-  // plugins: [vuexLocal.plugin],
   state: () => ({
     shopCart: [], //当前购物车中所有的good数组
     sessionStorageShopCart: [], // 需要存储到sessionStorage里面的简写
@@ -53,33 +49,27 @@ export default {
       window.sessionStorage.shopCart = JSON.stringify(state.sessionStorageShopCart)
     },
     change_shop_num(state,{isAddNum,shop}){
-      
-      // console.log(shop);
-      // console.log(shop.num++);
+      // 判断是数量+1还是-1
       let num = isAddNum ? 1 : -1
-      // console.log(num,'加一还是减一');
-      // console.log(num);
-      // Vue.set(shop,'num',num)
-      // console.log(shop);
       shop.num += num
-      // console.log(shop.num,'当前商品数量');
-      // console.log(shop);
       const a = {
         sku_id: shop.id,
         num: shop.num,
         params: shop.params
       }
-      console.log(a,'当前需要存储session的数据');
+      // 修改sessionStorage中商品的信息,并重新存储
       state.sessionStorageShopCart.splice(state.sessionStorageShopCart.indexOf(a),1,a)
       window.sessionStorage.shopCart = JSON.stringify(state.sessionStorageShopCart)
     },
     delete_shop(state,shop){
+      // 删除vuex中的商品信息
       state.shopCart.splice(state.shopCart.indexOf(shop),1)
       const a = {
         sku_id: shop.id,
         num: shop.num,
         params: shop.params
       }
+      // 删除存储在vuex中的sessionStorage的商品信息,并重新存储到sessionStorage
       state.sessionStorageShopCart.splice(state.sessionStorageShopCart.indexOf(a),1)
       window.sessionStorage.shopCart = JSON.stringify(state.sessionStorageShopCart)
     },
@@ -88,10 +78,17 @@ export default {
       state.sessionStorageShopCart = []
       window.sessionStorage.removeItem('shopCart')
     },
+    clearCollect(state){
+      state.repeatSqlShopId = {}
+    },
     collect(state,item){
-      // console.log(item);
+      // 收集数据库的购物车中相同商品的id值,为合并商品做准备
       if (state.repeatSqlShopId[item.sku_id]) {
-        state.repeatSqlShopId[item.sku_id][state.repeatSqlShopId[item.sku_id].length] = item.id
+        state.repeatSqlShopId[item.sku_id].forEach(item1=>{
+          if (item1 != item.id) {
+            state.repeatSqlShopId[item.sku_id][state.repeatSqlShopId[item.sku_id].length] = item.id
+          }
+        })
       }else{
         state.repeatSqlShopId[item.sku_id] = [item.id]
       }
@@ -102,7 +99,6 @@ export default {
     addToSession({commit,state}){
       //将购物车内容存储到sessionStorage里面
       const sessionStorageShopCart = state.shopCart.map(shop=>{
-        // console.log(shop);
         return {
           customer_id: window.sessionStorage.userId,
           sku_id: shop.id,
@@ -123,8 +119,6 @@ export default {
         let countIsSame = false
         let sameShopIndex = 0
         state.shopCart.forEach((shop, index) => {
-          // console.log(shop.sku_id,'----',shopInfo[0].sku_id);
-          // console.log(shop,shopInfo);
           if ((shop.sku_id == shopInfo.sku_id || shop.id == shopInfo.id) && shop.params.every((item,index)=> item == shopInfo.params[index]) ) {
             countIsSame = true
             sameShopIndex = index
@@ -132,62 +126,42 @@ export default {
         })
         if (countIsSame) {
           // 商品样式和id都一样,只是增加了数量
-          // console.log('商品样式和id都一样,只是增加了数量');
           commit(ADD_SHOP_NUM,{index:sameShopIndex,num:shopInfo.num})
         }else{
           // 商品id或品种不一样
-          // console.log(2);
           commit(ADD_SHOP_TO_SHOP_CART,shopInfo)
         }
       }
-      // console.log(state.shopCart);
-      
-
-      // 用户登录, 商品添加到数据库
-      // await addToShopCart({
-      //   customer_id: window.sessionStorage.userId,
-      //   sku_id: shopInfo.sku_id || shopInfo.id,
-      //   num: shopInfo.num,
-      //   params: shopInfo.params,
-      // })
     },
     // 添加商品到数据库
-    async ToShopCart({commit},{shopInfo,b}){
-      // console.log(shopInfo);
-      // console.log('添加商品到数据库');
+    async ToShopCart({commit},{shopInfo,b,isBtn = false}){
       shopInfo = shopInfo[0] || shopInfo
-      // console.log(shopInfo);
-      // console.log(b && shopInfo.id ? shopInfo.sku_id : shopInfo.id);
       const result = await addToShopCart({
         customer_id: window.sessionStorage.userId,
         sku_id: b && shopInfo.id ? shopInfo.sku_id : shopInfo.id,
         num: shopInfo.num,
         params: shopInfo.params,
       })
-      // console.log(result);
+      if (isBtn) {
+        shopInfo.id = result.data.insertId
+      }
     },
     // 拉去数据库数据到本地shopCart,并且添加值sessionStorage
     async initShopCart ({commit,dispatch}){
-      // console.log('拉去数据库数据到本地');
       const newResult = await reqShopCart({customer_id:window.sessionStorage.userId})
-      // console.log(newResult);
       if (newResult.data) { // 购物车有数据
         // 得到所有购物车信息
         let b = newResult.data.map(item=>{
           item.params = JSON.parse(item.params)
           return item
         })
-        // console.log(b);
         b.forEach(item=>{
           // 收集数据库的购物车,重复的商品(数量不一样,其它都一样的商品)
-          // console.log(item);
           commit('collect',item)
           dispatch('updateShopCart',item)
           dispatch('addToSession')
         })
       }
-      // }
-      // }
     },
     // 删除购物车中的某一个商品
     async deleteSqlShop({state},{id}){

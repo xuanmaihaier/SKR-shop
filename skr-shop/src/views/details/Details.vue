@@ -82,7 +82,6 @@
       </div>
     </div>
 
-
     <div class="detail">
       <DetailSortNav @jumptoWhich="whichOne" ref="DETAIL" :currentIndexIsOn="0" />
       <Detail :imgs="shop1.length>0 ?  JSON.parse(shop1[0].imgs) : []" />
@@ -143,6 +142,7 @@ import { mapState } from "vuex";
         currentStyle: '',
         styleSize: 'XS',
         visible: false,
+        lastStyle: ''
       }
     },
     methods : {
@@ -194,6 +194,11 @@ import { mapState } from "vuex";
             })
             this.$message.info("未选择颜色");
           }else{
+            if (this.lastStyle == this.currentStyle) {
+              this.$message.info("亲,购物车中有相同的款式哦,您可以前去购物车修改数量");
+              return
+            }
+            this.lastStyle = this.currentStyle
             // 先将数量,样式,尺寸在当前详情界面商品信息添加修改
             this.$store.dispatch('updateShopInfo',{
               num: this.shopNum,
@@ -248,8 +253,6 @@ import { mapState } from "vuex";
       },
       // 确认登录,页面跳转
       handleOk(e) {
-        // console.log(e);
-        // alert('跳转至登陆界面');
         this.$router.push('/login')
         this.visible = false;
       },
@@ -261,15 +264,12 @@ import { mapState } from "vuex";
       })
     },
     created(){
-      // console.log('created');
       const {id} = this
       this.$store.dispatch('getShop',id)
     },
     activated(){
-      // console.log('kkkk');
       // 给窗口绑定一个卸载的监听(刷新页面的时候触发)
       window.addEventListener('load',()=>{
-        // console.log(111111);
         this.$store.dispatch('initShopCart')
       })
     },
