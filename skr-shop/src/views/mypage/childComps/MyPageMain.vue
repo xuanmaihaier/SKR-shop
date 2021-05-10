@@ -118,7 +118,7 @@
         num: 0,
         addOrEditor: false,
         orderList: [],
-        statusArr: ['待支付', '待发货', '正在派送', '已完成']
+        statusArr: ['待支付', '待发货', '等待收货', '已完成']
       };
     },
     mounted() {

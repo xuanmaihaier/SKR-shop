@@ -51,7 +51,7 @@
             getOrderTotal(str) {
                 let result = 0
                 this.orderDetail.forEach(item => {
-                    result += item[str] - 0;
+                    result += (item[str] - 0)*item['num'];
                 })
                 return result
             },

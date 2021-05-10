@@ -1,14 +1,7 @@
-<!--
- * @Description: 
- * @Author: He Xiantao
- * @Date: 2021-04-13 10:43:26
- * @LastEditTime: 2021-04-14 22:48:58
- * @LastEditors: He Xiantao
--->
 <template>
   <div id="detail">
     <ul v-if="imgs.length>0">
-      <li v-for="(img,index) in imgs"><img :src="img.small"></li>
+      <li v-for="(img,index) in imgs" :key="index"><img :src="img.small"></li>
     </ul>
   </div>
 </template>
@@ -25,13 +18,13 @@
 #detail
   width 1240px
   margin 0 auto
-  ul 
+  ul
     width 960px
     margin 0 auto
-    li 
+    li
       width 100%
       margin 60px 0
-      img 
+      img
         width 960px
- 
+
 </style>

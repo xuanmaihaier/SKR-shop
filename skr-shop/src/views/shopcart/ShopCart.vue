@@ -71,9 +71,6 @@
         <div class="left">
           <div class="fl">
             <label class="checkbox-label checkbox-all">
-              <!-- <input checked='false' type="checkbox" class="checkbox-input">
-              <i></i> -->
-              <!-- <span>全选商品</span> -->
             </label>
           </div>
           <div class="fr">
@@ -104,7 +101,7 @@ import {mapState} from "vuex";
         shopCart: state => state.shopCart.shopCart,
         repeatSqlShopId: state => state.shopCart.repeatSqlShopId
       }),
-      
+
       totalPrice(){
         return this.shopCart.reduce((acc,shop)=>{
           const index = this.arr.indexOf(shop.id)
@@ -127,7 +124,7 @@ import {mapState} from "vuex";
         // 修改本地session中的数据
         this.$store.commit('change_shop_num',{isAddNum,shop})
 
-        
+
         const newResult = await reqShopCart({customer_id:window.sessionStorage.userId})
 
         if (newResult.data) { // 购物车有数据
@@ -150,13 +147,11 @@ import {mapState} from "vuex";
           })
           // 添加新的商品信息到数据库
           this.$store.dispatch('ToShopCart',{shopInfo:shop,b:'1'})
-
         }
 
       },
       // 付款
        pay(){
-
         const buyShopList1 = this.shopCart.filter(shop=>{
           const index = this.arr.indexOf(shop.id)
           if (index !== -1) {
@@ -205,7 +200,7 @@ import {mapState} from "vuex";
     border none
     &:checked + i:after
       opacity 1
-  i 
+  i
     display inline-block
     width 15px
     height 15px
@@ -217,11 +212,11 @@ import {mapState} from "vuex";
     cursor pointer
     &:after
       opacity 0
-      content: ''   
+      content: ''
       position: absolute;
-      width: 9px;    
+      width: 9px;
       height: 5px;
-      background: transparent;    
+      background: transparent;
       top: 3px;
       left: 2px;
       border: 2px solid #000;
@@ -230,8 +225,8 @@ import {mapState} from "vuex";
       transform: rotate(-45deg);
 .fixed-width
   max-width 1200px
-  margin 30px auto 
-  overflow hidden 
+  margin 30px auto
+  overflow hidden
 
 .cart-to-login
   height 87px
@@ -239,15 +234,15 @@ import {mapState} from "vuex";
   padding 15px 20px
   color #999
   font-size 13px
-  h4 
+  h4
     color: #f05124
     font-size: 16px
     line-height: 30px
     margin 0
-  p 
+  p
     padding: 3px 0;
     margin 0
-    a 
+    a
       color #A788A7
       border-bottom: 1px solid #999;
 .shop-cart
@@ -256,7 +251,7 @@ import {mapState} from "vuex";
     position relative
     height 50px
     line-height 50px
-    overflow hidden 
+    overflow hidden
     &::after
       content ''
       position absolute
@@ -265,7 +260,7 @@ import {mapState} from "vuex";
       width 55px
       height 4px
       background-color #000
-    span 
+    span
       font-size 28px
       font-weight 600
       vertical-align: middle;
@@ -273,7 +268,7 @@ import {mapState} from "vuex";
     .total-num
       font-size 12px
       color #999
-      font-style normal 
+      font-style normal
       margin-left 10px
       display inline-block
       line-height 35px
@@ -284,14 +279,14 @@ import {mapState} from "vuex";
     line-height 18px
     .checkbox-label
       position relative
-      span 
+      span
         font-size 12px
   .cart-list
     .goods-item
       width 100%
       height 140px
       border-bottom 1px solid #C3C3C3
-      display flex 
+      display flex
       justify-content flex-start
       align-items center
       padding 20px 0
@@ -299,21 +294,21 @@ import {mapState} from "vuex";
         width 40px
       .showImg
         margin 0 25px
-        img 
+        img
           width 100px
           height 100px
       .infos
         flex 1
         overflow hidden
         margin  20px 0
-        p 
+        p
           margin 0
         .fl
-          float left 
+          float left
           .info-name
             font-size 18px
             margin 0
-          p 
+          p
             height 22px
         .fr
           float right
@@ -330,12 +325,12 @@ import {mapState} from "vuex";
             text-align right
         .info-bom
           overflow hidden
-          a 
+          a
             color #000
           .fl
-            display flex 
+            display flex
             justify-content flex-start
-            span 
+            span
               margin-right 20px
             .num
               display inline-block
@@ -348,7 +343,7 @@ import {mapState} from "vuex";
               margin-right 3px
             .num-plus
               margin-left 3px
-            input 
+            input
               outline none
               border 1px solid #CCC
               width 78px
@@ -375,14 +370,14 @@ import {mapState} from "vuex";
       font-size 12px
       .checkbox-label
         margin-right 20px
-      a 
+      a
         color #fff
     .fr
       float right
       line-height 40px
       margin-right 25px
       font-size 13px
-      span 
+      span
         display block
         line-height 14px
         font-size 12px

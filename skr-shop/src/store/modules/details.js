@@ -12,7 +12,7 @@ import { getShopById, getShopById2 } from "../../network/getShopById";
 import axios from "axios";
 import Vue from "vue";
 
-import { 
+import {
   SAVE_SHOP1,
   SAVE_SHOP2,
   DELETE_ALL_SHOP,
@@ -40,24 +40,9 @@ export default {
     },
     [UPDATE_SHOP_NUM] (state,num){
       state.shop1[0].num = parseInt(num)
-      // Vue.set(state.shop1[0],'num',parseInt(num))
-      // state.shop1[0].num = parseInt(num)
-      // state.shop1[0].special_price = state.shop2.special_price
-      // if (state.shop1[0].num) {
-      //   state.shop1[0].num = num
-      // }else{
-      //   Vue.set(state.shop1[0],'num',num)
-      // }
     },
     [UPDATE_SHOP_PARAMS] (state,params){
       state.shop1[0].params = params
-      // Vue.set(state.shop1[0],'params',params)
-      // state.shop1[0].params = params
-      // if (state.shop1[0].params) {
-      //   state.shop1[0].params = params
-      // }else{
-      //   Vue.set(state.shop1[0],'params',params)
-      // }
     },
   },
   actions: {
@@ -71,11 +56,4 @@ export default {
       commit(UPDATE_SHOP_PARAMS,params)
     },
   },
-
-  getters: {
-    
-  }
-
-
-
 }
